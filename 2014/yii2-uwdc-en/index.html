@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Yii 2.0 review</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Yii 2.0 review">
+        <meta name="author" content="Alexander Makarov">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.min.css">
+        <link rel="stylesheet" href="../../css/samdark.css" id="theme">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Yii 2.0 review</h1>
+
+                    <div class="infobox">
+                        <p><a href="http://rmcreative.ru/author">Alexander Makarov</a></p>
+                        <p>
+                            <small>
+                                <a href="http://www.yiiframework.com/">Yii core team,</a>
+                                <a href="http://www.stay.com/">Stay.com</a>
+                            </small>
+                        </p>
+                        <ul>
+                            <li><a href="https://github.com/yiisoft/yii2/">https://github.com/yiisoft/yii2/</a></li>
+                            <li><a href="http://slides.rmcreative.ru/2014/yii2-uwdc-en/">http://slides.rmcreative.ru/2014/yii2-uwdc-en/</a></li>
+                        </ul>
+                    </div>
+                    <img src="uwdc.png" />
+                </section>
+
+                <section>
+                    <h2>Let's talk about PHP in general first</h2>
+                </section>
+
+                <section>
+                    <h2>PHP is cool!</h2>
+                    <ul>
+                        <li>It is a good choice for web development and more.</li>
+                        <li><a href="http://w3techs.com/technologies/overview/programming_language/all">Used more than others</a> (81%!).</li>
+                        <li>It's a pleasure to work with if you're using a good framework.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>PHP is getting better</h2>
+
+                    <ul>
+                        <li>Performance.</li>
+                        <li>Syntax.</li>
+                        <li>Password hashing API.</li>
+                        <li>Generators.</li>
+                        <li>Built-in webserver.</li>
+                        <li><a href="http://www.slideshare.net/jpauli/php55-new-features-23608435">And much more...</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>There are alternative <u>compatible</u> implementations</h3>
+
+                    <ul>
+                        <li><a href="http://hhvm.com/">HHVM</a></li>
+                        <li><a href="http://hippyvm.com/">HippyVM</a> (PyPy)</li>
+                        <li><a href="https://github.com/dim-s/jphp">JPHP</a> (JVM)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="github.png" alt="GitHub" />
+                </section>
+
+                <section>
+                    <ul>
+                        <li>PSR</li>
+                        <li>Composer</li>
+                        <li>Some <strong>stable, supported and backwards compatible</strong>
+                        frameworks.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>And <strong>that's great</strong>!</h2>
+                </section>
+
+                <section>
+                    <h2>Now about <strong>sad trends…</strong></h2>
+                </section>
+
+                <section>
+                    <h2>Overcomplication</h2>
+
+                    <p>PHP code is getting too complex in pursuit of unlimited flexibility.</p>
+                    <p>Many believe that this is the only right way.</p>
+                </section>
+
+                <section>
+                    <p>All problems in computer science can be solved by another level of indirection… except for the problem of too many layers of indirection</p>
+                    <br />
+                    <p style="text-align: right; margin-right: 20px; font-style: italic">David Wheeler</p>
+                </section>
+
+                <section>
+                    <h2>But what for?</h2>
+                    <strong>What if</strong> one needs to change one DBMS to another? What if one needs to exchange
+                    a base component to another one? What if something goes wrong...
+                </section>
+
+                <section>
+                    <h2>So we end up with</h2>
+
+                    <ul>
+                        <li><strong>Misunderstanding, pattern-orientation</strong>. Focus on how it's done instead of why it's done.</li>
+                        <li>Easier to test, but <strong>harder to write code, debug and learn</strong>.</li>
+                        <li>Layers. Many layers. In your tests you can cheat and hack once. API is used all the time.</li>
+                        <li><strong>There's a price for flexibility — complexity</strong>. Noone actually needs ultimate flexibility.</li>
+                        <li><strong>Can't delegate routine tasks</strong> to less qualified developers without
+                        <strong>spending significant time on educating them</strong>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>What should we do then?</h2>
+                </section>
+
+                <section>
+                    <h2>Practice-oriented frameworks</h2>
+
+                    <ul>
+                        <li>No unnecessary complexity.</li>
+                        <li>Easier to learn.</li>
+                        <li>Less magic.</li>
+                        <li>Less layers.</li>
+                        <li>Less configuration.</li>
+                        <li>Simple and usable API.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="yii.png" alt="Yii" />
+                    <br>
+                    <strong>practice-oriented</strong> framework
+                </section>
+
+                <section>
+                    <h2>Framework myths</h2>
+
+                    <ul>
+                        <li><strong>Reinvented the wheel</strong> = bad.</li>
+                        <li><strong>Has DI container and all the cool patterns</strong> = good.</li>
+                        <li><strong>Got feature X first</strong> = better than others.</li>
+                        <li><strong>Decoupled</strong> = always better.</li>
+                        <li><strong>Lacks feature X</strong> = bad.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Really important</h2>
+
+                    <ul>
+                        <li>Easy to <strong>learn</strong>.</li>
+                        <li>Easy to <strong>debug</strong> and
+                        <strong>fix errors</strong>.</li>
+                        <li>Should not be an obstacle for your workflow or using 3rd-party code.</li>
+                        <li>Friendly and acitve <strong>community</strong>.</li>
+                        <li><strong>Backwards compatibility</strong> and
+                        <strong>stability</strong>.</li>
+                        <li>Easy to <strong>configure</strong> and
+                        <strong>extend</strong>.</li>
+                        <li>You <strong>should like it</strong> ;)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>What is Yii 2.0?</h2>
+
+                    <ul>
+                        <li>PHP 5.4.</li>
+                        <li>Well balanced.</li>
+                        <li>Will be stable and supported.</li>
+                        <li>Licensed under BSD.</li>
+                        <li>Covers most of web-development tasks.</li>
+                        <li>REST API framework.</li>
+                        <li>Debugging tools.</li>
+                        <li>Code generation.</li>
+                        <li>Convenient way to work with data.</li>
+                        <li>Good docs and friendly community.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="projects1.png" alt="Projects" />
+                </section>
+
+                <section>
+                    <img src="projects2.png" alt="And more projects" />
+                </section>
+
+                <section>
+                    <h3>One of the <strong>fastest</strong> PHP-frameworks out there<sup>*</sup>.</h3>
+                    <p>*<sub>Except PECL and microframeworks</sub></p>
+                </section>
+
+                <section>
+                    <h2>99.7% HHVM-compatible</h2>
+                </section>
+
+                <section>
+                    <h2>Installing basic app template</h2>
+<pre><code>
+php composer.phar create-project --prefer-dist --stability=dev yiisoft/yii2-app-basic basic
+cd basic
+php -S localhost:80
+</code></pre>
+                    <p>or</p>
+                    <p><a href="http://www.yiiframework.com/download/">http://www.yiiframework.com/download/</a></p>
+                </section>
+
+                <section>
+                    <img src="basic1.png" />
+                    <p>bootstrap</p>
+                </section>
+
+                <section>
+                    <img src="basic2.png" />
+                    <p>validation and forms</p>
+                </section>
+
+                <section>
+                    <img src="basic3.png" />
+                    <p>debugger</p>
+                </section>
+
+                <section>
+                    <img src="basic4.png" />
+                    <p>remembers everything</p>
+                </section>
+
+                <section>
+                    <img src="basic5.png" />
+                    <p>can search logs</p>
+                </section>
+
+                <section>
+                    <img src="error1.png" />
+                    <p>useful errros</p>
+                </section>
+
+                <section>
+                    <img src="error2.png" />
+                    <p>useful fatals</p>
+                </section>
+
+                <section>
+                    <h2>All errors are ErrorException</h2>
+<pre><code>
+try {
+    file_get_contents('test');
+} catch (\yii\base\ErrorException $e) {
+    // okay :(
+}
+</code></pre>
+                </section>
+
+                <section>
+                    <img src="basic6.png" />
+                    <p>code generator</p>
+                </section>
+
+                <section>
+                    <img src="basic7.png" />
+                    <p>generating controller</p>
+                </section>
+
+
+                <section>
+                    <img src="basic8.png" />
+                    <p>preview</p>
+                </section>
+
+                <section>
+                    <img src="basic9.png" />
+                    <p>diff</p>
+                </section>
+
+                <section>
+                    <img src="basic10.png" />
+                    <p>console</p>
+                </section>
+
+                <section>
+                    <h2>Want more?</h2>
+                </section>
+
+                <section>
+                    <h2>advanced app template</h2>
+
+                    <ul>
+                        <li>Works with data.</li>
+                        <li>Authorization, authentication, password restore.</li>
+                        <li>Divided into frontend/backend/common/console + environments.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>More?</h2>
+                </section>
+
+                <section>
+                    <h2>Official extensions</h2>
+
+                    <ul>
+                        <li>twig, smarty</li>
+                        <li>swiftmailer</li>
+                        <li>sphinx, elasticsearch</li>
+                        <li>redis, mongodb</li>
+                        <li>bootstrap, jui</li>
+                        <li>imagine</li>
+                        <li>gii, debug</li>
+                        <li>codeception, faker</li>
+                        <li>authclient</li>
+                        <li>apidoc</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Extensions are easy to install:</p>
+<pre><code>
+php composer.phar require --prefer-dist yiisoft/yii2-mongodb "*"
+</code></pre>
+                    <p>that's it. You can use it now.</p>
+                </section>
+
+                <section>
+                    <p>More than 250 <a href="https://packagist.org/search/?search_query%5Bquery%5D=yii2">unofficial extensions</a></p>
+                </section>
+
+                <section>
+                    <h2>Working with databases</h2>
+
+                    <p>Consistent syntax for everything.</p>
+
+                <pre><code>
+$query = new \yii\db\Query;
+$query->select('id, name')
+  ->from('tbl_user')
+  ->orderBy('id DESC')
+  ->limit(10);
+
+$command = $query->createCommand();
+echo $command->sql;
+$rows = $command->queryAll();
+
+$users = User::model()->find()
+  ->orderBy('id DESC')
+  ->limit(10)
+  ->all();
+                </code></pre>
+                </section>
+
+                <section>
+                    <h2>Model and Query are separated</h2>
+
+                    <pre><code>
+$finder = Post::find()->where(['a' => 10]);
+$finder2 = clone $finder;
+$finder2->addWhere(['b' => 1]);
+
+$model = $finder->one();
+$model2 = $finder2->one();
+
+// shortcuts
+$post = Post::findOne(10); // pk = 10
+$post = Post::findOne(['a' => 10, 'b' => 1]); // where a = 10 and b = 1
+                    </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>AR relations</h2>
+
+                        <p>has one, has many. Declared as methods.</p>
+
+                    <pre><code>
+class User extends \yii\db\ActiveRecord
+{
+  public function getPosts()
+  {
+    return $this->hasMany('Post', ['user_id' => 'id']);
+  }
+
+  public function getActivePosts()
+  {
+    return $this->hasMany('Post', ['user_id' => 'id'])
+      ->where(['status' => Post::STATUS_ACTIVE]);
+  }
+}
+                    </code></pre>
+
+                    <pre><code>
+$posts = $user->getPosts()->limit(10)->all();
+$postCount = $user->getPosts()->count();
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Many to many</h2>
+<pre><code>
+class Post extends \yii\db\ActiveRecord
+{
+    public function getTags()
+    {
+        return $this->hasMany(Tag::className(), ['id' => 'tag_id'])
+            ->viaTable('post_tag', ['post_id' => 'id']);
+    }
+}
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>AR asArray</h2>
+
+                    <pre><code>
+$posts = Post::find()->limit(10)->asArray()->all();
+foreach($posts as $post) {
+  echo $post['title']."\n";
+}
+                    </code></pre>
+                                    </section>
+
+                    <section>
+                        <h2>dirty attributes and link</h2>
+
+                        <p>When calling <code>save()</code> only changed attributes are saved.</p>
+
+                        <p>There are <code>link</code> and <code>unlink</code> to manage relations.</p>
+                    <pre><code>
+$comment = new Comment();
+$comment->text = 'Hello, Yii!';
+
+// INSERT INTO post_comment ...
+$post->link('comments', $comment);
+
+// DELETE FROM post_comment ...
+$post->unlink('comments', $comment);
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Getting data in batches</h2>
+
+<pre><code>
+// 10 records at a time
+foreach (Customer::find()->batch(10) as $customers) {
+    // $customers — array of 10 or less records
+}
+// 10 records at a time, iterating one by one
+foreach (Customer::find()->each(10) as $customer) {
+    // $customer — Customer object
+}
+// eager loading
+foreach (Customer::find()->with('orders')->each() as $customer) {
+}
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Moreover</h2>
+
+                    <ul>
+                        <li>AR works with noSQL including relations</li>
+                        <li>Eager and lazy data loading</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Our priorities</h2>
+                </section>
+
+                <section>
+                        <h2>No overcomplication</h2>
+                        There's not a single thing like
+
+                        <code>
+    setMyCoolFactoryDependencyInjectionContainer()
+                        </code>
+                    in Yii
+                </section>
+
+                <section>
+                    <h2>Good balance</h2>
+
+                    <p>Well-thought API, 80% of use cases, sensible defaults, ability to extend.</p>
+                </section>
+
+                <section>
+                    <h2>Documentation</h2>
+
+                    <ul>
+                        <li>API is documented at the time of creating code.</li>
+                        <li><a href="http://www.yiiframework.com/doc-2.0/guide-index.html">Main docs</a> will be translated
+                            and kept up to date (1.1 got its guide translated to 16 languages).</li>
+                        <li>Planned books: Mark Safronov, Larry Ullman, <a href="https://github.com/samdark/yii2-cookbook">community cookbook</a>.</li>
+                    </ul>
+
+                    <img src="docs.png" alt="Docs" />
+                </section>
+
+                <section>
+                    <h2>Also...</h2>
+
+                    <ul>
+                        <li>We love tools (like <a href="https://github.com/yiisoft/yii2-apidoc">apidoc</a>) and IDEs</li>
+                        <li>We care about performance</li>
+                        <li>We're using Yii ourselves</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>We're watching trends</h2>
+                    
+                    <img src="mobile.png" />
+                </section>
+
+                <section>
+                    <h2>REST API framework</h2>
+                </section>
+
+                <section>
+                    <h2>Convenient</h2>
+                    <ul>
+                        <li>controller action — API endpoint</li>
+                        <li>controller — endpoint group for one resource type</li>
+                        <li>model — resource</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Example</h2>
+<pre><code>
+namespace app\controllers;
+
+use yii\rest\ActiveController;
+
+class UserController extends ActiveController
+{
+    public $modelClass = 'app\models\User';
+
+    public function actionSearch($keyword) // !!!
+    {
+        $result = SearchService::search($keyword);
+        return $result;
+    }
+}
+</code></pre>
+                                </section>
+
+                <section>
+<pre><code>'urlManager' => [
+    'enablePrettyUrl' => true,
+    'enableStrictParsing' => true,
+    'showScriptName' => false,
+    'rules' => [
+        [
+            'class' => 'yii\rest\UrlRule',
+            'controller' => 'user'
+        ],
+    ],
+]</code></pre>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>GET /users: paginated users;</li>
+                        <li>HEAD /users: headers ↑;</li>
+                        <li>POST /users: new user;</li>
+                        <li>GET /users/123: info of user 123;</li>
+                        <li>HEAD /users/123: headers ↑;</li>
+                        <li>PATCH /users/123 and PUT /users/123: update user 123;</li>
+                        <li>DELETE /users/123: delete user 123;</li>
+                        <li>OPTIONS /users: which HTTP-verbs could be used for /users;</li>
+                        <li>OPTIONS /users/123: which HTTP-verbs could be used for /users/123.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Trying API call</h2>
+<pre><code>
+curl -i -H "Accept:application/json" "http://localhost/users"
+</code></pre>
+                </section>
+
+                <section>
+                <pre><code style="font-size: 10pt">
+    HTTP/1.1 200 OK
+    Date: Sun, 02 Mar 2014 05:31:43 GMT
+    Server: Apache/2.2.26 (Unix) DAV/2 PHP/5.4.20 mod_ssl/2.2.26 OpenSSL/0.9.8y
+    X-Powered-By: PHP/5.4.20
+    X-Pagination-Total-Count: 1000
+    X-Pagination-Page-Count: 50
+    X-Pagination-Current-Page: 1
+    X-Pagination-Per-Page: 20
+    Link: &lt;http://localhost/users?page=1&gt;; rel=self,
+        &lt;http://localhost/users?page=2&gt;; rel=next,
+        &lt;http://localhost/users?page=50&gt;; rel=last
+    Transfer-Encoding: chunked
+    Content-Type: application/json; charset=UTF-8
+
+    [
+        {
+            "id": 1,
+            ...
+        },
+        {
+            "id": 2,
+            ...
+        },
+        ...
+    ]
+                </code></pre>
+                </section>
+
+                <section>
+                    <h2>Features</h2>
+                    <ul>
+                        <li>Quick prototyping</li>
+                        <li>JSON/XML or your own format</li>
+                        <li>Versioning</li>
+                        <li>Confiugrable serialization. You can choose which fields to expose</li>
+                        <li>Collections, fields and pagination, validation</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>More features</h2>
+                    <ul>
+                        <li>REST + fallback</li>
+                        <li>OPTIONS and HEAD</li>
+                        <li>Authentication (HTTP basic, URL token, OAuth2), authorization (regular one: access filter and RBAC)</li>
+                        <li>HATEOAS (<a href="http://restcookbook.com/Basics/hateoas/">Hypermedia as the Engine of
+                            Application State</a>)</li>
+                        <li>HTTP-cache</li>
+                        <li>Rate limiting: N requests per second per user</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Docs: <a href="http://www.yiiframework.com/doc-2.0/guide-rest.html">http://www.yiiframework.com/doc-2.0/guide-rest.html</a></p>
+                </section>
+
+                <section>
+                    <h2>1.1 → 2.0?</h2>
+                    <ul>
+                        <li>2.0 is not bacwards compatible with 1.1</li>
+                        <li>Good ideas from 1.1 are there but architecture was changed</li>
+                        <li><a href="http://www.yiiframework.com/doc-2.0/guide-upgrade-from-v1.html">http://www.yiiframework.com/doc-2.0/guide-upgrade-from-v1.html</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Use 2.0 with care</h2>
+                    <p>1.1 is stable and supported till at least 2016</p>
+                </section>
+
+                <section>
+                    <h2>How to help us:</h2>
+                    <ul>
+                        <li><a href="https://github.com/yiisoft/yii2/">https://github.com/yiisoft/yii2/</a></li>
+                        <li>Bug reports, feedback, ideas, code</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Questions?</h2>
+
+                    <ul>
+                        <li><a href="http://slides.rmcreative.ru/2014/yii2-uwdc-en/">http://slides.rmcreative.ru/2014/yii2-uwdc-en/</a></li>
+                        <li><a href="https://github.com/yiisoft/yii2/">https://github.com/yiisoft/yii2/</a></li>
+                        <li><a href="http://yiiframework.ru/">yiiframework.ru</a></li>
+                        <li><a href="http://www.yiiframework.com/">yiiframework.com</a></li>
+                        <li><a href="http://rmcreative.ru/">rmcreative.ru</a></li>
+                    </ul>
+
+                    <img src="elephant.png" />
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: false,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+//                    { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

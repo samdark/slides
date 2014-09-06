@@ -1,0 +1,21 @@
+{
+  "name": "samdark-slides",
+  "version": "1.0.0",
+  "authors": [
+    "Alexander Makarov <sam@rmcreative.ru>"
+  ],
+  "description": "Alexander Makarov's conference slides",
+  "license": "MIT",
+  "homepage": "http://slides.rmcreative.ru/",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "reveal.js": "~2.6.2"
+  }
+}

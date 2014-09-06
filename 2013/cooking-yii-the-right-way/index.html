@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Готовим Yii правильно</title>
+
+		<meta name="description" content="Об удобной разработке, развёртывании и отладке">
+		<meta name="author" content="Александр Макаров">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.min.css">
+		<link rel="stylesheet" href="../../css/samdark.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+	</head>
+
+	<body>
+
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Готовим Yii правильно</h1>
+					<p><a href="http://rmcreative.ru/author">Александр Макаров</a></p>
+                    <p>
+                        <small>
+                            <a href="http://www.yiiframework.com/">Yii core team,</a>
+                            <a href="http://www.stay.com/">Stay.com</a>
+                        </small>
+                    </p>
+
+					<a href="http://hotcode.org/"><img src="HOTCODE-logo_240.jpg" alt="HotCode"/></a>
+				</section>
+
+                <section>
+                    <img src="yii.png" />
+                </section>
+
+                <section>
+                    <ul>
+                        <li>PHP5 MVC.</li>
+                        <li>Приятный API.</li>
+                        <li>DAO, AR, миграции.</li>
+                        <li>Мощный кеш.</li>
+                        <li>Построитель форм.</li>
+                        <li>Обработка ошибок, лог.</li>
+                        <li>Тесты.</li>
+                        <li>Документирован.</li>
+                        <li>Сообщество.</li>
+                        <li>BSD.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="history.png" />
+                    <p>Prado, с 2004 → Yii 1.0, 2008 → Yii 1.1, 2010 → Yii 2, 2013</p>
+                </section>
+
+                <section>
+                    <img src="projects.png" />
+                </section>
+
+                <section>
+                    <img src="book.jpg" />
+                </section>
+
+                <section>
+                    <h2>Что важно в фреймворке</h2>
+
+                    <ul>
+                        <li><strong>Легко изучать</strong>.</li>
+                        <li><strong>Легко отлаживать и исправлять ошибки</strong>.</li>
+                        <li><strong>Не должен мешать</strong> вашему коду или любому нормальному стороннему коду.</li>
+                        <li>Отличное <strong>сообщество</strong>.</li>
+                        <li>Обратно <strong>совместимый и стабильный</strong>.</li>
+                        <li><strong>Не мешает</strong> расширять и настраивать.</li>
+                        <li><strong>Приятен</strong> ;)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="borsch1.jpg" alt="Начинаем готовить!" />
+                </section>
+
+                <section>
+                    <h2>Структура проекта</h2>
+                    <p><a href="http://www.yiiframework.com/wiki/155/">http://www.yiiframework.com/wiki/155/</a></p>
+                </section>
+
+                <section>
+                    <h2>Несколько приложений</h2>
+                    <ul>
+                        <li>Common (↓)
+                            <ul>
+                                <li>Models</li>
+                                <li>Parameters</li>
+                                <li>Components</li>
+                            </ul>
+                        </li>
+                        <li>Console (↑)</li>
+                        <li>Frontend (↑)</li>
+                        <li>Admin (↑)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Алиасы</h2>
+
+                    <pre><code>
+Yii::setPathOfAlias('root', __DIR__);
+echo Yii::getPathOfAlias('root');
+                    </code></pre>
+
+                    <ul>
+                        <li>root</li>
+                        <li>common</li>
+                        <li>application (Yii default)</li>
+                        <li>webroot</li>
+                        <li>…</li>
+                    </ul>
+                </section>
+
+				<section>
+					<img src="appetizer.jpg" alt=""/>
+				</section>
+
+                <section>
+                    <h2>Пред-production настройки</h2>
+                </section>
+
+                <section>
+                    <h2>Вытащить приложение за вебрут</h2>
+
+	                <p>Оставляем только <code>index.php</code> поправляя в нём пути.</p>
+<pre><code>
+// change the following paths if necessary
+$yii='\path\to\framework\yii.php';
+$config=__DIR__.'/../protected/config/main.php'; // !!!
+...
+</code></pre>
+	                <p>Более безопасно, удобней.</p>
+                </section>
+
+                <section>
+                    <h2>Вытащить <code>runtime</code> из <code>protected</code></h2>
+
+	                <p><code>protected/config/main.php</code>, <code>protected/config/console.php</code>:</p>
+
+<pre><code>
+return array(
+    'runtimePath' => Yii::getPathOfAlias('system') . '/../runtime/',
+    ...
+);
+</code></pre>
+	                <p>Туда пишется лог, файловый кеш, кеш HTMLPurifier, состояние приложения.</p>
+                </section>
+
+                <section>
+                    <h2>Настроить <code>id</code> для приложения</h2>
+
+	                <p><code>protected/config/main.php</code>, <code>protected/config/console.php</code>:</p>
+
+<pre><code>
+return array(
+    'id' => 'my-app-name',
+    ...
+);
+</code></pre>
+					<p>Используется как префикс для:</p>
+
+	                <ul>
+		                <li>Ключей кеша</li>
+		                <li>Ключей данных пользователя в сессии</li>
+	                </ul>
+
+                </section>
+
+                <section>
+                    <h2>Отключить DEBUG-режим</h2>
+
+                    В <code>index.php</code> прописать:
+<pre><code>
+if(!defined('YII_DEBUG')) {
+    define('YII_DEBUG', false);
+}
+</code></pre>
+	                <p>Значительно влияет на производительность, безопасно.</p>
+
+                </section>
+
+                <section>
+                    <h2>Включить кеш схемы AR</h2>
+
+<pre><code>
+return array(
+    ...
+    'components'=>array(
+        ...
+        'cache'=>array( // !!!
+            'class'=>'CDbCache',
+        ),
+        'db'=>array(
+            'connectionString'=>'mysql:host=localhost;dbname=yii_test',
+            'schemaCachingDuration'=>3600, // !!!
+        ),
+    ),
+);
+</code></pre>
+					<p>Значительно влияет на производительность.</p>
+                </section>
+
+                <section>
+                    <h2>Включить APC, если ещё не включен</h2>
+
+                    <p>Можно поробовать <code>yiilite.php</code>. Хорошо работает с
+					некоторыми версиями PHP и APC, но плохо с другими.</p>
+                </section>
+
+                <section>
+                    <h2>Готово?</h2>
+
+	                <img src="appetizer2.jpg" alt=""/>
+                </section>
+
+                <section>
+                    <h2>Вроде... Как подавать?</h2>
+                </section>
+
+                <section>
+                    <p>По сути, деплой в PHP не очень нужен... поначалу.</p>
+
+                    <ul>
+                        <li>Правки наживую, vim-style</li>
+                        <li>ftp / sftp</li>
+                        <li>rsync</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Это не наш метод</h2>
+                </section>
+
+                <section>
+                    <h2>Нас больше одного</h2>
+                    <h3>Контроль версий</h3>
+
+	                <img src="peppers.jpg" alt=""/>
+                </section>
+
+                <section>
+                    <h2>Как хранить код</h2>
+                    <ul>
+                        <li>Git или другая VCS. Git очень удобен.</li>
+                        <li>Ветки: <code>master</code>, <code>release-X.X</code>, <code>feature-XXX</code>.</li>
+                        <li>Теги: <code>X.X.Y</code></li>
+                        <li>Релиз.</li>
+                    </ul>
+
+                    <img src="git.png" />
+                </section>
+
+                <section>
+                    <h2>Что делать с базой?</h2>
+
+                    <ul>
+                        <li><code>base-schema.sql</code> — начальная структура.</li>
+                        <li><code>base-data.sql</code> — начальные данные.</li>
+                    </ul>
+
+                    <br><br>
+
+                    <h3>Миграции</h3>
+
+                    <ul>
+                        <li>Не использовать модели и код приложения.</li>
+                        <li>Если ушла в VCS и запускалась, не править.</li>
+                        <li>Если ушла в VCS и не запускалась — поправить.</li>
+                        <li>Не лезть в базу руками.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Как копировать?</h2>
+                    <h3>Деплой</h3>
+
+	                <img src="deploy.jpg" alt=""/>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Автоматизировать</li>
+                        <li>Меньше ошибок</li>
+                        <li>Быстрее</li>
+                        <li>Спокойнее</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>На сервере пускаем скриптик, он вытягивает код из системы контроля версий.</p>
+                    <p>На это время может ставить maintenance mode.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>На тестовый сервер и локально — автоматом.</li>
+                        <li>На RC и production — полуавтоматом.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Разные сервера, разные настройки</h2>
+                    <h3>Окружения</h3>
+
+                    <p>Выносим настройки в конфиг.</p>
+                </section>
+
+                <section>
+                    <h2>Как быть с конфигами?</h2>
+
+                    <ul>
+                        <li>Общий конфиг.</li>
+                        <li>Конфиги для разных приложений.</li>
+                        <li>Конфиги для разных серверов.</li>
+                        <li>Свой конфиг у разработчика.</li>
+                        <li>Пароли и ещё много чего нельзя держать в VCS.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Окружения</h2>
+
+<pre><code>
+common
+  config
+    main.php
+    main-local.php ← .gitignore
+  env
+    production
+      config
+        main-local.php
+    development
+      config
+        main-local.php
+</code></pre>
+
+<pre><code>
+frontend
+  config
+    main.php
+    main-local.php ← .gitignore
+  www
+    index.php ← .gitignore
+  env
+    production
+      config
+        main-local.php
+      www
+        index.php
+    development
+      config
+        main-local.php
+      www
+        index.php
+</code></pre>
+
+                    <pre><code>install.php &lt;application&gt; &lt;environment&gt;</code></pre>
+                </section>
+
+                <section>
+                    <h2>Конфиги наследуются</h2>
+
+                    <ol>
+                        <li>↓ <code>common/config/params.php</code></li>
+                        <li>↓ <code>common/config/params-local.php</code></li>
+                        <li>↓ <code>frontend/config/params.php</code></li>
+                        <li>↓ <code>frontend/config/params-local.php</code></li>
+                    </ol>
+
+                    <pre><code>
+$config1 = array(...);
+$config2 = array(...);
+$finalConfig = CMap::mergeArray($config1, $config2);
+                    </code></pre>
+
+	                <p><code>CMap::mergeArray</code> можно закешировать.</p>
+                </section>
+
+                <section>
+                    <h2>Что ещё можно делать автоматически?</h2>
+                    <h3>Билд</h3>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Гоняем тесты. Если фейл — письмо + остановка.</li>
+                        <li>Чистим APC (stat=0).</li>
+                        <li>Греем кеш.</li>
+                        <li>Рестарт вебсервера (если нужен).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <ul>
+                        <li><a href="http://lesscss.org/">LESS</a>/<a href="http://sass-lang.com/">SCSS</a> → CSS.</li>
+                        <li><a href="http://www.typescriptlang.org/">TypeScript</a> → JavaScript.</li>
+                        <li>Собрать и минифицировать CSS и JS. <br>
+                            <code>yiic compress all</code> (в паблике нет). <br>
+                            Жмёт, генерит файл аля <code>all_123hash123.js</code>, прописывает его в <code>frontend/config/params-local.php</code>.</li>
+                        <li>Применить миграции <code>yiic migrate</code>.</li>
+                        <li>Нагенерить документацию</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Инструменты</h2>
+
+	                <img src="tools.jpeg" alt=""/><br>
+
+                    <ul>
+                        <li>Phing</li>
+                        <li>Jenkins</li>
+                        <li>TeamCity</li>
+                    </ul>
+                </section>
+
+				<section>
+					<h2>Данные</h2>
+
+                    <ul>
+                        <li>MySQL.</li>
+                        <li>Кеш в APC.</li>
+                        <li>noSQL только когда нужен.</li>
+                        <li>Поиск <a href="http://lucene.apache.org/solr/">SOLR</a>/<a href="http://sphinxsearch.com/">Sphinx</a>.</li>
+                    </ul>
+				</section>
+
+				<section>
+                    <h2>Внешние API</h2>
+
+                    <ul>
+                        <li>Facebook.</li>
+                        <li>Google.</li>
+                        <li>…</li>
+                    </ul>
+
+                    <ul>
+                        <li>Могут не работать.</li>
+                        <li>Могут меняться.</li>
+                        <li>Кеш.</li>
+                    </ul>
+
+					<img src="fail.jpg" alt=""/>
+                </section>
+
+				<section>
+                    <h2>i18n</h2>
+
+                    <ul>
+                        <li>UTF-8.</li>
+                        <li>Collation.</li>
+                        <li>Yii::t, исходник всегда английский.</li>
+                        <li>С данными всегда по-разному…</li>
+                    </ul>
+                </section>
+
+				<section>
+                    <h2>Производительность</h2>
+
+                    <ul>
+                        <li>Узкие места будут не там, где вы думаете.</li>
+                        <li>Все будут использовать проект «не так».</li>
+                        <li>Рост можно контролировать.</li>
+                        <li>Время — деньги.</li>
+                    </ul>
+
+					<img src="webgrind.png" />
+                </section>
+
+				<section>
+                    <h2>Что тормозит?</h2>
+
+                    <ul>
+                        <li>Тормозит не там, где вы думаете.</li>
+                        <li>Не всё можно воспроизвести локально.</li>
+                        <li>Следите за изменениями.</li>
+                    </ul>
+
+                    <img src="phpstorm_profiler.png">
+                </section>
+
+                <section>
+                    <h2>Что делать?</h2>
+
+                    <ul>
+                        <li>Отложить выполнение.</li>
+                        <li>Очереди.</li>
+                        <li>SQL.</li>
+                        <li>Кеш.</li>
+                    </ul>
+                </section>
+
+				<section>
+                    <h2>Внешние vs внутренние сервисы</h2>
+
+                    <table style="width: 100%">
+                        <tr>
+                            <th>Внешние</th>
+                            <th>Внутренние</th>
+                        </tr>
+                        <tr>
+                            <td>Latency.</td>
+                            <td>Нужно мониторить.</td>
+                        </tr>
+                        <tr>
+                            <td>Ломаются.</td>
+                            <td>Нужно ставить.</td>
+                        </tr>
+                        <tr>
+                            <td>Без напряга.</td>
+                            <td>Нужно поддерживать.</td>
+                        </tr>
+                        <tr>
+                            <td>Стоят денег.</td>
+                            <td>Детали.</td>
+                        </tr>
+                        <tr>
+                            <td>Гарантии.</td>
+                            <td>Нет гарантий.</td>
+                        </tr>
+                    </table>
+                </section>
+
+				<section>
+                    <h2>Внешние сервисы</h2>
+
+                    <ul>
+                        <li><a href="https://postmarkapp.com/">Postmark</a>.</li>
+                        <li><a href="http://rollbar.com/">Rollbar</a> (бывший ratchet.io) /
+                            <a href="https://getsentry.com/">Sentry</a>.</li>
+                        <li><a href="http://aws.amazon.com/s3/">S3</a> /
+                            <a href="http://selectel.ru/services/cloud/">Selectel</a>.</li>
+                        <li><a href="http://aws.amazon.com/sqs/">Очереди Amazon</a>.</li>
+                    </ul>
+
+                    <img src="rollbar.png" />
+                </section>
+
+                <section>
+                    <h2>Clientside</h2>
+
+	                <img src="watermelon.jpg" alt=""/>
+                </section>
+
+                <section>
+                    <h2>JavaScript</h2>
+
+                    <ul>
+                        <li>Без <code>CClientScript::registerScriptFile()</code>.
+                        <pre><code>
+return array(
+'jquery.js',
+
+'widget.login.js',
+'widget.friends.js',
+
+'module.user.js',
+'module.post.js',
+);
+                        </code></pre>
+                        </li>
+                        <li><a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#modulepatternjavascript">Модульная система</a>, по модулю на 1-2 страницы.</li>
+                        <li>+ виджеты, структура примерно как у jQueryUI.</li>
+                        <li>Все скрипты описываются явно в конфиге, жмутся при деплое.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>CSS</h2>
+
+                    <ul>
+                        <li>LESS / SCSS …</li>
+                        <li>Перечислены в конфиге, жмутся явно при деплое.</li>
+                    </ul>
+
+                    <pre><code>
+@base: #f938ab;
+
+.box-shadow(@style, @c) when (iscolor(@c)) {
+box-shadow:         @style @c;
+-webkit-box-shadow: @style @c;
+-moz-box-shadow:    @style @c;
+}
+.box-shadow(@style, @alpha: 50%) when (isnumber(@alpha)) {
+.box-shadow(@style, rgba(0, 0, 0, @alpha));
+}
+.box {
+color: saturate(@base, 5%);
+border-color: lighten(@base, 30%);
+div { .box-shadow(0 0 5px, 30%) }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Соглашения CSS/JS</h2>
+
+                    <p><code>views/post/edit.php</code>:</p>
+                    <pre><code>
+&lt;div class="post-edit"&gt;...&lt;/div&gt;
+                    </code></pre>
+
+                    <p><code>css/post.css</code>:</p>
+                    <pre><code>
+.post-edit p { ... }
+.post-view h2 { ... }
+                    </code></pre>
+
+                    <p><code>widgets/friends/views/index.php</code>:</p>
+                    <pre><code>
+&lt;div class="widget-friends-index"&gt;...&lt;/div&gt;
+                    </code></pre>
+
+                    <p><code>widgets/friends/assets/friends.css</code>:</p>
+                                            <pre><code>
+.widget-friends-index div { ... }
+                                            </code></pre>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Глобальные классы <code>g-*</code>. Стили в <code>global.css</code>.</li>
+                        <li>Layout использует префикс <code>layout-</code> и файл <code>layout.css</code>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Документация</h2>
+
+                    <ul>
+                        <li>Readme.</li>
+                        <li>API.</li>
+                        <li>Комментарии.</li>
+                    </ul>
+
+                    <br>
+                    <img src="docs.jpg" />
+                </section>
+
+                <section>
+                    <h2>Задачи</h2>
+
+                    <ul>
+                        <li><a href="https://www.assembla.com/">Assembla</a></li>
+                        <li><a href="http://basecamp.com/">Basecamp</a></li>
+                        <li><strong><a href="https://github.com/">github</a></strong></li>
+                        <li><strong><a href="https://trello.com/">Trello</a></strong></li>
+                        <li><a href="http://www.pivotaltracker.com/">Pivotal tracker</a></li>
+                        <li>…</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="trello.png" />
+                </section>
+
+				<section>
+					<img src="omomom.jpg" alt=""/>
+				</section>
+
+                <section>
+                    <h2>Шорткаты в global.php</h2>
+
+                    <p>Подключаются в <code>index.php</code> после инициализации приложения, но до запуска:</p>
+                    <pre><code>
+$app = Yii::createApplication('CWebApplication', $config);
+include 'global.php';
+$app->run();
+                    </code></pre>
+
+                    <p>Примеры:</p>
+
+                    <pre><code>
+function app() {
+return Yii::app();
+}
+
+function user() {
+return Yii::app()->user;
+}
+
+function db() {
+return Yii::app()->db;
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Шорткаты в global.php</h2>
+
+                    <pre><code>
+function t($message, $params, $category = 'myproject') {
+return Yii::t($category, $message, $params);
+}
+function h($text) {
+return CHtml::encode($text);
+}
+function l(…) {
+return CHtml::link(…);
+}
+function param($name, $default = null) {
+return isset(Yii::app()->params[$name] ? Yii::app()->params[$name] : $default);
+}
+                    </code></pre>
+                </section>
+
+				<section>
+					<img src="borsch2.jpg" alt=""/>
+				</section>
+
+                <section>
+                    <h2>Вопросы?</h2>
+
+                    <ul>
+                        <li><a href="http://yiiframework.ru/">yiiframework.ru</a></li>
+                        <li><a href="http://www.yiiframework.com/">yiiframework.com</a></li>
+                        <li><a href="http://ru.yiicookbook.org/">ru.yiicookbook.org</a></li>
+                        <li><a href="http://rmcreative.ru/">rmcreative.ru</a></li>
+                    </ul>
+
+                    <img src="elephant.png" />
+                </section>
+
+			</div>
+
+		</div>
+
+		<script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+		<script src="../../bower_components/reveal.js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../../bower_components/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

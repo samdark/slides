@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Yii2, обзор public preview</title>
+
+		<meta name="description" content="Yii2, обзор public preview">
+		<meta name="author" content="Александр Макаров">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.min.css">
+		<link rel="stylesheet" href="../../css/samdark.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+	</head>
+
+	<body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Yii2</h1>
+					<h2>Обзор public preview</h2>
+					<p><a href="http://rmcreative.ru/author">Александр Макаров</a></p>
+                    <p>
+                        <small>
+                            <a href="http://www.yiiframework.com/">Yii core team,</a>
+                            <a href="http://www.stay.com/">Stay.com</a>
+                        </small>
+                    </p>
+				</section>
+
+				<section>
+					<p><a href="https://github.com/yiisoft/yii2/">https://github.com/yiisoft/yii2/</a></p>
+					<p><a href="https://github.com/yiisoft/yii2/wiki/Yii2-Development-Roadmap">roadmap</a> там же в wiki</p>
+				</section>
+
+				<section>
+					<h2>Насколько отличается от 1.1?</h2>
+					<ul>
+						<li>Нет обратной совместимости с 1.1</li>
+						<li>Хорошие идеи остались, но архитектура поменялась</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Требования</h2>
+
+					<ul>
+						<li>PHP 5.3.7+</li>
+						<li>mb_string</li>
+						<li>PDO</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Почему не 5.4+?</h2>
+
+					<ul>
+						<li>Можно использовать в приложении.</li>
+						<li>Не требуется для работы фреймворка.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>namespace</h2>
+
+					<ul>
+						<li>Все классы в namespace.</li>
+						<li>Нет префиксов вроде <code>C</code>.</li>
+						<li><a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">PSR-0</a>.</li>
+						<li>Умеренная вложенность.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>alias</h2>
+
+					<p>Используются для настройки компонент и автозагрузки классов.</p>
+<pre><code>
+echo \Yii::getAlias('@yii'); // директория фреймворка
+echo \Yii::getAlias('@app'); // директория приложения
+\Yii::setAlias('@Zend', '@app/vendors/Zend'); // определяем псевдоним для корня ZF и позволяем подгружать его классы
+</code></pre>
+					<p>Начинаются с <code>@</code>.</p>
+				</section>
+
+				<section>
+					<h2>Базовые классы</h2>
+
+					<ul>
+						<li><code>\yii\base\Object</code> — геттеры и сеттеры, метод <code>init</code>, конфигурирование массивом, <code>Object::className()</code>.</li>
+						<li><code>\yii\base\Component extends Object</code> — event, behavior.</li>
+					</ul>
+
+<pre><code>
+class GoogleMap extends \yii\base\Object
+{
+  public function __construct($param1, $param2, $config = array())
+  {
+    // ...
+    parent::__construct($config);
+  }
+
+  public function init()
+  {
+    // ...
+    parent::init();
+  }
+}
+</code></pre>
+				</section>
+
+				<section>
+					<h2>Создаём объект</h2>
+<pre><code>
+$object = \Yii::createObject(array(
+  'class' => '\app\components\GoogleMap',
+  'apiKey' => 'xyz',
+  'apiSecret' => 'cde',
+), $param1, $param2);
+</code></pre>
+				</section>
+
+				<section>
+					<h2>События</h2>
+					<p>API простой, нет необходимости декларировать заранее:</p>
+<pre><code>
+$component->on($eventName, $handler);
+$component->off($eventName, $handler);
+$component->trigger($eventName, Event $eventObject = null);
+</code></pre>
+
+					<p>Глобальные события:</p>
+<pre><code>
+// инициируем
+\Yii::$app->trigger($eventName);
+
+// подписываемся
+\Yii::$app->on($eventName, $handler);
+</code></pre>
+
+				</section>
+
+				<section>
+					<h2>Зачистка</h2>
+
+					<ul>
+						<li>Классы расположены лучше.</li>
+						<li>Лучше названия.</li>
+						<li>Убили коллекции (SPL достаточно).</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>View</h2>
+
+					<ul>
+						<li>Объект <code>View</code> — данные, скрипты, <code>render</code>.</li>
+						<li><code>$this</code> в шаблонах ссылается на него.</li>
+						<li><code>$this->context</code> на контроллер или другого родителя.</li>
+						<li>Можно использовать в консоли.</li>
+						<li>Темы (работают иначе).</li>
+						<li>Renderer-ы (Smarty, Twig).</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Виджеты</h2>
+
+<pre><code>
+echo \yii\widgets\Menu::widget(array(
+  'items' => $items,
+));
+</code></pre>
+				</section>
+
+				<section>
+					<h2>ActiveForm</h2>
+<pre><code>
+&lt;?php $form = yii\widgets\ActiveForm::begin(); ?&gt;
+  &lt;?php echo $form->field($model, 'username')->textInput(); ?&gt;
+  &lt;?php echo $form->field($model, 'password')->passwordInput(); ?&gt;
+  &lt;div class="form-actions"&gt;
+    &lt;?php echo Html::submitButton('Login'); ?&gt;
+  &lt;/div&gt;
+&lt;?php yii\widgets\ActiveForm::end(); ?&gt;
+</code></pre>
+				</section>
+
+				<section>
+					<h2>Asset bundle</h2>
+
+					<ul>
+						<li>Скрипты описываются пакетами.</li>
+						<li>Решает проблему зависимостей.</li>
+						<li>Можно сжимать, сливать и преобразовывать консольной командой.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Controller</h2>
+
+					<ul>
+						<li><code>echo $this->render(...);</code></li>
+						<li>Консоль и web аналогичны.</li>
+						<li>Слои для request и response.</li>
+						<li>Фильтры теперь ялвяются behavior-ами.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Model</h2>
+
+					<p>Убили <code>CFormModel</code>.</p>
+
+					<ul>
+						<li>Описание валидаторов отделено от сценариев.</li>
+						<li>Массовое присваивание не работает без валидации и сценариев.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>AR, DAO, Query Builder, критерии</h2>
+
+					<p>Один синтаксис для всего.</p>
+
+<pre><code>
+$query = new \yii\db\Query;
+$query->select('id, name')
+  ->from('tbl_user')
+  ->orderBy('id DESC')
+  ->limit(10);
+
+$command = $query->createCommand();
+echo $command->sql;
+$rows = $command->queryAll();
+
+$users = User::model()->find()
+  ->orderBy('id DESC')
+  ->limit(10)
+  ->all();
+</code></pre>
+				</section>
+
+				<section>
+					<h2>В AR разделены модель и finder</h2>
+
+<pre><code>
+$finder = Post::find()->where(array('a' => 10));
+$finder2 = clone $finder;
+$finder2->addWhere(array('b' => 1));
+
+$model = $finder->one();
+$model2 = $finder2->one();
+
+// шорткаты
+$post = Post::find(10); // pk = 10
+$post = Post::find(array('a' => 10, 'b' => 1)); // where a = 10 and b = 1
+</code></pre>
+				</section>
+
+				<section>
+					<h2>Связи AR</h2>
+
+					<ul>
+						<li>Только два типа has one, has many.</li>
+						<li>Объявляются методами.</li>
+					</ul>
+
+<pre><code>
+class User extends \yii\db\ActiveRecord
+{
+  public function getPosts()
+  {
+    return $this->hasMany('Post', array('user_id' => 'id'));
+  }
+
+  public function getActivePosts()
+  {
+    return $this->hasMany('Post', array('user_id' => 'id'))
+      ->where(array('status' => Post::STATUS_ACTIVE));
+  }
+}
+</code></pre>
+
+<pre><code>
+$posts = $user->getPosts()->limit(10)->all();
+</code></pre>
+				</section>
+
+				<section>
+					<h2>AR не использует JOIN для связей</h2>
+
+					<ul>
+						<li>Примерно то же по производительности.</li>
+						<li>Легче кешировать.</li>
+						<li>Можно работать с noSQL.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>AR asArray</h2>
+
+<pre><code>
+$posts = Post::find()->limit(10)->asArray()->all();
+foreach($posts as $post) {
+  echo $post['title']."\n";
+}
+</code></pre>
+				</section>
+
+				<section>
+					<h2>dirty attributes и link</h2>
+
+					<p>При <code>save()</code> сохраняется только то, что поменялось.</p>
+
+					<p>Появился метод <code>link</code> для сохранения связанных записей и <code>unlink</code> для удаления.</p>
+<pre><code>
+$comment = new Comment();
+$comment->text = 'Hello, Yii!';
+
+$post->link('comments', $comment);
+</code></pre>
+				</section>
+
+				<section>
+					<h2>Консоль</h2>
+
+					<ul>
+						<li>API как для web.</li>
+						<li><code>yii sitemap/index all --verbose</code></li>
+						<li>help из phpdoc</li>
+						<li>Цвета (к встроенным командам пока не применялись)</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Хелперы</h2>
+
+					<ul>
+						<li>Так и остались статичными классами.</li>
+						<li>Расширяемы (LSB, namespace).</li>
+						<li>ArrayHelper, StringHelper, SecurityHelper, FileHelper...</li>
+					</ul>
+
+<pre><code>
+$mergedConfig = ArrayHelper::merge($baseConfig, $specificConfig);
+
+$posts = Post::model()->limit(10)->all();
+$titles = ArrayHelper::getColumn('title');
+
+$hash = SecurityHelper::generatePasswordHash($password);
+// ...пишем хеш в базу...
+
+// при логине читаем хеш из базы
+if (SecurityHelper::verifyPassword($password, $hash) {
+  // всё нормально
+} else {
+  // плохой пароль
+}
+</code></pre>
+				</section>
+
+				<section>
+					<h2>Ошибки</h2>
+
+					<ul>
+						<li>Все ошибки конвертируются в исключения.</li>
+						<li>Ловит fatal-ы и логирует их.</li>
+						<li>Новый шаблон.</li>
+					</ul>
+
+					<img src="resurtm_errors.png" alt=""/>
+				</section>
+
+				<section>
+					<h2>Документация</h2>
+					<ul>
+						<li>API документируется сразу</li>
+						<li>Code style (почти PSR-1 и PSR-2)</li>
+						<li>Larry Ullman выпустит книгу</li>
+						<li>Гайд пишется</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Производительность</h2>
+
+					<ul>
+						<li>Быстрее грузятся классы за счёт PSR-0.</li>
+						<li>Меньше классов.</li>
+						<li>Кушает меньше памяти.</li>
+						<li>Новый AR быстрее и также менее требователен к памяти.</li>
+						<li>asArray</li>
+					</ul>
+
+					<img src="yii2-blog.png" alt=""/>
+				</section>
+
+				<section>
+					<h2>Composer</h2>
+
+					<p>Либо полностью, либо никак...</p>
+				</section>
+
+				<section>
+					<ul>
+						<li>Главный репозиторий со всем кодом.</li>
+						<li>Отдельные «чистые» read-only subtree-репозитории для пакетов.</li>
+						<li>ZIP для тех, у кого проблемы с консолью.</li>
+					</ul>
+
+					<p>Рекомендуемый способ работы с Yii2:</p>
+
+<pre><code>
+curl -s http://getcomposer.org/installer | php
+php composer.phar create-project --stability=dev yiisoft/yii2-bootstrap path/to/install
+</code></pre>
+				</section>
+
+				<section>
+					<h2>Планы и доделки</h2>
+
+					<ul>
+						<li>request/response</li>
+						<li>noSQL for AR</li>
+						<li>debug toolbar</li>
+						<li>gii</li>
+						<li>gridview</li>
+						<li>API doc generator</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Почему велосипеды</h2>
+
+					<p>Почему не monolog, компоненты Symfony и т.д.?</p>
+					<p>Мы можем это сделать качественно и с более приятным API в стиле фреймворка.</p>
+				</section>
+
+				<section>
+					<h2>Темп</h2>
+
+					<ul>
+						<li>Сообщество гиперактивно.</li>
+						<li>192 форка, 805 фолловеров (1060/2702 у 1.1).</li>
+						<li>Отметился pull request-ом Расмус Лердорф :)</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Не используйте в production!</h2>
+					<p>1.1 стабилен и поддерживается минимум до 2016</p>
+				</section>
+
+				<section>
+					<h2>Попробовать стоит</h2>
+				</section>
+
+                <section>
+                    <h2>The end</h2>
+
+                    <ul>
+                        <li>Вопросы? Замечания? Предложения?</li>
+                        <li>sam@rmcreative.ru</li>
+                        <li>@sam_dark</li>
+                        <li><a href="https://github.com/yiisoft/yii2/">https://github.com/yiisoft/yii2/</a></li>
+                    </ul>
+                </section>
+			</div>
+
+		</div>
+
+		<script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+		<script src="../../bower_components/reveal.js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../../bower_components/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

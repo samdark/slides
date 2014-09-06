@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>PHP, фреймворки, Yii2</title>
+
+		<meta name="description" content="Что происходит в мире PHP, фреймворков и как продвигается Yii2">
+		<meta name="author" content="Александр Макаров">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.min.css">
+		<link rel="stylesheet" href="../../css/samdark.css" id="theme">
+		<link rel="stylesheet" href="style.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+	</head>
+
+	<body>
+
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>PHP, фреймворки, Yii2</h1>
+					<p><a href="http://rmcreative.ru/author">Александр Макаров</a></p>
+                    <p>
+                        <small>
+                            <a href="http://www.yiiframework.com/">Yii core team,</a>
+                            <a href="http://www.stay.com/">Stay.com</a>
+                        </small>
+                    </p>
+
+					<ul class="sponsors">
+						<li><img src="sponsor_microsoft.png" alt="Microsoft"/></li>
+						<li><img src="sponsor_odesk.png" alt="oDesk"/></li>
+						<li><img src="sponsor_magento.png" alt="Magento"/></li>
+						<li><img src="sponsor_hostingmaks.png" alt="HostingMaks"/></li>
+						<li><img src="sponsor_jelastic.png" alt="Jelastic"/></li>
+						<li><img src="sponsor_global_technology_foundation.png" alt="Global technology foundation"/></li>
+						<li><img src="sponsor_stfalcon.png" alt="stfalcon.com"/></li>
+					</ul>
+
+					<a href="http://slides.rmcreative.ru/2013/php-frameworks-yii2/">http://slides.rmcreative.ru/2013/php-frameworks-yii2/</a>
+				</section>
+
+				<section>
+	                <h2>PHP замечателен!</h2>
+	                <ul>
+	                    <li>Отличный выбор для веб разработки.</li>
+	                    <li><a href="http://w3techs.com/technologies/overview/programming_language/all">Намного живее остальных</a> (81%!).</li>
+	                    <li>С хорошим фреймворком приятен.</li>
+	                </ul>
+	            </section>
+
+	            <section>
+	                <h2>PHP стремится к <strong>простоте</strong> и улучшается</h2>
+
+	                <ul>
+		                <li>Производительность.</li>
+		                <li>Синтаксис.</li>
+	                    <li>API хеширования паролей.</li>
+	                    <li>Генераторы.</li>
+	                    <li>Встроенный вебсервер.</li>
+	                    <li><a href="http://www.slideshare.net/jpauli/php55-new-features-23608435">И многое другое...</a></li>
+	                </ul>
+	            </section>
+
+	            <section>
+	                <h2>И <strong>это прекрасно</strong>!</h2>
+	            </section>
+
+				<section>
+					<h2>Хотя есть и «нехорошести»</h2>
+
+					<ul>
+						<li><a href="http://blog.ircmaxell.com/2013/09/rambling-on-internals.html">Скандалы, интриги,
+							расследования</a>.</li>
+						<li>Часть инфраструктуры устарела.</li>
+						<li>Не такая большая команда, как кажется.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Помогайте PHP стать лучше</h2>
+
+					<ul>
+						<li><a href="http://www.php.net/get-involved.php">http://www.php.net/get-involved.php</a></li>
+						<li><a href="http://www.slideshare.net/pierrej/php-core-get-rid-of-bugs-and-contribute">Чуть подробнее на слайдах Pierre Joye</a></li>
+					</ul>
+				</section>
+
+	            <section>
+	                <h2>А что <strong>фреймворки</strong>?</h2>
+	            </section>
+
+	            <section>
+	                <h2>Сначала о хорошем</h2>
+
+	                <ul>
+	                    <li>Github для хорошего PHP-кода.</li>
+	                    <li>PSR-0 и Composer (спасибо php-fig).</li>
+	                    <li>Есть несколько <strong>стабильных, поддерживаемых и обратно совместимых</strong>
+						фреймворков.</li>
+	                </ul>
+
+	                <img src="github.png" alt="GitHub" />
+	            </section>
+
+	            <section>
+	                <h2>А теперь <strong>о не очень хорошем…</strong></h2>
+	            </section>
+
+	            <section>
+	                <h2>Переусложнение</h2>
+
+	                <ul>
+	                    <li>ZF 2 и Symfony 2 черезчур гибкие и сложные.</li>
+	                    <li>Ещё более наворочены, чем были ZF1 и Symfony 1.</li>
+		                <li>Многие считают, что это единственный правильный путь.</li>
+	                </ul>
+	            </section>
+
+	            <section>
+	                <p>Все проблемы программирования можно решить дополнительным слоем абстракции… кроме проблемы избыточной абстракции</p>
+	                <br />
+	                <p style="text-align: right; margin-right: 20px; font-style: italic">David Wheeler</p>
+	            </section>
+
+	            <section>
+	                <h2><strong>Зачем</strong> делать <strong>сложно</strong>,
+	                если можно делать просто?</h2>
+	            </section>
+
+	            <section>
+	                <h2>Сделать <strong>просто сложнее</strong>, чем сделать
+	                <strong>сложно</strong></h2>
+	            </section>
+
+	            <section>
+	                <h2>Чем оправдывается сложность?</h2>
+
+	                <ul>
+	                    <li><strong>Паттерны знают все</strong>. Когда их видно
+	                    в интерфейсе, всем всё понятно.</li>
+	                    <li><strong>Легче тестировать</strong>.</li>
+		                <li><strong>А вдруг</strong> кто-то придумает поменять одну БД на другую, а вдруг надо поменять один основной
+		                компонент на другой? А вдруг что-то пойдёт не так...</li>
+	                </ul>
+	            </section>
+
+				<section>
+					<h2>Чем это оборачивается</h2>
+
+					<ul>
+						<li><strong>Непонимание, паттернизм</strong>. Говорят как реализовано, но не для чего.</li>
+						<li>Иногда легче тестировать, но <strong>заметно сложнее писать код,
+							отлаживать и изучать</strong>.</li>
+						<li>Куча слоёв. В тестах можно извернуться раз, а с API работать постоянно.</li>
+						<li><strong>Плата за гибкость — сложность</strong>. Сверхгибкость не нужна.</li>
+						<li><strong>Невозможно отдать рутину</strong> менее
+	                    опытным разработчикам не потратив
+	                    <strong>много времени на обучение</strong>.</li>
+					</ul>
+				</section>
+
+	            <section>
+	                <h2>SF2 и ZF2 — <strong>зло</strong>?</h2>
+	            </section>
+
+	            <section>
+	                <h2>Нет. Просто <strong>другая ниша</strong>.</h2>
+	            </section>
+
+	            <section>
+	                <h2>SF2 и ZF2 — не только сложность</h2>
+
+	                <ul>
+	                    <li>Стабильный API.</li>
+	                    <li>Хорошо оттестированный код.</li>
+	                    <li>Обратно-совместимые регулярные релизы.</li>
+	                    <li>Гарантия поддержки на последующие N лет.</li>
+	                    <li>Хорошая документация.</li>
+	                    <li>Коммерческая поддержка, тренинги (этого у Yii пока нет).</li>
+	                    <li>…?</li>
+	                </ul>
+	            </section>
+
+	            <section>
+	                <h2>И что делать?</h2>
+	            </section>
+
+	            <section>
+	                <h2>Практичные фреймворки</h2>
+
+	                <ul>
+	                    <li>Без лишних сложностей.</li>
+	                    <li>Проще изучить.</li>
+	                    <li>Меньше магии.</li>
+		                <li>Меньше слоёв.</li>
+	                    <li>Меньше конфигурации.</li>
+	                    <li>Простой и удобный API.</li>
+	                </ul>
+	            </section>
+
+	            <section>
+	                <img src="yii.png" alt="Yii" />
+	                <br>
+	                <strong>практичный</strong> фреймворк
+	            </section>
+
+	            <section>
+	                <h2>Мифы о фреймворках</h2>
+
+	                <ul>
+	                    <li><strong>Переизобрёл колесо</strong> = плохой.</li>
+	                    <li><strong>Контейнер DI и клёвые паттерны</strong> = хороший.</li>
+	                    <li><strong>Сделали фичу первыми</strong> = лучше остальных.</li>
+	                    <li><strong>Слабо связанный</strong> = всегда лучше.</li>
+	                    <li><strong>Нет фичи X</strong> = плохой.</li>
+	                </ul>
+	            </section>
+
+	            <section>
+	                <h2>Действительно важно</h2>
+
+	                <ul>
+	                    <li>Легко <strong>изучать</strong>.</li>
+	                    <li>Легко <strong>отлаживать</strong> и
+	                    <strong>исправлять ошибки</strong>.</li>
+	                    <li><strong>Не мешает</strong> работать и использовать
+	                    сторонний код.</li>
+	                    <li>Дружелюбное активное <strong>сообщество</strong>.</li>
+	                    <li><strong>Обратно совместим</strong> и
+	                    <strong>стабилен</strong>.</li>
+	                    <li>Нет сложностей при попытках <strong>настроить</strong> и
+	                    <strong>расширить</strong>.</li>
+	                    <li>Фреймворк <strong>должен нравиться</strong> ;)</li>
+	                </ul>
+	            </section>
+
+	            <section>
+	                <img src="history.png" alt="История Yii" />
+
+	                Prado, с 2004 → Yii 1.0, 2008 → Yii 1.1, 2010 → ;)
+	            </section>
+
+	            <section>
+	                <h2>Что такое Yii?</h2>
+
+	                <ul>
+	                    <li>PHP5 MVC.</li>
+		                <li>Сбалансированный, стабильный и поддерживаемый.</li>
+	                    <li>DAO, AR, миграции.</li>
+		                <li>Кеширование.</li>
+	                    <li>Формы.</li>
+                        <li>error handler, log.</li>
+                        <li>Генерация кода.</li>
+                        <li>I18n(CLDR).</li>
+                        <li>Виджеты.</li>
+                        <li>BSD.</li>
+		                <li>Хорошая документация и дружелюбное сообщество.</li>
+	                </ul>
+	            </section>
+
+				<section>
+	                <h2>Документация <strong>очень</strong> важна</h2>
+
+	                <ul>
+	                    <li>Документируем сразу как пишем код.</li>
+	                    <li>Основная документация переводится на 16 языков.</li>
+	                    <li>Примеры.</li>
+	                    <li>Книги.</li>
+	                </ul>
+
+	                <img src="docs.jpg" alt="Документация" />
+	            </section>
+
+	            <section>
+	                <h3>Всё ещё остаётся <strong>самым быстрым</strong> PHP-фреймворком<sup>*</sup></h3>
+	                <p>*<sub>Кроме PECL и микрофреймворков</sub></p>
+	            </section>
+
+	            <section>
+		            <h2>Производительность</h2>
+	                <img src="performance.png" alt="Производительность Yii" />
+		            <br/>
+		            <a href="http://docs.phalconphp.com/en/latest/reference/benchmark/hello-world.html">По версии Phalcon</a>
+	            </section>
+
+	            <section>
+	                Становится ещё быстрее и требует меньше памяти благодаря сообществу
+	            </section>
+
+	            <section>
+	                <img src="projects.png" alt="Проекты" />
+	            </section>
+
+	            <section>
+	                <img src="projects_int.png" alt="И ещё проекты" />
+	            </section>
+
+	            <section>
+
+	                    В Yii нет ни одного
+
+	                    <code>
+	setMyCoolFactoryDependencyInjectionContainer()
+	                    </code>
+
+	            </section>
+
+	            <section>
+	                Yii может работать с компонентами Symfony 2, ZF2 и всеми библиотеками из Composer.
+	            </section>
+
+	            <section>
+	                <h2>Yii — <strong>практичный</strong> фреймворк</h2>
+	            </section>
+
+				<section>
+					<h2>А теперь про Yii2</h2>
+
+					<img src="yay.jpg" />
+
+					<ul>
+						<li><a href="https://github.com/yiisoft/yii2/">https://github.com/yiisoft/yii2/</a> нужен Composer</li>
+						<li><a href="https://github.com/yiisoft/yii2/blob/master/docs/guide/index.md">Черновик документации</a></li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Насколько отличается от 1.1?</h2>
+					<ul>
+						<li>Нет обратной совместимости с 1.1</li>
+						<li>Хорошие идеи остались, но архитектура поменялась</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Требования</h2>
+
+					<ul>
+						<li>PHP 5.3.7+</li>
+						<li>mb_string</li>
+						<li>PDO</li>
+						<li>intl</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Почему не 5.4+?</h2>
+
+					<ul>
+						<li>Можно использовать в приложении.</li>
+						<li>Не требуется для работы фреймворка.</li>
+						<li>Статистика показывает, что пока рано.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>namespace</h2>
+
+					<ul>
+						<li>Все классы в namespace.</li>
+						<li>Нет префиксов вроде <code>C</code>.</li>
+						<li><a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">PSR-0</a>.</li>
+						<li>Умеренная вложенность.</li>
+					</ul>
+				</section>
+
+								<section>
+									<h2>Базовые классы</h2>
+
+									<ul>
+										<li><code>\yii\base\Object</code> — геттеры и сеттеры, метод <code>init</code>, конфигурирование массивом, <code>Object::className()</code>.</li>
+										<li><code>\yii\base\Component extends Object</code> — event, behavior.</li>
+									</ul>
+
+				<pre><code>
+class GoogleMap extends \yii\base\Object
+{
+  public function __construct($param1, $param2, $config = array())
+  {
+    // ...
+    parent::__construct($config);
+  }
+
+  public function init()
+  {
+    // ...
+    parent::init();
+  }
+}
+				</code></pre>
+								</section>
+
+								<section>
+									<h2>Создаём объект</h2>
+				<pre><code>
+$object = \Yii::createObject(array(
+  'class' => '\app\components\GoogleMap',
+  'apiKey' => 'xyz',
+  'apiSecret' => 'cde',
+), $param1, $param2);
+				</code></pre>
+								</section>
+
+								<section>
+									<h2>События</h2>
+				<pre><code>
+$component->on($eventName, $handler);
+$component->off($eventName, $handler);
+$component->trigger($eventName, Event $eventObject = null);
+				</code></pre>
+
+									<p>Глобальные события:</p>
+				<pre><code>
+// выкидываем
+\Yii::$app->trigger($eventName);
+
+// подписываемся
+\Yii::$app->on($eventName, $handler);
+				</code></pre>
+
+			</section>
+
+			<section>
+				<h2>Зачистка</h2>
+
+				<ul>
+					<li>Классы расположены лучше.</li>
+					<li>Лучше названия.</li>
+					<li>Убили коллекции (SPL достаточно).</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>View</h2>
+
+				<ul>
+					<li>Объект <code>View</code> — данные, скрипты, <code>render</code>.</li>
+					<li><code>$this</code> в шаблонах ссылается на него.</li>
+					<li><code>$this->context</code> на контроллер или другого родителя.</li>
+					<li>Можно использовать в консоли.</li>
+					<li>Темы (работают иначе).</li>
+					<li>Renderer-ы (Smarty, Twig).</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>Виджеты</h2>
+
+				<pre><code>
+use \yii\widgets\Menu;
+
+// ...
+
+echo Menu::widget(array(
+  'items' => $items,
+));
+				</code></pre>
+			</section>
+
+			<section>
+				<h2>ActiveForm</h2>
+				<pre><code>
+use yii\widgets\ActiveForm;
+
+&lt;?php $form = ActiveForm::begin(); ?&gt;
+  &lt;?php echo $form->field($model, 'username')->textInput(); ?&gt;
+  &lt;?php echo $form->field($model, 'password')->passwordInput(); ?&gt;
+  &lt;div class="form-actions"&gt;
+    &lt;?php echo Html::submitButton('Login'); ?&gt;
+  &lt;/div&gt;
+&lt;?php ActiveForm::end(); ?&gt;
+				</code></pre>
+			</section>
+
+			<section>
+				<h2>Asset bundle</h2>
+
+				<ul>
+					<li>Скрипты описываются пакетами.</li>
+					<li>Решает проблему зависимостей.</li>
+					<li>Можно сжимать, сливать и преобразовывать консольной командой.</li>
+				</ul>
+
+				<pre><code>
+app\config\AppAsset::register($this);
+				</code></pre>
+			</section>
+
+			<section>
+				<h2>Controller</h2>
+
+				<ul>
+					<li><code>return $this->render(...);</code></li>
+					<li>Консоль и web аналогичны.</li>
+					<li>Слои для request и response.</li>
+					<li>Фильтры теперь являются behavior-ами.</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>Model</h2>
+
+				<ul>
+					<li>Описание валидаторов отделено от сценариев.</li>
+					<li>Массовое присваивание не работает без валидации и сценариев.</li>
+				</ul>
+
+				<p>Убили <code>CFormModel</code>, <code>Model</code> отлично работает с формами. Для форм всё проще.</p>
+			</section>
+
+			<section>
+				<h2>AR, DAO, Query Builder, критерии</h2>
+
+				<p>Один синтаксис для всего.</p>
+
+				<pre><code>
+$query = new \yii\db\Query;
+$query->select('id, name')
+  ->from('tbl_user')
+  ->orderBy('id DESC')
+  ->limit(10);
+
+$command = $query->createCommand();
+echo $command->sql;
+$rows = $command->queryAll();
+
+$users = User::model()->find()
+  ->orderBy('id DESC')
+  ->limit(10)
+  ->all();
+				</code></pre>
+			</section>
+
+			<section>
+				<h2>В AR разделены модель и finder</h2>
+
+				<pre><code>
+$finder = Post::find()->where(array('a' => 10));
+$finder2 = clone $finder;
+$finder2->addWhere(array('b' => 1));
+
+$model = $finder->one();
+$model2 = $finder2->one();
+
+// шорткаты
+$post = Post::find(10); // pk = 10
+$post = Post::find(array('a' => 10, 'b' => 1)); // where a = 10 and b = 1
+				</code></pre>
+				</section>
+
+				<section>
+					<h2>Связи AR</h2>
+
+					<ul>
+						<li>Только два типа has one, has many.</li>
+						<li>Объявляются методами.</li>
+					</ul>
+
+				<pre><code>
+class User extends \yii\db\ActiveRecord
+{
+  public function getPosts()
+  {
+    return $this->hasMany('Post', array('user_id' => 'id'));
+  }
+
+  public function getActivePosts()
+  {
+    return $this->hasMany('Post', array('user_id' => 'id'))
+      ->where(array('status' => Post::STATUS_ACTIVE));
+  }
+}
+				</code></pre>
+
+				<pre><code>
+$posts = $user->getPosts()->limit(10)->all();
+$postCount = $user->getPosts()->count();
+				</code></pre>
+			</section>
+
+			<section>
+				<h2>AR не использует JOIN для связей</h2>
+
+				<ul>
+					<li>Примерно то же по производительности.</li>
+					<li>Легче кешировать.</li>
+					<li>Можно работать с noSQL (пока Redis в отдельной ветке).</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>AR asArray</h2>
+
+				<pre><code>
+$posts = Post::find()->limit(10)->asArray()->all();
+foreach($posts as $post) {
+  echo $post['title']."\n";
+}
+				</code></pre>
+								</section>
+
+				<section>
+					<h2>dirty attributes и link</h2>
+
+					<p>При <code>save()</code> сохраняется только то, что поменялось.</p>
+
+					<p>Появился метод <code>link</code> для сохранения связанных записей и <code>unlink</code> для удаления.</p>
+				<pre><code>
+$comment = new Comment();
+$comment->text = 'Hello, Yii!';
+
+// INSERT INTO post_comment ...
+$post->link('comments', $comment);
+
+// DELETE FROM post_comment ...
+$post->unlink('comments', $comment);
+				</code></pre>
+			</section>
+
+			<section>
+				<h2>Консоль</h2>
+
+				<p>API как для web.</p>
+
+				<img src="cli.png" alt=""/>
+			</section>
+
+								<section>
+									<h2>Хелперы</h2>
+
+									<ul>
+										<li>Так и остались статичными классами.</li>
+										<li>Расширяемы (LSB, namespace).</li>
+										<li>ArrayHelper, StringHelper, Security, FileHelper...</li>
+									</ul>
+
+				<pre><code>
+$mergedConfig = ArrayHelper::merge($baseConfig, $specificConfig);
+
+$posts = Post::model()->limit(10)->all();
+$titles = ArrayHelper::getColumn('title');
+
+$hash = Security::generatePasswordHash($password);
+// ...пишем хеш в базу...
+
+// при логине читаем хеш из базы
+if (Security::verifyPassword($password, $hash) {
+  // всё нормально
+} else {
+  // плохой пароль
+}
+				</code></pre>
+								</section>
+
+								<section>
+									<h2>Ошибки</h2>
+
+									<ul>
+										<li>Все ошибки конвертируются в исключения.</li>
+										<li>Ловит fatal-ы и логирует их.</li>
+										<li>Новый шаблон.</li>
+									</ul>
+
+									<img src="yii2_error.png" alt=""/>
+								</section>
+
+								<section>
+									<h2>Отладчик</h2>
+
+									<img src="debug_toolbar.png" />
+								</section>
+
+								<section>
+									<h2>Отладчик</h2>
+
+									<img src="debug_app.png" />
+								</section>
+
+								<section>
+									<h2>Генератор кода</h2>
+
+									<img src="gii.png" />
+								</section>
+
+								<section>
+									<h2>Шаблоны приложений</h2>
+
+									<ul>
+										<li>basic</li>
+										<li>advanced</li>
+										<li>свои</li>
+									</ul>
+								</section>
+
+								<section>
+									<h2>i18n на intl</h2>
+
+									<ul>
+										<li><a href="https://github.com/yiisoft/yii2/pull/917">https://github.com/yiisoft/yii2/pull/917</a></li>
+										<li>Было: i18n → своя реализация → CLDR</li>
+										<li>Стало: i81n → (intl + ICU + CLDR)</li>
+									</ul>
+
+									<pre><code>
+echo \Yii::t('app', 'There {n, plural, =0{are no cats} =1{is one cat} other{are # cats}}!', array(
+    'n' => 13,
+));
+// Здесь {n, plural, =0{котов нет} =1{есть один кот} one{# кот} few{# кота} many{# котов} other{# кота}}!
+
+echo \Yii::t('app', '{n,number} is spelled as {n, spellout}', array(
+    'n' => 42,
+));
+									</code></pre>
+								</section>
+
+								<section>
+									<h2>Документация</h2>
+									<ul>
+										<li>API документируется сразу</li>
+										<li><a href="https://github.com/yiisoft/yii2/wiki/Core-framework-code-style">Code
+											style (почти PSR-1 и PSR-2)</a></li>
+										<li>Larry Ullman выпустит книгу</li>
+										<li><a href="https://github.com/yiisoft/yii2/blob/master/docs/guide/index.md">Гайд
+											в черновом варианте</a></li>
+									</ul>
+								</section>
+
+								<section>
+									<h2>Производительность</h2>
+
+									<ul>
+										<li>Быстрее грузятся классы за счёт PSR-0.</li>
+										<li>Меньше классов.</li>
+										<li>Кушает меньше памяти.</li>
+										<li>Новый AR быстрее и также менее требователен к памяти.</li>
+										<li>asArray</li>
+									</ul>
+
+									<img src="yii2-blog.png" alt=""/>
+								</section>
+
+								<section>
+									<h2>Composer</h2>
+
+									<ul>
+										<li>Либо полностью, либо никак...</li>
+										<li>Ядро-компоненты</li>
+										<li>Репозиторий расширений</li>
+									</ul>
+								</section>
+
+								<section>
+									<ul>
+										<li>Главный репозиторий со всем кодом.</li>
+										<li>Отдельные «чистые» read-only subtree-репозитории для пакетов.</li>
+										<li>ZIP для тех, у кого проблемы с консолью.</li>
+									</ul>
+
+									<p>Рекомендуемый способ работы с Yii2:</p>
+
+				<pre><code>
+curl -s http://getcomposer.org/installer | php
+php composer.phar create-project --stability=dev yiisoft/yii2-app-basic .
+				</code></pre>
+				</section>
+
+				<section>
+					<h2>Планы и доделки</h2>
+
+					<ul>
+						<li>noSQL для AR (Redis)</li>
+						<li>gridview (начат)</li>
+						<li>API doc generator</li>
+						<li>Документация (черновик есть)</li>
+						<li>Багфиксы</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Темп</h2>
+
+					<ul>
+						<li>Сообщество было гиперактивно на тему пулл-реквестов, сейчас небольшой спад (основное готово?)</li>
+						<li>431 форк, 1248 фолловеров (1327/3100 у 1.1).</li>
+						<li>Много работы :(</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Не используйте в production! <a href="https://www.theprintful.com">;)</a></h2>
+					<p>1.1 стабилен и поддерживается минимум до 2016</p>
+				</section>
+
+				<section>
+					<h2>Попробовать 100% стоит</h2>
+				</section>
+
+                <section>
+                    <h2>Вопросы?</h2>
+
+                    <ul>
+	                    <li><a href="http://slides.rmcreative.ru/2013/php-frameworks-yii2/">http://slides.rmcreative.ru/2013/php-frameworks-yii2/</a></li>
+                        <li><a href="http://yiiframework.ru/">yiiframework.ru</a></li>
+                        <li><a href="http://www.yiiframework.com/">yiiframework.com</a></li>
+                        <li><a href="http://ru.yiicookbook.org/">ru.yiicookbook.org</a></li>
+                        <li><a href="http://rmcreative.ru/">rmcreative.ru</a></li>
+                    </ul>
+
+                    <img src="elephant.png" />
+                </section>
+
+			</div>
+
+		</div>
+
+		<script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+		<script src="../../bower_components/reveal.js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../../bower_components/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

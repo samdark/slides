@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Куда катится PHP, а также про Yii и другие фреймворки</title>
+
+		<meta name="description" content="О сложности, простоте, PHP, фреймворках и Yii">
+		<meta name="author" content="Александр Макаров">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.min.css">
+		<link rel="stylesheet" href="../../css/samdark.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+	</head>
+
+	<body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Куда катится PHP</h1>
+                    <h2>а также про Yii и другие фреймворки</h2>
+					<p><a href="http://rmcreative.ru/author">Александр Макаров</a></p>
+                    <p>
+                        <small>
+                            <a href="http://www.yiiframework.com/">Yii core team,</a>
+                            <a href="http://www.stay.com/">Stay.com</a>
+                        </small>
+                    </p>
+				</section>
+
+                <section>
+                    <h2>Надо валить?!</h2>
+
+                    <ul>
+                        <li>Разработчики мигрируют на
+                            <ul>
+                                <li>Ruby</li>
+                                <li>Python</li>
+                                <li>Java</li>
+                                <li>C++</li>
+                                <li>...</li>
+                            </ul>
+                        </li>
+                        <li>Мигрируют потому что <strong>PHP отстой</strong>?!</li>
+                    </ul>
+
+                    <img src="peter.png" alt="Пётр тоже мигрирует!" />
+                </section>
+
+                <section>
+                    <h2>PHP отстой, но <strong>не настолько</strong>!</h2>
+
+                    <ul>
+                        <li>Отличный выбор для веб разработки.</li>
+                        <li>Живее всех живых.</li>
+                        <li>Язык программирования — всего лишь инструмент. Один из.</li>
+                        <li>С хорошим фреймворком косяки вылезают не так часто.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>PHP хорош для бизнеса</h2>
+
+                    <ul>
+                        <li>Ориентирован на веб.</li>
+                        <li><strong>Много</strong> готового из коробки.</li>
+                        <li>Делает всё <strong>проще и легче</strong>.</li>
+                        <li>Просто найти <span style="color: #ccc">и заменить</span> разработчиков.</li>
+                        <li>Меньше риска.</li>
+                        <li>Меньше стоимость проекта.</li>
+                    </ul>
+
+                    <img src="money.jpg" alt="$$$" />
+                </section>
+
+                <section>
+                    <h2><strong>Хорошо</strong> для бизнеса — <strong>хорошо</strong> для разработчика</h2>
+                </section>
+
+                <section>
+                    <h2>PHP стремится к <strong>простоте</strong> и улучшается</h2>
+
+
+                    <ul>
+                        <li>API хеширования паролей.</li>
+                        <li>Генераторы.</li>
+                        <li>Больше единообразия.</li>
+                        <li>Встроенный вебсервер.</li>
+                        <li>Лучше производительность.</li>
+                        <li>Лучше синтаксис.</li>
+                        <li>…</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>И <strong>это замечательно</strong>!</h2>
+                </section>
+
+                <section>
+                    <h2>А что <strong>фреймворки</strong>?</h2>
+                </section>
+
+                <section>
+                    <h2>Сначала о хорошем</h2>
+
+                    <ul>
+                        <li>Github стал фактически стандартом для хорошего PHP-кода.</li>
+                        <li>Хорошо распространился PSR-0.</li>
+                        <li>Есть как минимум несколько <strong>стабильных фреймворков</strong>,
+                        готовых к коммерческому использованию. То есть
+                        <strong>поддерживаемых</strong> и <strong>обратно совместимых</strong>.</li>
+                    </ul>
+
+                    <img src="github.png" alt="GitHub" />
+                </section>
+
+                <section>
+                    <h2>А теперь <strong>о не очень хорошем…</strong></h2>
+                </section>
+
+                <section>
+                    <h2>«Enterprise»</h2>
+
+                    <ul>
+                        <li>ZF 2 и Symfony 2 очень «enterprise».</li>
+                        <li>Ещё более, чем были ZF1 и Symfony 1.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="wat.jpg" alt="WAT?!" />
+                </section>
+
+                <section>
+                    <h2>Весь этот <strong>“enterprise” слишком сложен</strong></h2>
+                </section>
+
+                <section>
+                    <p>Все проблемы программирования можно решить дополнительным слоем абстракции… кроме проблемы избыточной абстракции</p>
+                    <br />
+                    <p style="text-align: right; margin-right: 20px; font-style: italic">David Wheeler</p>
+                </section>
+
+                <section>
+                    <h2>Отзывы о ZF2 и Symfony2</h2>
+
+                    «ZF2 <strong>слишком «научный»</strong>. По нему и его дизайну
+                    можно кандидатскую написать. Не поймите меня неправильно, я
+                    люблю стандарты, паттерны и т.д., но разработчики ZF2 слишком
+                    сильно окунулись в «науку». Symfony2 в этом плане получше, но
+                    недостаточно»
+                </section>
+
+                <section>
+                    <h2><strong>Зачем</strong> делать <strong>сложно</strong>,
+                    если можно делать просто?</h2>
+                </section>
+
+                <section>
+                    <h2>Сделать <strong>просто сложнее</strong>, чем сделать
+                    <strong>сложно</strong></h2>
+                </section>
+
+                <section>
+                    <h2>Почему ZF2 такой?</h2>
+
+                    <ul>
+                        <li>Zend — <strong>коммерческая компания</strong>.
+                        ZF — <strong>дополняющий продукт</strong> к IDE,
+                        Zend server и т.д.</li>
+                        <li>У ZF2 <strong>необходимое и достаточное качество</strong>.
+                        <strong>Упрощать</strong> интерфейс и делать RAD —
+                        <strong>трата времени (и денег)</strong> на то, что не
+                        принесёт дополнительной прибыли. Скорее наоборот.</li>
+                        <li>80% проектов/клиентов не очень-то интересны. Zend может
+                        себе это позволить.</li>
+                        <li>Хотят получить разочаровавшиеся в J2EE компании.</li>
+                        <li><strong>Консалтинг не нужен, если продукт недостаточно
+                        сложен ;)</strong></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Zend успешна</h2>
+                </section>
+
+                <section>
+                    <h2>Что с Symfony 2?</h2>
+
+                    <ul>
+                        <li>Пытаются быть «<strong>enterprise</strong>» (=сложными),
+                        как и ZF2.</li>
+                        <li>Sensio labs — <strong>коммерческая компания</strong>.
+                        Зарабатывает на саппорте и консалтинге.</li>
+                        <li><a href="http://fabien.potencier.org/article/65/why-symfony">http://fabien.potencier.org/article/65/why-symfony</a></li>
+                        <li><strong>Более практичны</strong>, чем ZF2.</li>
+                        <li>Всё-таки <strong>довольно сложны</strong>.</li>
+                        <li>Сознательно принесли в жертву RAD.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Что же <strong>плохого</strong> в «<strong>enterprise</strong>»?</h2>
+
+                    <ul>
+                        <li>Напирают на <strong>паттерны</strong>. Их видно
+                        <strong>в интерфейсе</strong>.</li>
+                        <li>Легче тестировать, но <strong>заметно сложнее писать
+                        код, отлаживать и изучать</strong>.</li>
+                        <li>Почти <strong>невозможно отдать рутину</strong> менее
+                        компетентным разработчикам предварительно не потратив
+                        <strong>много времени на обучение</strong>.</li>
+                        <li><strong>Высокий риск</strong> для того, кто заказывает
+                        музыку.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Всё это похоже на прошлое Java…</h2>
+
+                    <ul>
+                        <li>“Their <strong>main thesis to support that
+                        complexity</strong> is… hold your breath… fasten your
+                        seatbelts: <strong>if it were easier, more stupid people
+                        would be using it</strong>!. Ta-da!!”</li>
+                        <li>“J2EE is no way simple. However the reality is simple:
+                        for J2EE <strong>to survive — we have to make it simple to
+                        build, deploy and manage</strong>”</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>В Java всё идёт к упрощению</h2>
+
+                    <ul>
+                        <li>Play</li>
+                        <li>Apache Wicket</li>
+                        <li>И даже Spring</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>SF2 и ZF2 — <strong>зло</strong>?</h2>
+                </section>
+
+                <section>
+                    <h2>Нет. Просто <strong>другая ниша</strong>.</h2>
+                </section>
+
+                <section>
+                    <h2>Enterprise — не только сложность</h2>
+
+                    <ul>
+                        <li>Стабильный API.</li>
+                        <li>Хорошо оттестированный код.</li>
+                        <li>Обратно-совместимые регулярные релизы.</li>
+                        <li>Гарантия поддержки на последующие N лет.</li>
+                        <li>Хорошая документация.</li>
+                        <li>Коммерческая поддержка, тренинги.</li>
+                        <li>…</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>И что делать <strong>практикам</strong>?</h2>
+                </section>
+
+                <section>
+                    <h2>Практичные фреймворки</h2>
+
+                    <ul>
+                        <li><strong>Без дополнительных сложностей</strong>.</li>
+                        <li><strong>Легко изучить</strong>.</li>
+                        <li><strong>Меньше магии</strong>.</li>
+                        <li><strong>Меньше конфигурации</strong>.</li>
+                        <li>Как можно более <strong>простой API</strong>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Если есть ещё и всё <strong>хорошее</strong> от enterprise — идеал</h2>
+                </section>
+
+                <section>
+                    <img src="yii.png" alt="Yii" />
+                    <br>
+                    <strong>практичный</strong> фреймворк
+                </section>
+
+                <section>
+                    <h2>Мифы о фреймворках</h2>
+
+                    <ul>
+                        <li>Если фреймворк <strong>переизобрёл колесо</strong>,
+                        то он <strong>плохой</strong>.</li>
+                        <li>Если используется <strong>контейнер DI</strong> и
+                        везде <strong>клёвые паттерны</strong>, то фреймворк
+                        <strong>хороший</strong>.</li>
+                        <li>Если фреймворк <strong>сделал фичу первым</strong>,
+                        то он лучше остальных.</li>
+                        <li><strong>Слабо связанный</strong> фреймворк
+                        <strong>всегда лучше</strong>.</li>
+                        <li>Если <strong>нет фичи</strong> X в фреймворке, то он
+                        <strong>плохой</strong>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Действительно важно</h2>
+
+                    <ul>
+                        <li>Легко <strong>изучать</strong>.</li>
+                        <li>Легко <strong>отлаживать</strong> и
+                        <strong>исправлять ошибки</strong>.</li>
+                        <li><strong>Не мешает</strong> работать и использовать
+                        сторонний код.</li>
+                        <li>Дружелюбное активное <strong>сообщество</strong>.</li>
+                        <li><strong>Обратно совместим</strong> и
+                        <strong>стабилен</strong>.</li>
+                        <li>Нет затыков при попытках <strong>настроить</strong> и
+                        <strong>расширить</strong>.</li>
+                        <li>Фреймворк <strong>должен нравиться</strong> ;)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="history.png" alt="История Yii" />
+
+                    Prado, с 2004 → Yii 1.0, 2008 → Yii 1.1, 2010 → ;)
+                </section>
+
+                <section>
+                    <h2>Что такое Yii?</h2>
+
+                    <ul>
+                        <li>PHP5 <strong>MVC</strong>.</li>
+                        <li><strong>Приятный API</strong>.</li>
+                        <li>DAO, AR, <strong>миграции</strong>.</li>
+                        <li>Построитель форм.</li>
+                        <li>Темы.</li>
+                        <li>Тестирование.</li>
+                        <li><strong>Хорошая документация</strong>.</li>
+                        <li><strong>Большое дружелюбное сообщество</strong>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Что такое Yii?</h2>
+
+                    <ul>
+                        <li>Кеширование.</li>
+                        <li>RBAC.</li>
+                        <li>Консоль.</li>
+                        <li><strong>error handler, log</strong>.</li>
+                        <li>Gii.</li>
+                        <li>I18n(CLDR).</li>
+                        <li>Виджеты.</li>
+                        <li><strong>BSD</strong>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Всё ещё остаётся <strong>самым быстрым</strong> современным
+                    PHP-фреймворком</h2>
+                    <h3>кроме PECL и микрофреймворков</h3>
+                </section>
+
+                <section>
+                    Это не наш тест.
+                    <a href="http://docs.phalconphp.com/en/latest/reference/benchmark/hello-world.html">http://docs.phalconphp.com/en/latest/reference/benchmark/hello-world.html</a>
+
+                    <img src="performance.png" alt="Производительность Yii" />
+                </section>
+
+                <section>
+                    <h2>Становится ещё быстрее и менее требовательнее к памяти благодаря сообществу</h2>
+                </section>
+
+                <section>
+                    <img src="world.png" alt="Распространение Yii" />
+                </section>
+                
+                <section>
+                    <img src="projects.png" alt="Русскоязычные проекты" />
+                </section>
+
+                <section>
+                    <img src="projects_int.png" alt="И ещё проекты" />
+                </section>
+
+                <section>
+
+                    <ul>
+                        <li>Сбалансированный</li>
+                        <li>Стабильный</li>
+                        <li>Гибкий</li>
+                        <li>Хорошо документирован</li>
+                        <li>Не мешает</li>
+                    </ul>
+
+                    <img src="good_evil.gif" alt="Хорошо и плохо" />
+                </section>
+
+                <section>
+
+                        В Yii нет ни одного
+
+                        <code>
+setMyCoolFactoryDependencyInjectionContainer()
+                        </code>
+
+                </section>
+
+                <section>
+                    <h2>Документация <strong>очень</strong> важна</h2>
+
+                    <ul>
+                        <li>Документируем сразу как пишем код.</li>
+                        <li>Основная документация переводится на 16 языков.</li>
+                        <li><strong>Не мешает</strong> работать и использовать сторонний код.</li>
+                        <li>phpdoc.</li>
+                        <li>Примеры.</li>
+                        <li>Отличные книги.</li>
+                    </ul>
+
+                    <img src="docs.jpg" alt="Документация" />
+                </section>
+
+                <section>
+                    Yii может работать с компонентами Symfony 2 и ZF2. <br />
+                    Они ведь именно для этого, правда? ;)
+                </section>
+
+                <section>
+                    <h2>Yii — <strong>практичный</strong> фреймворк</h2>
+                </section>
+
+                <section>
+                    <h2>The end</h2>
+
+                    <ul>
+                        <li>Вопросы? Замечания? Предложения?</li>
+                        <li>sam@rmcreative.ru</li>
+                        <li>@sam_dark</li>
+                        <li><a href="http://www.yiiframework.com/">www.yiiframework.com</a></li>
+                    </ul>
+
+                    <img src="drink.jpg" alt="Слоник намекает..." />
+                </section>
+			</div>
+
+		</div>
+
+		<script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+		<script src="../../bower_components/reveal.js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../../bower_components/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

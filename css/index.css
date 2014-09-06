@@ -1,0 +1,70 @@
+@import url(../fonts/stylesheet.css);
+
+body {
+    padding: 1em;
+    font-family: "PT Sans";
+    font-size: 16pt;
+    font-weight: 200;
+    letter-spacing: -0.02em;
+    color: #666666;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2em 0;
+}
+
+ul ul {
+    list-style: none;
+    padding: 0;
+    margin: 1em 0 0 0;
+    color: #777;
+}
+
+li {
+    padding-left: 1em;
+    margin-bottom: .2em;
+}
+
+li:before {
+    content: "\2014";
+    padding-right: 7px;
+    color: #aaa;
+}
+
+::selection {
+    color: white;
+    background: #ff5e99;
+    text-shadow: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 20px 0;
+    color: #333333;
+    font-family: "PT Sans Caption";
+    line-height: 0.9em;
+    letter-spacing: 0.02em;
+    text-transform: none;
+}
+
+a:not(.image) {
+    color: darkblue;
+    text-decoration: none;
+    -webkit-transition: color 0.15s ease;
+    -moz-transition: color 0.15s ease;
+    -ms-transition: color 0.15s ease;
+    -o-transition: color 0.15s ease;
+    transition: color 0.15s ease;
+}
+
+a:not(.image):hover {
+    color: #0000f1;
+    text-shadow: none;
+    border: none;
+}

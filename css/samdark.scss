@@ -1,0 +1,80 @@
+/**
+ * samdark theme for reveal.js
+ */
+
+// Default mixins and settings -----------------
+@import "../bower_components/reveal.js/css/theme/template/mixins";
+@import "../bower_components/reveal.js/css/theme/template/settings";
+// ---------------------------------------------
+
+@import "../fonts/stylesheet.css";
+
+// Override theme settings (see ../template/settings.scss)
+$mainFont: 'PT Sans';
+$headingFont: 'PT Sans Caption';
+$headingTextTransform: none;
+
+$backgroundColor: #fff;
+
+$mainColor: #666666;
+$headingColor: #333;
+$backgroundColor: #fff;
+$linkColor: #00008B;
+$linkColorHover: lighten( $linkColor, 20% );
+
+.reveal table {
+    table-layout:fixed;
+
+    th {
+        font-weight: bold;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+}
+
+.reveal code {
+    font-family: Monaco, consolas, monospace;
+}
+
+.reveal pre.big code {
+    font-size: 200%;
+}
+
+.reveal section img {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.reveal {
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 1em 0 0 0;
+
+            color: #777;
+        }
+    }
+
+    li {
+        padding-left: 1em;
+        margin-bottom: .2em;
+    }
+
+    li:before {
+        content: "\2014";
+        padding-right:7px;
+        color: #aaa;
+    }
+}
+
+
+// Theme template ------------------------------
+@import "../bower_components/reveal.js/css/theme/template/theme";
+// ---------------------------------------------
