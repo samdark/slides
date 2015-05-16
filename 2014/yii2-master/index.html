@@ -1,0 +1,1197 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Yii 2.0 МК</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Yii 2.0 МК">
+        <meta name="author" content="Александр Макаров">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.min.css">
+        <link rel="stylesheet" href="../../css/samdark.css" id="theme">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide" data-background="">
+                    <h1>МК</h1>
+
+                    <p><a href="http://rmcreative.ru/author">Александр Макаров</a></p>
+                    <p>
+                        <small>
+                            <a href="http://www.yiiframework.com/">Yii core team,</a>
+                            <a href="http://www.stay.com/">Stay.com</a>
+                        </small>
+                    </p>
+
+                    <img src="yii.png" alt="Yii" />
+
+                    <ul>
+                        <li><a href="https://github.com/yiisoft/yii2/">https://github.com/yiisoft/yii2/</a></li>
+                        <li><a href="http://slides.rmcreative.ru/2014/yii2-master/">http://slides.rmcreative.ru/2014/yii2-master/</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Про меня</h2>
+
+                        <ul>
+                            <li>Из Воронежа</li>
+                            <li>Инженер CS, ZCE, переводчик</li>
+                            <li>Писатель, рецензент и редактор</li>
+                            <li>Докладчик</li>
+                            <li>Не кусаюсь</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Свои проекты и OpenSource</h2>
+
+                        <ul>
+                            <li><a href="https://github.com/samdark">https://github.com/samdark</a></li>
+                            <li>Yii, <a href="http://www.php-fig.org/">php-fig</a></li>
+                            <li><a href="http://yiiframework.ru/">yiiframework.ru</a>, <a href="http://rmcreative.ru/">rmcreative.ru</a>,
+                                <a href="http://yiicookbook.org/">yiicookbook.org</a></li>
+                        </ul>
+
+                        <h3>В прошлом</h3>
+                        <ul>
+                            <li>code-igniter.ru</li>
+                            <li>samlab.ws</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Работы</h2>
+
+                        <ul>
+                            <li>Siemens (ABAP, LiveLink, J2EE)</li>
+                            <li>Docufide, сейчас Parchment Exchange (J2EE)</li>
+                            <li>Scinovate (Drupal)</li>
+                            <li><a href="https://www.wrike.com/">Wrike.com</a> (J2EE)</li>
+                            <li>MeetFriends (Russia Today)</li>
+                            <li><a href="http://nnm.me/">NNM</a></li>
+                            <li><a href="http://www.clevertech.biz/">CleverTech</a> (Yii 1.1)</li>
+                            <li><a href="http://www.stay.com/">Stay.com</a> (Yii 1.1, Android)</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Знакомимся?</h2>
+
+                    <ul>
+                        <li>Кто?</li>
+                        <li>Откуда?</li>
+                        <li>Опыт?</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Планы</h2>
+
+                    <ul>
+                        <li>Теория, практика, общение, вопросы</li>
+                        <li>Хорошо и полезно проведём время</li>
+                        <li>Пожелания?</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Освежим знания?</h2>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>PHP 5.3</h2>
+
+                        <ul>
+                            <li><a href="http://php.net/manual/ru/language.namespaces.php">Пространства имён</a></li>
+                            <li><a href="http://php.net/manual/ru/language.oop5.late-static-bindings.php">Позднее
+                                статическое связывание (LSB)</a></li>
+                            <li><a href="http://php.net/manual/ru/functions.anonymous.php">Анонимные функции</a></li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Пространства имён</h2>
+
+                        <ul>
+                            <li>namespace my\name;</li>
+                            <li>use \my\name\Class;</li>
+                            <li>use \my\name\Class as BaseClass;</li>
+                            <li>new Class();</li>
+                            <li>new name\Class();</li>
+                            <li>new \Class();</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Позднее статическое связывание (LSB)</h2>
+
+                        <ul>
+                            <li>self::, __CLASS__</li>
+                            <li>static::, get_called_class()</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Анонимные функции</h2>
+
+                        <ul>
+                            <li>$f = function ($arg) { ... }</li>
+                            <li>function ($a, $b) use ($c, &$d) { ... }</li>
+                            <li>Нельзя сериализовать (почти)</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>PHP 5.4</h2>
+
+                        <ul>
+                            <li>$this в анонимных функциях</li>
+                            <li><a href="http://php.net/manual/ru/language.oop5.traits.php">Трейты</a></li>
+                            <li>Короткий синтаксис массивов</li>
+                            <li>&lt;?=</li>
+                            <li><a href="http://php.net/manual/ru/features.commandline.webserver.php">Вебсервер</a></li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Трейты</h2>
+
+                        <ul>
+                            <li>trait Feature { ... }</li>
+                            <li>class MyClass { use Feature; }</li>
+                            <li>копи→пейст</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Вебсервер</h2>
+
+                        php -S localhost:8000
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>ООП</h2>
+                    </section>
+
+                    <section>
+                        <h2>Основы</h2>
+
+                        <ul>
+                            <li>Инкапсуляция</li>
+                            <li>Наследование</li>
+                            <li>Полиморфизм</li>
+                            <li>Агрегирование</li>
+                            <li>SOLID</li>
+                            <li>KISS</li>
+                            <li>YAGNI</li>
+                            <li>DRY</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Инкапсуляция</h2>
+
+                        <ul>
+                            <li>Геттеры-сеттеры</li>
+                            <li>Реалии PHP</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Наследование</h2>
+                    </section>
+
+                    <section>
+                        <h2>Полиморфизм, интерфейс, абстрактный класс</h2>
+
+                        <ul>
+                            <li>Полиморфизм = взаимозаменяемость объектов с одинаковым интерфейсом</li>
+                            <li>Интерфейс = контракт</li>
+                            <li>Абстрактный класс = базовая реализация</li>
+                            <li>instanceof</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Агрегирование</h2>
+
+                        <ul>
+                            <li>Оно же делегирование</li>
+                            <li>Оно же принадлежность</li>
+                            <li>А внутри B выполняет отдельные задачи, извне недоступен</li>
+                            <li>По ссылке (Агрегация) и по значению (Композиция)</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>SOLID</h2>
+
+                        <ul>
+                            <li>Single responsibility - единственной обязанности - каждый класс занимается одной задачей.</li>
+                            <li>Open/closed - открытости/закрытости - возможность расширения без изменений. Через наследование, через полиморфизм.</li>
+                            <li>Liskov substitution - подстановки Барбары Лисков - объект можно заменить наследниками без последствий.</li>
+                            <li>Interface segregation - разделения интерфейса - специализированные интерфейсы надо отделять.</li>
+                            <li>Dependency inversion - инверсии зависимостей - зависим от абстракций, а не от реализаций (Open/closed + LSP).</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>KISS</h2>
+
+                        <ul>
+                            <li>Чем проще, тем лучше</li>
+                            <li>Бритва Оккама</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>YAGNI</h2>
+
+                        <ul>
+                            <li>Вам оно не надо</li>
+                            <li>Отсутствие решения тоже решение</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>DRY</h2>
+
+                        <ul>
+                            <li>Единое место для сходного кода / сущностей / данных</li>
+                            <li>Не всё, что похоже, и правда сходно</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Composer</h2>
+
+                        <ul>
+                            <li>Менеджер пакетов</li>
+                            <li><a href="https://getcomposer.org/">https://getcomposer.org/</a></li>
+                            <li><a href="https://packagist.org/">https://packagist.org/</a></li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Команды</h2>
+
+                        <ul>
+                            <li>init - новый composer.json</li>
+                            <li>require - добавить пакет в require файла composer.json</li>
+                            <li>remove - убить пакет из composer.json</li>
+                            <li>validate - проверить синтаксис composer.json</li>
+                        </ul>
+
+                        <ul>
+                            <li>install - установить пакеты из composer.lock</li>
+                            <li>update - обновить composer.lock и установить из него пакеты</li>
+                            <li>create-project - создать проект на основе пакета</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Пакеты</h2>
+
+                        <ul>
+                            <li>Ставятся в vendor. Руками не трогать!</li>
+                            <li>Приложение тоже пакет.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>composer.json</h2>
+
+                        <ul>
+                            <li>name - имя пакета</li>
+                            <li>мета информация: description, keywords, homepage...</li>
+                            <li>minimum-stability - какие пакеты тянуть из require (dev, alpha, beta, RC, stable)</li>
+                            <li>require - всегда нужные пакеты</li>
+                            <li>require-dev - пакеты для разработки</li>
+                            <li>suggest - предложить их в конце установки, но не ставить</li>
+                            <li>autoload - <a href="https://getcomposer.org/doc/04-schema.md#autoload">правила загрузки
+                                классов</a></li>
+                            <li>bin - слинковать файл в vendor/bin</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Версии</h2>
+
+                        <ul>
+                            <li><a href="https://getcomposer.org/doc/01-basic-usage.md#package-versions">Правила</a></li>
+                            <li><a href="https://getcomposer.org/doc/faqs/why-are-unbound-version-constraints-a-bad-idea.md">Ограничивайте сверху</a></li>
+                            <li>~2.0.0 → >=2.0.0, <2.1</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>composer.lock</h2>
+
+                        <ul>
+                            <li>фиксирует версии</li>
+                            <li>читается только у корневого пакета при install</li>
+                            <li>обновляется при update</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>global</h2>
+
+                        <ul>
+                            <li>Пакет можно поставить глобально.</li>
+                            <li>composer.json в COMPOSER_HOME (обычно в домашней директории).</li>
+                            <li>Подходит для инструментов.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Полезные ключики</h2>
+
+                        <ul>
+                            <li>--prefer-dist - ставить из zip-ов, не вытягивать git-репозиторий</li>
+                            <li>--no-dev - не ставить пакеты из require-dev</li>
+                            <li>--dry-run - симуляция установки без установки</li>
+                            <li>--no-interaction - пытаться автоматически разрулить спорные моменты (полезно для CI)</li>
+                            <li>--optimize-autoloader - создать карту файлов для автозагрузчика</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Приватные пакеты</h2>
+
+                        <a href="https://getcomposer.org/doc/articles/handling-private-packages-with-satis.md">https://getcomposer.org/doc/articles/handling-private-packages-with-satis.md</a>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Что такое Yii 2.0?</h2>
+
+                        <ul>
+                            <li>PHP 5.4+.</li>
+                            <li>Сбалансированный.</li>
+                            <li>Стабильный с 12 октября 2014 и поддерживаемый.</li>
+                            <li>Лицензирован под BSD.</li>
+                            <li>Решает все основные задачи веб-разработки.</li>
+                            <li>REST API framework.</li>
+                            <li>Инструменты для отладки.</li>
+                            <li>Генерация кода.</li>
+                            <li>Очень приятная работа с данными.</li>
+                            <li>Хорошая документация и дружелюбное сообщество.</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <a href="http://slides.rmcreative.ru/2014/yii2-rifvrn/">http://slides.rmcreative.ru/2014/yii2-rifvrn/</a>
+                    </section>
+                    <section>
+                        <h2>Документация</h2>
+
+                        <ul>
+                            <li><a href="http://www.yiiframework.com/doc-2.0/">Официальная</a></li>
+                            <li><a href="https://github.com/yiisoft/yii2/blob/master/docs/guide-ru/README.md">Русская версия на github</a></li>
+                            <li><a href="https://leanpub.com/yii2forbeginners">Yii 2 For Beginners</a></li>
+                            <li><a href="http://www.amazon.com/gp/product/1783981881/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=1783981881&linkCode=as2&tag=yiicookbook-20&linkId=FALDLGJHCLBUY7VP">Web Application Development with Yii 2 and PHP</a></li>
+                            <li><a href="https://github.com/samdark/yii2-cookbook">Yii 2.0 cookbook</a></li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Сообщество</h2>
+
+                        <ul>
+                            <li><a href="http://www.yiiframework.com/forum/">Официальный форум</a></li>
+                            <li><a href="http://yiiframework.ru/forum/">Форум yiiframework.ru</a></li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Планы</h2>
+
+                        <ul>
+                            <li>2.0.1</li>
+                            <li>Новый сайт</li>
+                            <li>1.1++</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Как перейти с 1.1 на 2.0</h2>
+
+                    <ul>
+                        <li>Просто — никак.</li>
+                        <li>А стоит ли?</li>
+                        <li>Если да — переписывать или портировать.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Практика!</h2>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Hello world</h2>
+                    </section>
+
+                    <section>
+                        composer global require "fxp/composer-asset-plugin:1.0.0-beta3"<br/>
+                        composer create-project --prefer-dist yiisoft/yii2-app-basic helloworld
+                    </section>
+
+                    <section>
+                        <ul>
+                            <li>Контроллер</li>
+                            <li>View</li>
+                            <li>Передаём данные</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        Profit?
+                    </section>
+
+                    <section>
+                        <h2>Как это работает</h2>
+                    </section>
+
+                    <section>
+                        <h2>MVC</h2>
+
+                        <ul>
+                            <li>Модель</li>
+                            <li>View</li>
+                            <li>Контроллер</li>
+                            <li>Что куда?</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Компоненты</h2>
+
+                        <ul>
+                            <li>Yii::$app-&gt;</li>
+                            <li>не всё обязано быть компонентом</li>
+                            <li>Object</li>
+                            <li>Если ничего не надо, просто не наследоваться</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Свойства</h2>
+
+                        <ul>
+                            <li>Геттеры-сеттеры</li>
+                            <li>Конфиг</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>События</h2>
+
+                        <ul>
+                            <li>Локальные</li>
+                            <li>Глобальные</li>
+                            <li>Зачем?</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Алиасы</h2>
+
+                        <ul>
+                            <li>Что это такое?</li>
+                            <li>URL и файлы</li>
+                            <li>Стандартные</li>
+                            <li>Алиасы расширений</li>
+                            <li>bower / npm</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Автозагрузка классов</h2>
+
+                        <ul>
+                            <li>Как оно вообще работает?</li>
+                            <li><a href="http://www.php-fig.org/psr/psr-4/">Правила PSR-4</a></li>
+                            <li>Composer</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Сервис-локатор</h2>
+
+                        <ul>
+                            <li>Реестр.</li>
+                            <li>Для чего? Отложенная загрузка, единственные экземпляры, ...</li>
+                            <li>Yii::$app</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>DI контейнер</h2>
+
+                        <ul>
+                            <li>Объект, который знает как создать и настроить другие объекты и их зависимости.</li>
+                            <li>Для чего?</li>
+                            <li>Yii::$container, Yii::createObject</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Делаем витрину</h2>
+
+                    <p>Сделаем витрину для магазина. Магазином называть не будем потому как платежи не
+                        принмиаем и за наличием товаров не следим.</p>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Формируем требования</h2>
+
+                        <ul>
+                            <li>А будет ли магазин? Чаще это витрины :)</li>
+                            <li>А не сделать ли ещё и X?</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Важно быть на одной волне с владельцем бизнеса</h2>
+
+                        <ul>
+                            <li>У него всегда видение шире!</li>
+                            <li>DDD</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Оцениваем время</h2>
+
+                        <ul>
+                            <li>Раскидываем по задачкам: Trello, Pivotal.</li>
+                            <li>Оцениваем каждую.</li>
+                            <li>Суммируем.</li>
+                            <li>Запас ×1.5+</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>ставим advanced</h2>
+                    </section>
+                    <section>
+                        <h2>Навёрстываем минимальный layout</h2>
+
+                        <ul>
+                            <li>asset-ы: куда сложить, как тянуть из bower</li>
+                            <li><a href="http://getbootstrap.com/css/#grid">bootstrap</a></li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Проектируем БД</h2>
+                    </section>
+
+                    <section>
+                        <ul>
+                            <li>product</li>
+                            <li>category</li>
+                            <li>image</li>
+                            <li>order</li>
+                            <li>order_item</li>
+                            <li>user</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Соглашения</h2>
+                        <ul>
+                            <li>Единственное число</li>
+                            <li>Не приделывать имя таблицы к полям</li>
+                            <li>Не включать префикс в название модели</li>
+                            <li>PK именуйте id</li>
+                            <li>Используйте внешние ключи</li>
+                            <li>Заканчивайте из на _id</li>
+                            <li>fk-source_table-source_column-target_table-target_column</li>
+                            <li>Связи называйте в соотвествующем числе</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Миграции</h2>
+
+                        <ul>
+                            <li>Что такое и зачем?</li>
+                            <li>Не использовать модели.</li>
+                            <li>Запускалась и ушла в репу - не трогать!</li>
+                            <li>Не запускалась и ушла в репу - поправить!</li>
+                            <li>Для MySQL указывайте engine и collation.</li>
+                            <li>Руками не трогать!</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Создадим и применим...</h2>
+
+                        <ul>
+                            <li>Поправим юзера</li>
+                            <li>Создадим всё остальное</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Генерим всё через Gii</h2>
+
+                    <ul>
+                        <li>UI</li>
+                        <li>Консоль</li>
+                        <li>common, frontend, backend</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Пользователи</h2>
+
+                    <ul>
+                        <li>Как работает то что уже есть?</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Документация</h2>
+
+                    <ul>
+                        <li>Зачем?</li>
+                        <li>Какая?</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Git</h2>
+                    </section>
+
+                    <section>
+                        <h2>Основы</h2>
+
+                        <ul>
+                            <li>Консолька</li>
+                            <li>SmartGit</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <ul>
+                            <li><a href="https://www.atlassian.com/git/">Getting Git Right</a></li>
+                            <li><a href="http://git-scm.com/book/ru/v2">Pro Git</a></li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Как организовать работу?</h2>
+
+                        <ul>
+                            <li><a href="https://github.com/">GitHub</a></li>
+                            <li><a href="https://bitbucket.org/">Bitbucket</a></li>
+                            <li><a href="https://about.gitlab.com/">GitLab</a></li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Как ветвиться?</h2>
+
+                        <img src="git.png" alt=""/>
+                    </section>
+
+                    <section>
+                        <h2>Полезняшки</h2>
+
+                        <ul>
+                            <li>git pull --rebase</li>
+                            <li>git bisect</li>
+                            <li><a href="https://hub.github.com/">hub</a></li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Вот теперь можно подключать команду к коду...</h2>
+
+                    <ul>
+                        <li>Почему только сейчас?</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <section>
+                        <h2>Каталог</h2>
+
+                        <ul>
+                            <li>Leveled list</li>
+                            <li>Выбираем одним запросом, строим рекурсивно</li>
+                            <li>Редактор простой по одной категории</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Загрузка картинок</h2>
+
+                        <ul>
+                            <li>Не сохраняем отдельные файлы</li>
+                            <li>Валидация</li>
+                            <li>Конвертация</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Разметка</h2>
+
+                        <ul>
+                            <li>markdown</li>
+                            <li>HTMLPurifier</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Валидация и формы</h2>
+                    </section>
+                </section>
+
+
+                <section>
+                    <h2>О работе в команде</h2>
+
+                    <ul>
+                        <li>Доверие</li>
+                        <li>коммуникация</li>
+                        <li>обещания</li>
+                        <li>сроки</li>
+                        <li>незаменимость</li>
+                        <li>иерархия</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <section>
+                        <h2>Корзина</h2>
+
+                        <ul>
+                            <li>Добавить</li>
+                            <li>Удалить</li>
+                            <li>Изменить количество (+/-)</li>
+                            <li>Заказать</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Сессии</h2>
+
+                        <ul>
+                            <li>В базу писать не надо</li>
+                            <li>Как сохранить корзину надолго?</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Куки</h2>
+
+                        <ul>
+                            <li>Мало места?</li>
+                            <li>Кука + база</li>
+                            <li>order: status, secret</li>
+                            <li>Чистим кроном</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Не AR-формы</h2>
+
+                        <ul>
+                            <li>Форма заказа</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Итерации и ревью</h2>
+
+                    <ul>
+                        <li>Как часто?</li>
+                        <li>Правила?</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Заказ</h2>
+                    </section>
+                    <section>
+                        <h2>email</h2>
+
+                        <ul>
+                            <li>При помощи Yii</li>
+                            <li>Отдать на внешку??? Внешние API</li>
+                            <li>dkim, spf</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>События</h2>
+
+                        <ul>
+                            <li>Как выкинуть</li>
+                            <li>Как прицепиться</li>
+                            <li>Глобальный диспетчер</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Мусор в проекте</h2>
+
+                    <ul>
+                        <li>Почему чистим?</li>
+                        <li>Жалко!</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Откуда мне знать, что оно всё работает?</h2>
+                    </section>
+
+                    <section>
+                        <h2>Тестирование</h2>
+
+                        <ul>
+                            <li>Не должно напрягать</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Что потестить?</h2>
+
+                        <ul>
+                            <li>Юнит - вычисление суммы заказа</li>
+                            <li>Заказ</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>CI</h2>
+
+                        <ul>
+                            <li>Travis</li>
+                            <li>TeamCity</li>
+                            <li>...</li>
+                        </ul>
+                    </section>
+                </section>
+
+
+
+                <section>
+                    <section>
+                        <h2>Сервер</h2>
+                    </section>
+
+                    <section>
+                        <h2>Начальный конфиг</h2>
+
+                        <ul>
+                            <li>nginx + php-fpm</li>
+                            <li>PHP 5.6</li>
+                            <li>MariaDB</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Автоматизация (или полуавтомат)</h2>
+
+                        <ul>
+                            <li>Деплой с APC</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Ошибки</h2>
+
+                        <ul>
+                            <li>Локальные</li>
+                            <li>На продакшне</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Логирование</h2>
+
+                        <ul>
+                            <li>Фильтры</li>
+                            <li>Цели</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Внешние сервисы</h2>
+
+                        <ul>
+                            <li>Почему не email, jabber?</li>
+                            <li>https://github.com/getsentry/sentry</li>
+                            <li>Rollbar</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Допиливаем</h2>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Ускоряем</h2>
+                    </section>
+
+                    <section>
+                        <h2>production-конфиг</h2>
+
+                        <ul>
+                            <li>init</li>
+                            <li>YII_DEBUG = false</li>
+                            <li>Кеш</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Инструменты</h2>
+
+                        <ul>
+                            <li>debug toolbar</li>
+                            <li>XDebug</li>
+                            <li>XHProf</li>
+                            <li>Pinba</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Масштрабирование</h2>
+
+                        <ul>
+                            <li>round robin</li>
+                            <li>Разделяем по серверам</li>
+                            <li>Репликация БД</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>i18n</h2>
+                    </section>
+
+                    <section>
+                        <h2>Сообщения</h2>
+
+                        <ul>
+                            <li>yii message</li>
+                            <li>message source</li>
+                            <li>Исходный язык английский</li>
+                            <li>ICU</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Данные</h2>
+
+                        Всегда по-разному. Пример?
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Красивые URL</h2>
+
+                        <ul>
+                            <li>Как настроить</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Как оно работает?</h2>
+
+                        <ul>
+                            <li>Роуты</li>
+                            <li>Порядок</li>
+                            <li>Регулярки</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Свой Rule</h2>
+
+                        <ul>
+                            <li>Дополним базу алиасом</li>
+                            <li>Генерация алиаса по title</li>
+                            <li>Своё правило</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Безопасность</h2>
+                    </section>
+
+                    <section>
+                        <h2>Общие принцыпы</h2>
+
+                        <ul>
+                            <li>filter input</li>
+                            <li>escape output</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Пароли</h2>
+
+                        <ul>
+                            <li>md5</li>
+                            <li>sha1</li>
+                            <li>Соль</li>
+                            <li>bcrypt</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Yii</h2>
+
+                        <ul>
+                            <li>SQL injection</li>
+                            <li>XSS</li>
+                            <li>CSRF</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>RBAC</h2>
+
+                        <ul>
+                            <li>Что такое?</li>
+                            <li>Как работает?</li>
+                            <li>закрываем админку</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>REST API</h2>
+                    </section>
+
+                    <section>
+                        <h2>Быстрый старт</h2>
+                    </section>
+
+                    <section>
+                        <h2>Выдача токена</h2>
+
+                        <ul>
+                            <li>Отдельный action</li>
+                            <li>Передача хеша?</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Фильтр полей</h2>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Вопросы?</h2>
+
+                    <ul>
+                        <li><a href="http://slides.rmcreative.ru/2014/yii2-master/">http://slides.rmcreative.ru/2014/yii2-master/</a></li>
+                        <li><a href="https://github.com/yiisoft/yii2/">https://github.com/yiisoft/yii2/</a></li>
+                        <li><a href="http://yiiframework.ru/">yiiframework.ru</a></li>
+                        <li><a href="http://www.yiiframework.com/">yiiframework.com</a></li>
+                        <li><a href="http://rmcreative.ru/">rmcreative.ru</a></li>
+                    </ul>
+
+                    <img src="elephant.png" />
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+//                    { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

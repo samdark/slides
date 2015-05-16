@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>HHVM - УСКОРЯЕМ PHP. БЕСПЛАТНО. БЕЗ СМС</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="HHVM - УСКОРЯЕМ PHP. БЕСПЛАТНО. БЕЗ СМС">
+        <meta name="author" content="Александр Макаров">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.min.css">
+        <link rel="stylesheet" href="../../css/samdark.css" id="theme">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide" data-background="dump_color.png">
+                    <h1><img src="hhvm.png"></h1>
+                    <h2>Ускоряем PHP</h2>
+                    <h3>Бесплатно*. Без СМС</h3>
+
+                    <p><a href="http://rmcreative.ru/author">Александр Макаров</a></p>
+                    <p>
+                        <small>
+                            <a href="http://www.yiiframework.com/">Yii core team,</a>
+                            <a href="http://www.stay.com/">Stay.com</a>
+                        </small>
+                    </p>
+
+                    <a href="http://slides.rmcreative.ru/2015/hhvm-dump/">http://slides.rmcreative.ru/2015/hhvm-dump/</a>
+                </section>
+
+                <section>
+                    <h2>История</h2>
+                </section>
+
+                <section>
+                    <h2>Жил был Facebook</h2>
+
+                    <img src="facebook.png" /> <br/>
+
+                    <ul>
+                        <li>Замечательно стартанул на обычном PHP.</li>
+                        <li>Рос и развивался.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>2008</h2>
+
+                    <ul>
+                        <li>Взрывной рост, 100 млн. пользователей, 154000 rps.</li>
+                        <li>С какого-то момента человекочасы стали дешевле железа.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>А почему-бы не транслировать PHP в <nobr>С++?</nobr></h2>
+
+                    <img src="lol.jpg" />
+                </section>
+
+                <section>
+                    <img src="hiphop.png" />
+                    <h2>HipHop, 2010</h2>
+
+                    <p>Мультитредовый вебсервер + движок PHP</p>
+
+                    <p>HPHPc + HPHPi + HPHPd</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li><strong>HPHPc</strong> транслировал PHP в C++, который кормили GCC и получали бинарник для продакшна</li>
+                        <li><strong>HPHPi</strong> - интерпретатор для разработки (отдельный!)</li>
+                        <li><strong>HPHPd</strong> - интерактивный дебаггер</li>
+                    </ul>
+                </section>
+
+                <section>
+                    Обгонял на <em>некоторых</em> тестах Zend Engine в 6 раз.
+                </section>
+
+                <section>
+                    <h2>А можно лучше?</h2>
+
+                    <ul>
+                        <li>HPHPc и HPHPi - <strong>отдельные</strong></li>
+                        <li>На выходе был <strong>бинарник больше 1Гб</strong>!</li>
+                        <li>Упёрлись по возможности улучшения <strong>производительности HPHPc</strong></li>
+                        <li>Упёрлись по возможности добавления в HPHPc динамики вроде <strong>eval и анонимок,
+                            несовместимость с PHP</strong></li>
+                    </ul>
+
+                </section>
+
+                <section>
+                    <h2>Исследования</h2>
+
+                    <ul>
+                        <li>2010 - <a href="https://www.facebook.com/note.php?note_id=10150415177928920">Пробы HHVM</a></li>
+                        <li>май 2012 - <a href="http://morepypy.blogspot.com/2012/07/hello-everyone.html">спонсирует два месяца разработки PHP под PyPy (success!)</a></li>
+                        <li>август 2012 - <a href="http://nerds-central.blogspot.com/2012/08/facebook-moving-to-jvm.html">слухи о том, что HipHop будет переписан под JVM</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="hhvm.png" />
+                    <h2>HHVM, 2011</h2>
+
+                    <p>Заменил HPHPc и HPHPi в Facebook в 2013.</p>
+                </section>
+
+                <section>
+                    <h2>Что это такое?</h2>
+                    <ul>
+                        <li>Виртуальная машина</li>
+                        <li>JIT-компилятор</li>
+                        <li>Кеш байткода</li>
+                        <li>FastCGI</li>
+                        <li>Приличная совместимость с PHP</li>
+                        <li>Расширения на C++, PHP, HNI</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Как работает?</h2>
+
+                    <img src="hhvm_algorithm.png" />
+                </section>
+
+                <section>
+                    <h2>Как поставить?</h2>
+
+                    <pre><code>
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
+echo deb http://dl.hhvm.com/debian wheezy main | sudo tee /etc/apt/sources.list.d/hhvm.list
+sudo apt-get update
+sudo apt-get install hhvm
+                    </code></pre>
+
+                    <a href="https://github.com/facebook/hhvm/wiki/Getting-Started">Инструкции для других дистрибутивов</a>
+                </section>
+
+                <section>
+                    <h2>Проверяем</h2>
+                    <pre><code>
+                        hhvm --help
+
+                        hhvm test.php
+
+                        hhvm -m server
+                    </code></pre>
+
+                    <pre><code>echo defined('HHVM_VERSION') ? 'Using HHVM' : 'Not using HHVM';</code></pre>
+                </section>
+
+                <section>
+                    <h2>FastCGI + nginx</h2>
+
+                    <pre><code>
+server {
+    listen 80;
+    root /path/to/your/www/root/goes/here;
+
+    index index.php;
+    server_name hhvm.test.local;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+        fastcgi_pass   127.0.0.1:9000;
+        try_files $uri =404;
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Только Linux</h2>
+
+                    <ul>
+                        <li>Под Windows не работает.</li>
+                        <li>Под MacOS только интерпретатор без JIT.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Производительность</h2>
+
+                    <p>Проверим на Yii2?</p>
+
+                    <p>basic + запрос в базу + вывод в foreach</p>
+                </section>
+
+                <section>
+                    <h2>Вроде всё работает, но...</h2>
+                </section>
+
+                <section>
+                    <h2>Exception приводит к WSOD</h2>
+                </section>
+
+                <section>
+                    <img src="yii2_error.png" />
+                </section>
+
+                <section></section>
+
+                <section>
+                    Юзайте grep по логам ;)
+                </section>
+
+                <section>
+                    hhvm.debug.server_error_message = true
+                    <img src="hhvm_error.png" />
+                </section>
+
+                <section>
+                    <h2>Версии</h2>
+
+                    <ul>
+                        <li>HipHop VM 3.5.1 (rel)</li>
+                        <li>PHP 5.6.6-1~dotdeb.1 (cli) (built: Feb 20 2015 19:57:36) + OpCache</li>
+                        <li>Yii 2.0.3</li>
+                        <li>YII_DEBUG = false</li>
+                        <li>MySQL, sakila, выбор всех author</li>
+                        <li>Сессии на диске</li>
+                        <li>Файловый кэш</li>
+                        <li>hhvm.jit_profile_interp_requests = 0 (JIT без разогрева)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Тестим</h2>
+
+                    <pre><code>
+siege -b -c10 -t60S http://hhvm.hhvm.local/
+siege -b -c10 -t60S http://php.hhvm.local/
+                    </code></pre>
+
+                    <p>Для 1, 2, 3, 4, 5, 6, 10, 20, 50 конкурентных запросов.</p>
+                </section>
+
+                <section>
+                    <h2>Машина</h2>
+
+                    <ul>
+                        <li>DigitalOcean</li>
+                        <li>1 GB памяти</li>
+                        <li>1 CPU</li>
+                        <li>30 GB SSD</li>
+                        <li>Debian 7.0 x64</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>RPS</h2>
+
+                    <table>
+                        <tr>
+                            <th>Concurrency</th>
+                            <th>PHP</th>
+                            <th>HHVM</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>26.65</td>
+                            <td>36.84</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>32.48</td>
+                            <td>35.22</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>32.68</td>
+                            <td>36.69</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>35.54</td>
+                            <td>38.70</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>34.57</td>
+                            <td>38.04</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>34.05</td>
+                            <td>38.56</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>35.01</td>
+                            <td>38.89</td>
+                        </tr>
+                        <tr>
+                            <td>20</td>
+                            <td>32.88</td>
+                            <td>37.18</td>
+                        </tr>
+                        <tr>
+                            <td>50</td>
+                            <td>33.81</td>
+                            <td>37.35</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <img src="rps_all.png" alt="RPS" />
+                </section>
+
+                <section>
+                    <img src="rps_16.png" alt="RPS" />
+                </section>
+
+                <section>
+                    <h2>40% -- 10%</h2>
+                </section>
+
+                <section>
+                    <h2>Время ответа, ms</h2>
+
+                    <table>
+                        <tr>
+                            <th>Concurrency</th>
+                            <th>PHP</th>
+                            <th>HHVM</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>40</td>
+                            <td>30</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>60</td>
+                            <td>60</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>90</td>
+                            <td>80</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>110</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>140</td>
+                            <td>130</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>180</td>
+                            <td>160</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>280</td>
+                            <td>260</td>
+                        </tr>
+                        <tr>
+                            <td>20</td>
+                            <td>610</td>
+                            <td>540</td>
+                        </tr>
+                        <tr>
+                            <td>50</td>
+                            <td>1460</td>
+                            <td>1320</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <img src="time_all.png" />
+                </section>
+
+                <section>
+                    <img src="time_16.png" />
+                </section>
+
+                <section>
+                    <h2>15% -- 10%</h2>
+                </section>
+
+                <section>
+                    <h2>Другие тесты</h2>
+
+                    <ul>
+                        <li><a href="https://blog.liip.ch/archive/2013/10/29/hhvm-and-symfony2.html">Symfony2, PHP 5.5 vs HHVM. 50%+</a></li>
+                        <li>
+                            <a href="https://kinsta.com/blog/real-world-wordpress-benchmarks-with-php5-5-php5-6-php-ng-and-hhvm/">Wordpress, PHP 5.6, HHVM, NG</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Бесплатно без SMS?!</h2>
+                </section>
+
+                <section>
+                    <img src="production.jpg">
+
+                    <p>Facebook работает на HHVM с начала 2013.</p>
+                    <p><a href="https://blog.wikimedia.org/2014/12/29/how-we-made-editing-wikipedia-twice-as-fast/">Wikipedia перешла за 6 месяцев</a></p>
+
+                    <a href="https://github.com/facebook/hhvm/issues">Но есть нюансы...</a>
+                </section>
+
+                <section>
+                    <h2>Совместимость</h2>
+
+                    <ul>
+                        <li><a href="http://hhvm.com/frameworks/">Покрыто много фреймворков</a></li>
+                        <li><a href="https://github.com/facebook/hhvm/labels/php5%20incompatibility">Есть отклонения по части PHP</a> (183 issue)</li>
+                        <li>Было больше, закрыли молча...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Из трекера</h2>
+                    <ul>
+                        <li><a href="https://github.com/facebook/hhvm/issues/4797">Повторный include не перечитывает файлы</a></li>
+                        <li><a href="https://github.com/facebook/hhvm/issues/4678">Не работает phpinfo()</a></li>
+                        <li><a href="https://github.com/facebook/hhvm/issues/3950">error_get_last() не работает с фаталами и собачкой</a></li>
+                        <li><a href="https://github.com/facebook/hhvm/issues/3661">Не работает сборка циклических ссылок</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Можно, но осторожно</h2>
+
+                    <ul>
+                        <li>Проект покрыт тестами</li>
+                        <li>Проект оттестирован на HHVM не в бою</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Альтернативы</h2>
+
+                    <ul>
+                        <li><a href="https://github.com/vk-com/kphp-kdb">KPHP</a> (2013) - PHP → C++, несовместимое, без ООП, без доки</li>
+                        <li><a href="http://quercus.caucho.com/">Quercus</a> - JVM, OpenSource (интерпретатор), Pro (JIT, PHP×3,5-4). Интеграция с Java, совместимость, UTF. Деплоится на Java-application сервера.</li>
+                        <li><a href="http://www.php-compiler.net/">Phalanger</a> - PHP → .NET, JIT. <a href="http://wiki.php-compiler.net/Compatibility">Совместимость не полная</a>.</li>
+                        <li>Подождать PHP 7 (phpng)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>phpng</h2>
+
+                    <ul>
+                        <li><a href="http://zsuraski.blogspot.ru/2014/07/benchmarking-phpng.html">В чём-то быстрее HHVM</a></li>
+                        <li>Zend, Дмитрий Стогов</li>
+                        <li><a href="https://wiki.php.net/phpng">PHP 7, уже в master</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="hack.png" />
+
+                    <p>Начал разрабатываться в 2013, релизнут в 2014.</p>
+
+                    <ul>
+                        <li>Динамическая и статическая типизация</li>
+                        <li>Generics (параметризация классов и методов, как в Java)</li>
+                        <li>Nullable-типы как в TypeScript: <code>int?</code></li>
+                        <li>Коллекции</li>
+                        <li>Лямбды как в JavaScript</li>
+                        <li>shapes (типизированные структуры данных)</li>
+                        <li>Асинхронное выполнение кода (пока не до конца доделано)</li>
+                        <li><a href="http://docs.hhvm.com/manual/en/hacklangref.php">Куча других вкусностей</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <pre><code>
+                        &lt;?hh
+                        class MyClass {
+                          public function alpha(): int {
+                            return 1;
+                          }
+
+                          public function beta(): string {
+                            return 'hi test';
+                          }
+                        }
+
+                        function f(MyClass $my_inst): int {
+                          return $my_inst->alpha();
+                        }
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Как перейти?</h2>
+
+                    <ul>
+                        <li><code>&lt;?php</code> меняем на <code>&lt;?hh</code></li>
+                        <li>Profit?</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Не совсем</h2>
+
+                    Не поддерживаются:
+                    <ul>
+                        <li>goto, if...endif</li>
+                        <li>AND, OR, XOR</li>
+                        <li>@</li>
+                        <li>break N, continue N</li>
+                        <li>eval, $$x</li>
+                        <li>undefined переменные</li>
+                        <li>globals</li>
+                        <li>ArrayAccess</li>
+                        <li>Смесь HTML и Hack (привет, шаблоны)</li>
+                        <li>Конструкторы в стиле PHP4</li>
+                        <li>Вызов статического метода родителя</li>
+                    </ul>
+
+                    <p>И ещё... всё надо обернуть в классы.</p>
+                </section>
+
+                <section>
+                    <h2>Опасно!</h2>
+
+                    <img src="noway.jpg">
+
+
+                    <p>Есть <code>h2tp</code>, который конвертирует код обратно в PHP 5, но он не для этого.</p>
+                </section>
+
+                <section>
+                    <h2>Спасибо Facebook</h2>
+
+                    <ul>
+                        <li><a href="http://hhvm.com/blog/5723/announcing-a-specification-for-php">Спецификация PHP</a></li>
+                        <li>Приблизили PHP7</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Бонус</h2>
+
+                    <img src="composer.png" /><br/>
+
+                    <ul>
+                        <li>Получаем путь <code>which composer</code>.</li>
+                        <li>Прописываем алиасом в <code>.bashrc</code>:<br/>
+                            <pre><code>alias composer='hhvm /path/to/composer'</code></pre>
+                        </li>
+                        <li>×5 к скорости</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Вопросы?</h2>
+
+                    <ul>
+                        <li><a href="http://hhvm.com/">hhvm.com</a></li>
+                        <li><a href="http://slides.rmcreative.ru/2015/hhvm-dump/">http://slides.rmcreative.ru/2015/hhvm-dump/</a></li>
+                        <li><a href="http://rmcreative.ru/">rmcreative.ru</a></li>
+                    </ul>
+
+                    <img src="elephant.png" />
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: false,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+//                    { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
