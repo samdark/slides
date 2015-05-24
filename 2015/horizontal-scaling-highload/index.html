@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Горизонтальное масштабирование: что, зачем, когда и как</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Горизонтальное масштабирование: что, зачем, когда и как">
+        <meta name="author" content="Александр Макаров">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.min.css">
+        <link rel="stylesheet" href="../../css/samdark.css" id="theme">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide" data-background="Junior-1.jpg">
+                    <h1>Горизонтальное масштабирование</h1>
+                    <h2>Что, зачем, когда и как</h2>
+
+                    <p><a href="http://rmcreative.ru/author">Александр Макаров</a></p>
+                    <p>
+                        <small>
+                            <a href="http://www.yiiframework.com/">Yii core team,</a>
+                            <a href="http://www.stay.com/">Stay.com</a>
+                        </small>
+                    </p>
+
+                    <a href="http://slides.rmcreative.ru/2015/horizontal-scaling-highload/">slides.rmcreative.ru/2015/horizontal-scaling-highload/</a>
+                </section>
+
+                <section>
+                    <h2>Что такое масштабирование?</h2>
+                </section>
+
+                <section>
+                    Возможность увеличить производительность проекта за минимальное время путём добавления ресурсов.
+                </section>
+
+                <section>
+                    <h2>Способы масштабирования</h2>
+
+                    <ul>
+                        <li>Вертикальное. Больше памяти, быстрее диск, лучше процессор в пределах одного сервера.</li>
+                        <li>Горизонтальное. Больше серверов в кластере.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>А оно надо? И так всё работает!</h2>
+                </section>
+
+                <section>
+                    <h2>Как проверить?</h2>
+
+                    <ul>
+                        <li><a href="https://httpd.apache.org/docs/2.0/programs/ab.html">ab</a></li>
+                        <li>siege</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>ab</h2>
+
+                    <pre><code>ab -n 100 -c 10 http://example.com/</code></pre>
+
+                    <pre><code>
+Concurrency Level:      10
+Time taken for tests:   1.889 seconds
+Complete requests:      100
+Failed requests:        0
+Write errors:           0
+Total transferred:      1003100 bytes
+HTML transferred:       949000 bytes
+Requests per second:    52.94 [#/sec] (mean)
+Time per request:       188.883 [ms] (mean)
+Time per request:       18.888 [ms] (mean, across all concurrent requests)
+Transfer rate:          518.62 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       57   59   1.7     59      64
+Processing:   117  126   7.5    124     162
+Waiting:       57   62   7.0     60      98
+Total:        175  186   8.0    184     224
+
+Percentage of the requests served within a certain time (ms)
+  50%    184
+  66%    186
+  75%    187
+  80%    188
+  90%    192
+  95%    203
+  98%    216
+  99%    224
+ 100%    224 (longest request)
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>siege</h2>
+
+                    <pre><code>siege -b -c10 -t60S http://example.com/</code></pre>
+
+                    <pre><code>
+** SIEGE 2.72
+** Preparing 10 concurrent users for battle.
+The server is now under siege...
+Lifting the server siege...      done.
+
+Transactions:               4066 hits
+Availability:             100.00 %
+Elapsed time:              60.00 secs
+Data transferred:          13.73 MB
+Response time:              0.22 secs
+Transaction rate:          67.77 trans/sec
+Throughput:             0.23 MB/sec
+Concurrency:               14.95
+Successful transactions:        4066
+Failed transactions:               0
+Longest transaction:            3.28
+                    </code></pre>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>RPS / TPS</li>
+                        <li>Response time</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Бывает, что не надо... пока</h2>
+
+                    <ul>
+                        <li>Обновить PHP (+40%)</li>
+                        <li>OpCache + потюнить (не должно быть misses)</li>
+                        <li>Добавить индексы в БД, пооптимизировать</li>
+                        <li>Включить кеш (memcache, Redis)</li>
+                        <li>Apache → nginx + php-fpm</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Далее будут доклады на тему оптимизации</h2>
+
+                    <ul>
+                        <li>PostgreSQL, Илья Космодемьянский</li>
+                        <li>MySQL, Василий Лукьянчиков</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Это просто и может дать вам время</h2>
+                </section>
+
+                <section>
+                    <h2>Мало!!!</h2>
+                </section>
+
+                <section>
+                    <h2>Но мы же уже всё сделали?!</h2>
+                </section>
+
+                <section>
+                    <h2>Мониторинг</h2>
+
+                    <ul>
+                        <li>Выиграйте время</li>
+                        <li>Настройте мониторинг</li>
+                        <li>Он покажет, куда и как расти</li>
+                    </ul>
+
+                    <p>Повторяйте постоянно.</p>
+                </section>
+
+                <section>
+                    <h2>Что может показать мониторинг</h2>
+
+                    <ul>
+                        <li>Упёрлись в диск</li>
+                        <li>Мало памяти</li>
+                        <li>Мало процессора</li>
+                        <li>Сеть не выдерживает</li>
+                        <li>Всё более-менее, но ошибки валятся</li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>На что обращать внимание прямо сейчас</h2>
+
+                    <ul>
+                        <li>Доступность</li>
+                        <li>Нехватка ресурсов</li>
+                        <li>Ошибки</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Мониторим ресурсы</h2>
+
+                    <ul>
+                        <li><a href="http://mmonit.com/monit/">Monit</a></li>
+                        <li><a href="http://www.zabbix.com/">Zabbix</a></li>
+                        <li><a href="http://munin-monitoring.org/">Munin</a></li>
+                        <li><a href="http://www.nagios.org/">Nagios</a></li>
+                        <li><a href="https://www.serverdensity.com/">ServerDensity</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Мониторим ошибки</h2>
+
+                    <ul>
+                        <li><a href="https://rollbar.com/">Rollbar</a></li>
+                        <li><a href="https://getsentry.com/">Sentry</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Нотификации</h2>
+
+                    <p>Важно уведомить, но не стоит спамить.</p>
+                </section>
+
+                <section>
+                    <h2>Что анализировать</h2>
+
+                    <ul>
+                        <li>RPS</li>
+                        <li>Response time</li>
+                        <li>Количество процессов</li>
+                        <li>Количество потоков</li>
+                        <li>Размеры очередей</li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Будет подробно в докладе Александра Крижановского завтра</h2>
+                </section>
+
+                <section>
+                    <h2>Бизнес-анализ</h2>
+
+                    <ul>
+                        <li><a href="http://www.google.com/analytics/">Google Analytics</a></li>
+                        <li><a href="https://mixpanel.com/">mixpanel</a></li>
+                        <li>На основе своих данных (позже)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Когда?</h2>
+
+                    <p>Нагрузка бывает как запланированная, так и нет:</p>
+                    
+                    <ul>
+                        <li>Сезонная</li>
+                        <li>Реклама</li>
+                        <li>Новости</li>
+                        <li>Акции</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Как бороться с нагрузкой?</h2>
+
+                    <p>Бизнес решает. Важна цена вопроса.</p>
+                </section>
+
+                <section>
+                    <h2>Возможно, это будет дешевле:</h2>
+
+                    <ul>
+                        <li>Профайлинг, очевидные оптимизации</li>
+                        <li>Кеш в memcached</li>
+                        <li>Правка конфигов сервера</li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Если железо дешевле программиста</h2>
+                </section>
+
+                <section>
+                    <h2>Типичная схема</h2>
+
+                    <img src="typical_schema.png" />
+
+                    <p>Балансировщик + несколько серверов приложения</p>
+                </section>
+
+                <section>
+                    <h2>Что даёт?</h2>
+
+                    <ul>
+                        <li>Возможность обработать больше запросов</li>
+                        <li>Надёжность</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Почему PHP так хорош для масштабирования</h2>
+
+                    <p>Share nothing по умолчанию.</p>
+
+                    <p>То есть слабая связанность для слоя серверов приложений.</p>
+                </section>
+
+                <section>
+                    <h2>Балансировка нагрузки</h2>
+
+                    <ul>
+                        <li>nginx</li>
+                        <li><a href="http://www.squid-cache.org/">Squid</a></li>
+                        <li><a href="http://www.haproxy.org/">HAProxy</a></li>
+                        <li>Аппаратные</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Проблемы</h2>
+
+                    <ul>
+                        <li>Как выбрать сервер?</li>
+                        <li>Как хранить сессии?</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Выбор сервера</h2>
+
+                    <ul>
+                        <li>По очереди из списка (round-robin)</li>
+                        <li>География IP</li>
+                        <li>Статистика (least-connected, доступность)</li>
+                        <li>Как-то ещё</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>nginx</h2>
+
+                    <a href="http://nginx.org/en/docs/http/load_balancing.html">http://nginx.org/en/docs/http/load_balancing.html</a>
+                </section>
+
+                <section>
+                    <h2>А что если упрёмся в балансировщик?</h2>
+
+                    <img src="typical_schema_dns.png" />
+                </section>
+
+                <section>
+                    <h2>Сессии</h2>
+
+                    <ul>
+                        <li>По умолчанию в файлах</li>
+                        <li>NFS?</li>
+                        <li>БД?</li>
+                        <li>Нельзя писать в кеш, если данные в сессии важны</li>
+                        <li>Можно поместить в общее отдельное хранилище</li>
+                        <li>Redis однопоточный</li>
+                        <li>По Redis на каждом инстансе, sticky-сессии (ip-hash)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Прокси для memcached и Redis</h2>
+
+                    <a href="https://github.com/twitter/twemproxy">https://github.com/twitter/twemproxy</a>
+                </section>
+
+                <section>
+                    <h2>Не пишите своего аналога сессий, используйте PHP!</h2>
+
+                    <ul>
+                        <li><a href="https://php.net/manual/ru/class.sessionhandler.php">https://php.net/manual/ru/class.sessionhandler.php</a></li>
+                        <li><a href="https://php.net/manual/ru/function.session-set-save-handler.php">https://php.net/manual/ru/function.session-set-save-handler.php</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Закрывайте сессии</h2>
+
+                    <pre><code>session_write_close();</code></pre>
+                </section>
+
+                <section>
+                    <h2>Файлы</h2>
+
+                    <ul>
+                        <li>Специализированное решение</li>
+                        <li>«Шардирование» средствами PHP</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Специализированные решения</h2>
+
+                    <ul>
+                        <li><a href="http://www.gluster.org/about/">GlusterFS</a></li>
+                        <li><a href="https://aws.amazon.com/ru/s3/">Amazon S3</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>PHP</h2>
+
+                    <p><a href="http://flysystem.thephpleague.com/">Flysystem</a></p>
+
+                    <img src="files_sharding.png" />
+                </section>
+
+                <section>
+                    <h2>Раздача</h2>
+
+                    <ul>
+                        <li><a href="http://nginx.org/">nginx</a></li>
+                        <li><a href="https://www.varnish-cache.org/">Varnish</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Замечания</h2>
+
+                    <ul>
+                        <li>Не хранить в базе!</li>
+                        <li>Можно хранить локальный кеш. Например, для роутинга запросов.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>База данных</h2>
+
+                    <ul>
+                        <li>Репликация master-slave</li>
+                        <li>Репликация master-master</li>
+                        <li>Репликация руками</li>
+                        <li>Шардирование</li>
+                        <li>Партицирование (расскажет Денис Иванов далее)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>master-slave</h2>
+
+                    <img src="master_slave.png" />
+                </section>
+
+                <section>
+                    <h2>Зачем?</h2>
+
+                    <ul>
+                        <li>Читаем больше, чем пишем? Будет быстрее.</li>
+                        <li>Отказоустойчивость.</li>
+                        <li>Бэкапы (реплику можно остановить).</li>
+                        <li>Тяжёлые вычисления (о статистике далее).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>read/write split</h2>
+
+                    <ul>
+                        <li>2 пула серверов: master, slave</li>
+                        <li>Соединение по требованию</li>
+                        <li>Логика выбора соединения варьируется...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Логика</h2>
+
+                    <ul>
+                        <li>Писать всегда в master</li>
+                        <li>Только чтение с slave (<code>array_rand()</code>)</li>
+                        <li>Чтение для записи - ...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Засада... репликация лагает</h2>
+
+                    <p>Иногда данные попадают с master на slave с задержкой.</p>
+
+                    <p>Для MySQL:</p>
+                    <pre><code>mysql -e "SHOW SLAVE STATUS;" | grep Seconds_Behind_Master</code></pre>
+
+                    <p>PostgreSQL:</p>
+                    <pre><code>select now() - pg_last_xact_replay_timestamp() AS replication_delay;</code></pre>
+
+                    <ul>
+                        <li>0 = OK. Читаем с slave.</li>
+                        <li>Больше 0 = ждём или читаем с master.</li>
+                        <li>NULL = ещё не реплицировали (логи!). Читаем с master.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Причины</h2>
+
+                    <ul>
+                        <li>Медленная сеть.</li>
+                        <li>Не справляется реплика.</li>
+                        <li>Слишком много слейвов (>20 на мастер).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>master-master</h2>
+
+                    <img src="master_master.png" />
+                </section>
+
+                <section>
+                    <h2>Зачем?</h2>
+
+                    <ul>
+                        <li>Отказоустойчивость.</li>
+                        <li>Может быть быстрее.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Логика</h2>
+
+                    <p>Выбираем рандомное соединение.</p>
+                </section>
+
+                <section>
+                    <h2>Минусы</h2>
+
+                    <ul>
+                        <li>Лаг репликации выше.</li>
+                        <li>Поломка = потеря данных. Поломка реплицируется.</li>
+                        <li>Может забить сеть.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>О репликации в MySQL сегодня расскажет Андрей Аксенов</h2>
+                </section>
+
+                <section>
+                    <h2>Репликация руками</h2>
+
+                    <p>Всегда можно сделать это руками.</p>
+                </section>
+
+                <section>
+                    <h2>Шардирование</h2>
+
+                    <p>Размазывание данных по нескольким серверам.</p>
+                </section>
+
+                <section>
+                    <h2>Отдельные таблицы</h2>
+
+                    <img src="sharding_table.png" />
+
+                    <p>Отдельные соединения. <code>WHERE IN</code> вместо <code>JOIN</code>.</p>
+                </section>
+
+                <section>
+                    <h2>Часть одних и тех же данных</h2>
+
+                    <img src="sharding_id.png" />
+                </section>
+
+                <section>
+                    <h2>Как выбрать сервер?</h2>
+
+                    <pre><code>$connectionID = 'user_db' . ($user_id % 3 + 1);</code></pre>
+
+                    где 3 - количество серверов. Альтернаива - map в key-value хранилище.
+                </section>
+
+                <section>
+                    <h2>Попроще</h2>
+
+                    <p>Попробовать разделить на части, которые используются вместе, но не пересекаются.</p>
+
+                    <img src="sharding_grouping.png" />
+
+                    <p>Надо знать ID пользователя, но легко выбрать все его посты, посортировать и т.д.</p>
+                </section>
+
+                <section>
+                    <h2>Посложнее</h2>
+
+                    <p>Не удаётся сгруппировать данные.</p>
+
+                    <p>Надо знать ID данных, чтобы их достать. Никаких <code>JOIN</code>, <code>ORDER</code> и т.д.
+                       Таблица используется как key-value.</p>
+                </section>
+
+                <section>
+                    <h2>Обычные задачи становятся необычными</h2>
+
+                    <ul>
+                        <li>Выбрать TOP 10.</li>
+                        <li>Постраничная разбивка.</li>
+                        <li>Выбрать с наименьшей стоимостью.</li>
+                        <li>Выбрать посты юзера X.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>А правильно ли мы выбрали хранилище...</h2>
+                </section>
+
+                <section>
+                    <h2>Шардинг из коробки</h2>
+
+                    <ul>
+                        <li>memcache</li>
+                        <li>Redis</li>
+                        <li><a href="https://cassandra.apache.org/">Cassandra</a></li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Подробно о шардировании сегодня будет в докладе Дениса Иванова</h2>
+                </section>
+
+                <section>
+                    <h2>Как быть со статистикой?</h2>
+
+                    <p>Считать статистику по основным данным - ошибка.</p>
+
+                    <ul>
+                        <li>Скорее всего вам не нужен realtime.</li>
+                        <li>Не считайте статистику на основной базе.</li>
+                        <li>Специальный slave.</li>
+                        <li>OLAP</li>
+                        <li>Или что-то готовое...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Фоновая обработка</h2>
+
+                    <img src="queue.png" />
+
+                    <p>Всё, что не критично сделать прямо сейчас, можно обработать в фоне.</p>
+                </section>
+
+                <section>
+                    <h2>Зачем?</h2>
+
+                    <ul>
+                        <li>Быстрее ответ сервера</li>
+                        <li>Можно размазать нагрузку</li>
+                        <li>Можно обработать на другом сервере</li>
+                        <li>Можно обработать не PHP</li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Как?</h2>
+
+                    <ul>
+                        <li>AMQP: <a href="http://activemq.apache.org/">ActiveMQ</a>, <a href="https://www.rabbitmq.com/">RabbitMQ</a></li>
+                        <li><a href="https://kr.github.io/beanstalkd/">beanstalkd</a></li>
+                        <li><a href="https://aws.amazon.com/ru/sqs/">Amazon SQS</a></li>
+                        <li><a href="http://gearman.org/">Gearman</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Подробно будет сегодня в докладе Константина Осипова</h2>
+                </section>
+
+                <section>
+                    <h2>Архитектура</h2>
+                </section>
+
+                <section>
+                    <h2>Меньше связанности!</h2>
+
+                    <p>Чем меньше связанности, тем проще менять одно решение на другое.</p>
+                </section>
+
+                <section>
+                    <h2>Связанность?</h2>
+
+                    <ul>
+                        <li>В коде (SOLID, GRASP)</li>
+                        <li>В доменном слое</li>
+                        <li>В архитектуре в целом</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>SOA</h2>
+
+                    <ul>
+                        <li>Система бьётся на отдельные <u>логические</u> части</li>
+                        <li>Части взаимодействуют через интерфейсы</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Доменный слой</h2>
+
+                    <ul>
+                        <li>Сверхважно отделить его от контекста, в котором он выполняется</li>
+                        <li>Что происходит в самом слое не так важно, но лучше делать это правильно</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Про доменный слой</h2>
+
+                    <ul>
+                        <li>Domain-Driven Design: Tackling Complexity in the Heart of Software, Eric Evans</li>
+                        <li>Implementing Domain-Driven Design, Implementing Domain-Driven Design</li>
+                        <li><a href="http://martinfowler.com/bliki/BoundedContext.html">BoundedContext</a> и <a href="http://martinfowler.com/tags/domain%20driven%20design.html">DDD в общем</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>В архитектуре</h2>
+
+                    <ul>
+                        <li>share nothing</li>
+                        <li>логика на стороне приложения</li>
+                        <li>низкая связанность</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Не стоит недооценивать браузерную оптимизацию</h2>
+                </section>
+
+                <section>
+                    <h2>Абстракция и дробление совсем не бесплатны.</h2>
+                </section>
+
+                <section>
+                    <h2>Не действуйте вслепую.</h2>
+                </section>
+
+                <section>
+                    <h2>Думайте.</h2>
+                </section>
+
+                <section>
+                    <h2>Проверяйте.</h2>
+                </section>
+
+                <section>
+                    <h2>Материалы</h2>
+
+                    <ul>
+                        <li><a href="http://book.mixu.net/distsys/single-page.html">Distributed systems for fun and profit</a></li>
+                        <li><a href="http://ruhighload.com/">http://ruhighload.com/</a></li>
+                        <li><a href="http://www.insight-it.ru/">http://www.insight-it.ru/</a></li>
+                        <li>Поискать по "highload" в рунете</li>
+                        <li>Поискать по "sclability" в англонете</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Как всё это попробовать?</h2>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <img src="production.jpg" />
+                            </td>
+                            <td style="vertical-align: middle">
+                                <ul>
+                                    <li>DigitalOcean</li>
+                                    <li>Linode</li>
+                                    <li>...</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <h2>Вопросы?</h2>
+
+                    <ul>
+                        <li><a href="http://slides.rmcreative.ru/2015/horizontal-scaling-highload/">slides.rmcreative.ru/2015/horizontal-scaling-highload/</a></li>
+                        <li><a href="http://rmcreative.ru/">rmcreative.ru</a></li>
+                    </ul>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: false,
+                progress: true,
+                history: true,
+                center: true,
+                margin: 0.3,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+//                    { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
