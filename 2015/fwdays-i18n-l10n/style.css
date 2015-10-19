@@ -1,0 +1,18 @@
+.reveal .slide-background {
+    background-position: 100% 100%;
+    background-image: url(slide.png);
+    background-repeat: no-repeat;
+}
+
+.reveal section.title-slide  img {
+    border: 10px solid #fff !important;
+}
+
+.reveal pre code {
+    max-height: 650px;
+}
+
+.reveal blockquote {
+    font-style: normal;
+    background: #feffbb;
+}

@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Yii and PHP i18n & L10n</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Yii and PHP i18n & L10n">
+        <meta name="author" content="Alexander Makarov">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.min.css">
+        <link rel="stylesheet" href="../../css/samdark.css" id="theme">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide" data-background="title-slide.png">
+                    <h1>Yii and PHP i18n & L10n</h1>
+
+                    <p><a href="http://github.com/samdark">Alexander Makarov</a></p>
+                    <p>
+                        <small>
+                            <a href="http://www.yiiframework.com/">Yii core team,</a>
+                            <a href="http://www.stay.com/">Stay.com</a>
+                        </small>
+                    </p>
+
+                    <a href="http://slides.rmcreative.ru/2015/i18n-l10n/">http://slides.rmcreative.ru/2015/i18n-l10n/</a>
+                </section>
+
+                <section>
+                    <h2>Goals</h2>
+
+                    <ul>
+                        <li>Learn what's i18n, L10n</li>
+                        <li>Learn about how it's done</li>
+                        <li>Avoid common mistakes</li>
+                        <li>Explain what PHP intl really is</li>
+                        <li>Data translation</li>
+                    </ul>
+
+                    <center>
+                        <img src="i18n.png" />
+                    </center>
+                </section>
+
+                <section>
+                    <h2>What's i18n?</h2>
+                    <p>Internationalization == globalization</p>
+                    <blockquote>Ability of an app to be adapted to various languages and regions without engineering changes.</blockquote>
+
+                    <p>i.e. regardless of locale chosen. Developer's tasks.</p>
+                </section>
+
+                <section>
+                    <h2>What's L10n?</h2>
+                    <p>Localization</p>
+                    <blockquote>The process of adapting software for a specific region or language by adding locale-specific components and translating text.</blockquote>
+
+                    <p>Translator tasks.</p>
+                </section>
+
+                <section>
+                    <h2>Locale?</h2>
+
+                    <p>A a data set that includes info about language, country, formats, currencies etc. Usually varies
+                    per country. Sometimes there are sub-variations.</p>
+                </section>
+
+                <section>
+                    <h2>i18n problems (developers)</h2>
+                    <ul>
+                        <li>Support various characters (utf8, right collation)</li>
+                        <li>LTR / RTL</li>
+                        <li>String translation</li>
+                        <li>Locale switching</li>
+                        <li>Language/locale aware formatting (dates, currencies, geographical names)</li>
+                        <li>Language/locale based substitutions</li>
+                        <li>Timezones</li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Approaches</h2>
+
+                    <ul>
+                        <li><a href="http://icu-project.org/">ICU</a> (PHP intl, Yii 2.0, Aura, Java)</li>
+                        <li><a href="https://www.gnu.org/software/gettext/">gettext</a> (Django, Yii 2.0, Yii 1.1)</li>
+                        <li>Custom stuff based on <a href="http://cldr.unicode.org/">CLDR</a>. Not as powerful (Yii 1.1, RoR, Symfony, Laravel)</li>
+                        <li>Totally custom or just string replacement. Meh</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>intl</h2>
+
+                    <ul>
+                        <li>PHP extension.</li>
+                        <li>A wrapper around icu4c.</li>
+                        <li>Uses CLDR.</li>
+                        <li>Awful docs.</li>
+                        <li>Has issues.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>CLDR</h2>
+
+                    <p>Unicode Common Locale Data Repository</p>
+                    <a href="http://cldr.unicode.org/">cldr.unicode.org</a>
+
+                    Huge data set of i18n data per locale.
+
+                    Used by companies such as Apple, Google, IBM, Microsoft, Adobe, lots of Linux distribs.
+                    <a href="https://docs.oracle.com/javase/7/docs/api/java/text/MessageFormat.html">Java</a>, Perl,
+                    Python, jQuery, PHP intl and more.
+                </section>
+
+                <section>
+                    <h2>ICU</h2>
+
+                    <a href="http://site.icu-project.org/">icu-project.org</a>
+
+                    <p>Libraries for C and Java that use CLDR data for message formatting, locale selection etc.</p>
+                </section>
+
+                <section>
+                    <h2>What intl can do</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Collator - locale-aware string collation</li>
+                        <li><strong>Locale</strong> - various locale utils
+                            <ul>
+                                <li>Locale::acceptFromHttp</li>
+                                <li>Locale::canonicalize</li>
+                            </ul>
+                        </li>
+                        <li>IntlCalendar - locale-aware calendar</li>
+                        <li>ResourceBundle - loads resources (later)</li>
+                        <li><strong>Transliterator</strong> - yum!</li>
+                        <li>IntlBreakIterator - locating boundaries in text</li>
+                        <li>UConverter - encoding converter</li>
+                        <li>NumberFormatter - locale-aware number formatting</li>
+                        <li><strong>MessageFormatter</strong> - powerful message formatter</li>
+                        <li><a href="https://secure.php.net/manual/en/book.intl.php">and more</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Message formatting</h2>
+                </section>
+
+                <section>
+                    <h2>Numbers</h2>
+
+                    <pre><code>
+echo \MessageFormatter::formatMessage(
+    'en_US', 'Value: {value, number}', ['value' => 123456,789]
+);
+// Value: 123,456.789
+
+echo \MessageFormatter::formatMessage(
+    'en_US', 'Price: {price, number, currency}', ['price' => 100]
+);
+// Price: $100.00
+
+echo \MessageFormatter::formatMessage(
+    'en_US', 'Value: {value, number, percent}', ['value' => 123]
+);
+// Value: 123%
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Date and time</h2>
+
+                    <pre><code>
+echo \MessageFormatter::formatMessage(
+    'en_US', 'Date: {d, date, short} | {d, date, medium} | {d, date, long}
+     | {d, date, full}', ['d' => $d]
+);
+// Date: 4/18/15 | Apr 18, 2015 | April 18, 2015
+   | Saturday, April 18, 2015
+
+echo \MessageFormatter::formatMessage(
+    'ru_UA', 'Date: {d, date, short} | {d, date, medium} | {d, date, long}
+     | {d, date, full}', ['d' => $d]
+);
+
+// Дата: 18.04.15 | 18 апр. 2015 г. | 18 апреля 2015 г.
+   | суббота, 18 апреля 2015 г.
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Spellout</h2>
+
+<pre><code>
+echo \MessageFormatter::formatMessage(
+    'en_US', '{n,number} is spelled as {n, spellout}', ['n' => 42]
+);
+// 42 is spelled as forty-two
+
+echo \MessageFormatter::formatMessage(
+    'en_US', 'I am {n, spellout,%spellout-ordinal} agent', ['n' => 47]
+);
+// I am forty-seventh agent
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Plurals</h2>
+
+                    <pre><code>
+$message = 'Здесь {n, plural, =0{котов нет} =1{есть один кот} one{# кот}
+            few{# кота} many{# котов} other{# кота}}!';
+echo \MessageFormatter::formatMessage('ru_UA', $message, ['n' => 1]);
+// Здесь есть один кот!
+
+$message = 'There {n, plural, =0{are no cats}
+            =1{is one cat} other{are # cats}}!';
+echo \MessageFormatter::formatMessage('en_US', $message, ['n' => 1]);
+// There is one cat!
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Ordinals</h2>
+
+<pre><code>
+echo \Yii::t('app', 'You are the {n, ordinal} visitor here!', ['n' => 42]);
+// You are the 42nd visitor here!
+</code></pre>
+                </section>
+
+
+                <section>
+                    <h2>Selection</h2>
+
+<pre><code>
+echo \Yii::t('app', '{name} is a {gender} and {gender, select, female{she}
+    male{he} other{it}} loves Yii!', [
+    'name' => 'Snoopy',
+    'gender' => 'dog',
+]);
+// Snoopy is a dog and it loves Yii!
+</code></pre>
+                </section>
+
+
+                <section>
+                    <h2>There are more but... enough</h2>
+
+                    <p>Intl is powerful!</p>
+                </section>
+
+
+                <section>
+                    <h2>intl problems</h2>
+
+                    <ul>
+                        <li>Docs</li>
+                        <li>Named parameter issues</li>
+                        <li>Sometimes it's not installed</li>
+                        <li>Sometimes ICU is outdated</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Named parameter issues</h2>
+
+                    <ul>
+                        <li>Named parameters fail w/ PHP < 5.5.0 or INTL < 4.8.</li>
+                        <li><a href="https://bugs.php.net/bug.php?id=70484">Named parameters fail w/ selectordinal in latest PHP versions.</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Positional ones could be used:</p>
+
+                    <pre><code>
+$message = 'There {0, plural, =0{are no cats}
+            =1{is one cat} other{are # cats}} except {1}!';
+echo \MessageFormatter::formatMessage('en_US', $message, [1, 'Simon']);
+                    </code></pre>
+                </section>
+
+                <section>
+                    But that sucks!
+                </section>
+
+                <section>
+                    Solved in Yii, should be OK in Aura.
+
+                    <img src="guts.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>intl not installed</h2>
+
+                    If you're making a product provide fallback. At least for English.
+
+                    If you're making a service install it.
+                </section>
+
+                <section>
+                    <h2>Outdated intl or ICU data</h2>
+
+
+                    Update it:
+
+                    <ul>
+                        <li><a href="http://nix-tips.ru/obnovlenie-icu-na-centosred-hatfedora.html">http://nix-tips.ru/obnovlenie-icu-na-centosred-hatfedora.html</a></li>
+                        <li><a href="http://habrahabr.ru/post/254789/">http://habrahabr.ru/post/254789/</a></li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Hidden gems</h2>
+
+                    <p>intl relies on CLDR data which is kinda more than is exposed via extension API. Can we access raw data?</p>
+                </section>
+
+                <section>
+                    <h2>Yes!</h2>
+
+                    <img src="engineering.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>intl manual lies to us</h2>
+
+                    <img src="no-lies.jpg" alt="">
+
+                    <pre><code>new \ResourceBundle($resourceFileName, $resourceDirName);</code></pre>
+
+                    <code>$resourceDirName = null</code> means root dir of intl internal resources.
+                </section>
+
+                <section>
+                    Resources are compiled but you <a href="https://github.com/OpenNTF/org.openntf.domino/tree/master/com.ibm.icu/src/com/ibm/icu/impl/data/icudt51b">can find a list of files</a>
+                    or decompile <code>icudt49.dll</code> if you're on Windows or try building resources from source.
+                </section>
+
+                <section>
+                    <pre><code>
+private function dumpResourceBundle($bundle, $depth = 0)
+{
+    if ($bundle === null) {
+        return 'NULL';
+    } elseif (is_scalar($bundle)) {
+        return $bundle;
+    }
+
+    $out = '';
+    foreach ($bundle as $k => $v) {
+        $out .= str_repeat(' ', $depth) . $k . ' = ';
+        if ($v instanceof \ResourceBundle || is_array($v)) {
+            $out .= " [\n";
+            $out .= $this->dumpResourceBundle($v, $depth + 1);
+            $out .= str_repeat(' ', $depth) . "\n]\n";
+        }
+        else {
+            $out .= $v . "\n";
+        }
+    }
+    return $out;
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code>new \ResourceBundle('en_UK', null);</code></pre>
+
+                    <p>Instead of <code>en_UK</code> try more locales. If there's no data, try <code>en</code>.</p>
+
+                    <ul>
+                        <li>month names</li>
+                        <li>weekday names</li>
+                        <li>quarter names</li>
+                        <li>various formats for various calendars</li>
+                        <li>units</li>
+                        <li>measurement system names</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <pre><code>new \ResourceBundle('en_US', ...);</code></pre>
+
+                    <ul>
+                        <li>ICUDATA-curr = currencies</li>
+                        <li>ICUDATA-region = regions</li>
+                        <li>ICUDATA-zone = time zone names</li>
+                        <li>ICUDATA-lang = languages</li>
+                    </ul>
+
+                    <p>Less useful:</p>
+                    <ul>
+                        <li>ICUDATA-rbnf - rule based number format (spellout)</li>
+                        <li>ICUDATA-translit - transliteration rules and tables (huge!)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <pre><code>new \ResourceBundle(..., null);</code></pre>
+
+                    <ul>
+                        <li>metadata = language aliases, region codes, script aliases, territory aliases, variant aliases</li>
+                        <li>plurals = rules for plural and selectordinal</li>
+                        <li>zoneinfo64 = Olson DB?!</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Research results</h2>
+
+                    <a href="http://intl.rmcreative.ru/">http://intl.rmcreative.ru/</a>
+
+                    <p>Give it a locale and it will show you plurals format, selectordinal format etc.</p>
+                </section>
+
+                <section>
+                    <h2>L18n problems (translators)</h2>
+
+                    <p>As little work as possible</p>
+
+                    <ul>
+                        <li>Translation itself</li>
+                        <li>Template adjustments (Colors, legal requirements)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Source strings</h2>
+
+                    <p>English or <code>keys.in.english</code>.</p>
+                </section>
+
+                <section>
+                    <h2>Message storage format</h2>
+                    
+                    <p>Doens't really matter.</p>
+
+                    <p>PHP arrays are OK for non-tech people.</p>
+                </section>
+
+                <section>
+                    <h2>Don't try Google Translate ;)</h2>
+
+                    <img src="google_translate.png" alt="">
+                </section>
+
+                <section>
+                    <h2>Message scanner</h2>
+
+                    <p>A tool that scans code and updates translation files automatically adding new strings and removing old
+                    ones.</p>
+
+                    <p>We have it in Yii ;)</p>
+                </section>
+
+                <section>
+                    <h2>Data translation</h2>
+                </section>
+
+                <section>
+                    <h2>How to store posts in X languages?</h2>
+
+                    <ul>
+                        <li>UTF-8</li>
+                        <li>Filter by language</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Many columns</h2>
+
+                    <img src="data_columns.png" alt=""> <br>
+
+                    <ul>
+                        <li>- Complex query</li>
+                        <li>- Hard to add languages</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Same table, multiple records</h2>
+
+                    <img src="data_separated.png" alt=""> <br>
+
+                    <ul>
+                        <li>! Each language record is a separate independent one</li>
+                        <li>+ Simple</li>
+                        <li>+ Easy to add translations</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Single record + translation in another table</h2>
+
+                    <img src="data_has_many.png" alt=""> <br>
+
+                    <ul>
+                        <li>+ Simple maintenance</li>
+                        <li>+ Easy to add translations</li>
+                        <li>+ Only one join</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Always normalize language!</h2>
+
+                    <p>Use <a href="http://www.loc.gov/standards/iso639-2/">ISO-639-2</a>: es, en, fr or <a
+                            href="https://www.ietf.org/rfc/rfc5646.txt">RFC-5645</a>: zh_CN, ru_UA.</p>
+
+                    <pre><code>Locale::canonicalize($language);</code></pre>
+                </section>
+                
+                <section>
+                    <h2>More reading</h2>
+                    
+                    <ul>
+                        <li><a href="https://secure.php.net/manual/en/book.intl.php">intl docs</a></li>
+                        <li><a href="http://icu-project.org/">ICU</a></li>
+                       <li><a href="http://cldr.unicode.org/">CLDR</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Questions time!</h2>
+
+                    <ul>
+                        <li><a href="http://slides.rmcreative.ru/2015/i18n-l10n/">http://slides.rmcreative.ru/2015/i18n-l10n/</a></li>
+                        <li><a href="http://www.yiiframework.com/">http://www.yiiframework.com/</a></li>
+                    </ul>
+
+                    <img src="elephant.png" />
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: false,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+//                    { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
