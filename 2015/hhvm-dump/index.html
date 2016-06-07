@@ -15,12 +15,9 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.min.css">
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
         <link rel="stylesheet" href="../../css/samdark.css" id="theme">
         <link rel="stylesheet" href="style.css">
-
-        <!-- For syntax highlighting -->
-        <link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css">
 
         <!-- If the query includes 'print-pdf', use the PDF print sheet -->
         <script>
@@ -499,7 +496,7 @@ siege -b -c10 -t60S http://php.hhvm.local/
                 </section>
 
                 <section>
-                    <img src="hack.png" />
+                    <img src="hack.png"  width="10%"/>
 
                     <p>Начал разрабатываться в 2013, релизнут в 2014.</p>
 
@@ -517,20 +514,20 @@ siege -b -c10 -t60S http://php.hhvm.local/
 
                 <section>
                     <pre><code>
-                        &lt;?hh
-                        class MyClass {
-                          public function alpha(): int {
-                            return 1;
-                          }
+&lt;?hh
+class MyClass {
+  public function alpha(): int {
+    return 1;
+  }
 
-                          public function beta(): string {
-                            return 'hi test';
-                          }
-                        }
+  public function beta(): string {
+    return 'hi test';
+  }
+}
 
-                        function f(MyClass $my_inst): int {
-                          return $my_inst->alpha();
-                        }
+function f(MyClass $my_inst): int {
+  return $my_inst->alpha();
+}
                     </code></pre>
                 </section>
 
@@ -560,7 +557,9 @@ siege -b -c10 -t60S http://php.hhvm.local/
                         <li>Конструкторы в стиле PHP4</li>
                         <li>Вызов статического метода родителя</li>
                     </ul>
+                </section>
 
+                <section>
                     <p>И ещё... всё надо обернуть в классы.</p>
                 </section>
 
@@ -585,7 +584,7 @@ siege -b -c10 -t60S http://php.hhvm.local/
                 <section>
                     <h2>Бонус</h2>
 
-                    <img src="composer.png" /><br/>
+                    <img src="composer.png" width="20%" /><br/>
 
                     <ul>
                         <li>Получаем путь <code>which composer</code>.</li>
@@ -613,7 +612,7 @@ siege -b -c10 -t60S http://php.hhvm.local/
         </div>
 
         <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
-        <script src="../../bower_components/reveal.js/js/reveal.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
 
         <script>
 
