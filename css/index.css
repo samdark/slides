@@ -68,3 +68,14 @@ a:not(.image):hover {
     text-shadow: none;
     border: none;
 }
+
+.youtube:before {
+	content: ' ';
+    background: url(youtube.png) no-repeat;
+    width: 28px;
+    height: 20px;
+    background-size: contain;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 2px;
+}
