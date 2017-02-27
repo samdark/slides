@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Абстракция vs простота</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Абстракция vs простота">
+        <meta name="author" content="Александр Макаров">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../../css/samdark.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide">
+                    <h1>Абстракция и её проблемы</h1>
+
+                    <p><a href="http://github.com/samdark">Александр Макаров</a></p>
+                    <p>
+                        <small>
+                            <a href="http://www.yiiframework.com/">Yii core team,</a>
+                            <a href="http://www.stay.com/">Stay.com</a>
+                        </small>
+                    </p>
+
+                    <a href="http://slides.rmcreative.ru/2016/yii2-architecture/">http://slides.rmcreative.ru/2017/abstraction/</a>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Что такое абстракция и абстрагирование</li>
+                        <li>Зачем?</li>
+                        <li>Проблемы</li>
+                        <li>Выводы</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Что такое абстракция и абстрагирование</h2>
+                </section>
+
+                <section>
+                    <p>Из философии: <strong>отвлечение</strong> в процессе познания <strong>от несущественных</strong>
+                       сторон, свойств, связей объекта (предмета или явления) <strong>с целью выделения их существенных</strong>,
+                       закономерных признаков; абстрагирование — теоретическое обобщение как результат такого отвлечения.</p>
+                </section>
+
+                <section>
+                    <h2>Зачем?</h2>
+
+                    <p>Впихнуть невпихуемое.</p>
+
+                    <img src="perfect_fit.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>Память</h2>
+
+                    <img src="brain.png" alt="Мозг">
+
+                    <ul>
+                        <li>Кратковременная</li>
+                        <li>Долговременная</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="short_memory.png" alt="Кратковременная память" />
+
+                    <p>TTL объекта = ~20 сек.</p>
+                </section>
+
+                <section>
+                    <p>Оперативно (в кратковременной памяти) <strong>человек может оперировать малым числом объектов</strong>:</p>
+
+                    <ul>
+                        <li>7±2 объектами (George Miller, 1989)</li>
+                        <li>4±1 (Cowan, 2001)</li>
+                        <li>Число зависит от объектов</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Группировка (Chunking)</h2>
+                </section>
+
+                <section>
+                    <h2>88003334434</h2>
+                </section>
+
+                <section></section>
+
+                <section>
+                    <h2>8-800-333-44-34</h2>
+                </section>
+
+                <section></section>
+
+                <section>
+                    <h2>Вернёмся к абстрагированию</h2>
+                </section>
+
+                <section>
+                    <p>Абстрагировать можно алгоритмы и данные. Объект &mdash; их сочетание.</p>
+                </section>
+
+                <section>
+                    <p>Архитектуру изобретают для того, чтобы совладать с <strong>неподъёмно</strong> сложными системами.</p>
+                </section>
+
+                <section>
+                    <p>Обычно <strong>систему бьют на слои</strong> (группы, chunk-и). Каждый последующий более абстрактный
+                        слой базируется на предыдущем менее абстрактном.</p>
+
+                    <img src="layers.gif" alt="Слои">
+                </section>
+
+                <section>
+                    <p>Так можно уместить в голове общую картину разом.</p>
+                </section>
+
+                <section>
+                    <h2>Проблемы</h2>
+                </section>
+
+                <section>
+                    <h2>Барьер абстракции</h2>
+
+                    <p>Два разных объекта могут при абстрагировании стать
+                       в определённом контексте неразличимы.</p>
+
+                    <img src="barrier.png" alt="">
+                </section>
+
+                <section>
+                    <p>"All non-trivial abstractions, to some degree, are leaky." <em>Joel Spolski</em></p>
+                    <p>Практически все абстракции "дырявые". Через них просачиваются детали реализации.</p>
+                </section>
+
+                <section>
+                    <p>Чтобы полностью понять абстракцию приходится зарыться в детали реализации.</p>
+
+                    <img src="barrier.png" alt="">
+                </section>
+
+                <section>
+                    <p>Придётся вникнуть во всё. Начиная с совсем абстрактного и заканчивая почти конкретным.</p>
+                </section>
+
+                <section>
+                    <p>Проще вникать в простое и конкретное.</p>
+                </section>
+
+                <section>
+                    <h2>Побочный эффект</h2>
+
+                    <p>У абстракции есть свойства, которых нет в объекте.</p>
+                </section>
+
+                <section>
+                    <h2>OOD, DDD и т.д.</h2>
+
+                    <ul>
+                        <li>Цель &mdash; подобрать подходящую абстракцию</li>
+                        <li>Важен контекст</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Плохая абстракция хуже отсутствия абстракции.</p>
+                </section>
+
+                <section>
+                    <p>Абстракция (класс) зависит от того, кто абстрагирует. Для одной задачи два человека получат разный
+                    набор классов.</p>
+                </section>
+
+                <section>
+                    <p>Своя абстракция всегда более понятна. Отсюда желание всё переписать.</p>
+                </section>
+
+                <section>
+                    <p>Все хотят писать реюзабельный код, но никто не хочет реюзать чужой код.</p>
+                </section>
+
+                <section>
+                    <h2>Смена контекста</h2>
+                </section>
+
+                <section>
+                    <p>При изменении контекста абстракция может перестать работать.</p>
+
+                    <img src="personal.gif" alt="">
+                </section>
+
+                <section>
+                    <p>Практически невозможно оценить архитектуру, не развивая в течение существенного времени
+                       приложение, на ней построенное.</p>
+                </section>
+
+                <section>
+                    <h2>Совсем сходу не оценить?</h2>
+                </section>
+
+                <section>
+                    <p>Оценить техническое исполнение абстрагирования возможно:</p>
+
+                    <ul>
+                        <li>Coupling</li>
+                        <li>Cohesion</li>
+                        <li>SOLID</li>
+                        <li>и т.д.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Одинаковая подготовка делает различия меньше, а понимание лучше.</p>
+                </section>
+
+                <section>
+                    <p>Именно поэтому надо читать и знать Буча, Фаулера и т.д.</p>
+                </section>
+
+                <section>
+                    <p>Абстракция &mdash; не цель, а инструмент.</p>
+                </section>
+
+                <section>Абстракция &mdash; необходимое зло.</section>
+
+                <section>
+                    <h2>Почитать</h2>
+
+                    <ul>
+                        <li><a href="https://en.wikipedia.org/wiki/Abstraction">Wikipedia: Abstraction</a></li>
+                        <li><a href="https://en.wikipedia.org/wiki/Short-term_memory">Wikipedia: Short-term memory</a></li>
+                        <li>Barbara Oakley: A Mind For Numbers (Думай как математик)</li>
+                        <li><a href="https://speakerdeck.com/tastapod/why-every-element-of-solid-is-wrong">Why Every Single Element of SOLID is Wrong!</a></li>
+                        <li><a href="http://sergeyteplyakov.blogspot.ru/2013/10/articles.html">Сергей Тепляков</a></li>
+                        <li><a href="http://www.helloworld.ru/texts/comp/other/oop/index.htm">Гради Буч, Объектно-ориентированный анализ и проектирование</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Время вопросов!</h2>
+
+                    <ul>
+                        <li><a href="http://slides.rmcreative.ru/2017/abstraction/">http://slides.rmcreative.ru/2017/abstraction/</a></li>
+                    </ul>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
