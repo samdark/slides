@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>OpenSource изнутри</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="OpenSource изнутри">
+        <meta name="author" content="Александр Макаров">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../../css/samdark.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide">
+                    <h1>OpenSource изнутри</h1>
+
+                    <p><a href="http://github.com/samdark">Александр Макаров</a></p>
+                    <p>
+                        <small>
+                            <a href="http://www.yiiframework.com/">Yii core team</a>
+                        </small>
+                    </p>
+
+                    <a href="http://slides.rmcreative.ru/2016/yii2-architecture/">http://slides.rmcreative.ru/2017/opensource/</a>
+                </section>
+
+                <section>
+                    <h2>О себе</h2>
+
+                    <img src="yii.png" alt="">
+
+                    <ul>
+                        <li>8 лет занимаюсь фреймворком Yii и другим открытым кодом.</li>
+                        <li>Параллельно работал над коммерческими проектами.</li>
+                        <li>Участвую в PHP-FIG.</li>
+                        <li>Автор нескольких книг и rmcreative.ru.</li>
+                        <li>В этом году провожу эксперимент с Patreon.</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <img src="projects1.png" alt="">
+                </section>
+
+                <section>
+                    <img src="projects2.png" alt="">
+                </section>
+
+                <section>
+                    <a href="http://yiipowered.com/">yiipowered.com</a>
+                </section>
+
+                <section>
+                    <h2>Что такое OpenSource?</h2>
+                </section>
+
+                <section>
+                    <h2>Восприятие поменялось</h2>
+
+                    <ul>
+                        <li>До.</li>
+                        <li>После.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Восприятие до</h2>
+
+                    <ul>
+                        <li>Халява!</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Как меня затянуло</h2>
+
+                    <ul>
+                        <li>В 2005 я работал в Siemens.</li>
+                        <li>В 2007 аутсорсил на Java.</li>
+                        <li>Личные проекты на Java разворачивать было не очень...</li>
+                        <li>Использовал PHP. CodeIgniter.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Yii</h2>
+
+                    <ul>
+                        <li>Разочаровался в CodeIgniter.</li>
+                        <li>Попробовал ZF, Symfony, CakePHP и ещё всякие.</li>
+                        <li>Случайно попал на сайт Yii.</li>
+                        <li>Почитал документацию - понравилось.</li>
+                        <li>Сделал yiiframework.ru (2009).</li>
+                        <li>Начал активно слать патчи.</li>
+                        <li>Приглашён в core team (2010).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Восприятие после</h2>
+
+                    <ul>
+                        <li>Коллективный труд на благо всех участников.</li>
+                        <li>Бесплатен, но создаётся не бесплатно.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Зачем?</h2>
+
+                    <ul>
+                        <li>Вместе можно сделать лучше.</li>
+                        <li>Очень много тестирования.</li>
+                        <li>Можно учиться.</li>
+                        <li>Новые знакомые.</li>
+                        <li>Учить удалённой работе и английскому.</li>
+                        <li>Profit?!</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Проблемы</h2>
+
+                    <ul>
+                        <li>Время.</li>
+                        <li>Силы.</li>
+                        <li>Деньги.</li>
+                        <li>Ожидания.</li>
+                        <li>Популярность.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Время</h2>
+
+                    <ul>
+                        <li>На всё не хватает.</li>
+                        <li>Синдром героя и культ занятости.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Силы</h2>
+
+                    <ul>
+                        <li>Выгорание.</li>
+                        <li>Эмоциональное истощение.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Каждый год на конференциях по Linux есть тема "<a href="https://lwn.net/Articles/662979/">Is Linus happy?</a>".</li>
+                        <li>В сообществе Yii выгорание встречается не так редко.</li>
+                        <li>В core team тоже было.</li>
+                        <li><a href="https://github.com/doctrine/doctrine2/issues/6211">Пример из Doctrine</a>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Деньги</h2>
+
+                    <p>Откуда вообще в OpenSource деньги?!</p>
+                </section>
+
+                <section>
+                    <h2>Не случай Yii</h2>
+
+                    <ul>
+                        <li>Продажа лицензий (MariaDB).</li>
+                        <li>Консалтинг, не очень... (Sphinx).</li>
+                        <li>Платные учебные материалы (Laravel).</li>
+                        <li>Дополнительные сервисы с рекуррентной оплатой (Laravel).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>А что же Yii?</h2>
+
+                    <p>Пока, в плане денег, &mdash; ничего...</p>
+                </section>
+
+                <section>
+                    <h2>?!</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Да, я работал над Yii 8 лет не за деньги.</li>
+                        <li>Да, все остальные члены core team тоже.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Но это не плохо</h2>
+
+                    <ul>
+                        <li>Консалтинг (мало, но бывает).</li>
+                        <li>Крутая работа (CleverTech, Stay.com).</li>
+                        <li>Конференции.</li>
+                        <li>Плюшки (привет, JetBrains).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2><a href="https://patreon.com/invite/zxlxwv">Patreon</a></h2>
+
+                    <p>Сервис для рекуррентного финансирования проекта или человека.</p>
+
+                    <ul>
+                        <li>Запустил кампанию.</li>
+                        <li>Собрал достаточно, чтобы уделять Yii какое-то время.</li>
+                        <li>Если будет больше &mdash; не будет необходимости заниматься чем-то ещё.</li>
+                        <li>Мотивирует.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Ожидания</h2>
+
+                    <p>Многие думают, что Yii штука коммерческая и что core team &mdash; сотрудники.</p>
+                </section>
+                
+                <section>
+                    <img src="bug_report.png" alt="">
+                </section>
+
+                <section>
+                    <img src="bug_report2.png" alt="">
+                </section>
+
+                <section>
+                    <p>OpenSource &mdash; это совместная разработка.</p>
+                </section>
+
+                <section>
+                    <h2>Популярность</h2>
+                </section>
+
+                <section>
+                    <img src="shitstorm_1.png" alt="">
+
+                    <p>Недовольные есть всегда.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Бесконечный поток issue и pull request.</li>
+                        <li>Много разных мнений. Негативные высказываются, позитивные, как правило, нет.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>И что со всем этим делать?!</h2>
+
+                    <ul>
+                        <li>Проект определённо нужен.</li>
+                        <li>Жить тоже хочется.</li>
+                        <li>Время не бесконечно.</li>
+                    </ul>
+
+                    <img src="world.png" alt="">
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Наслаждаться позитивной частью.</li>
+                        <li>Различать конструктивную критику и хейтеров.</li>
+                        <li>Не разрываться (по возможности).</li>
+                        <li>Не пытаться прыгнуть выше головы.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Полезная часть</h2>
+
+                    <p>Не просто же так меня слушали...</p>
+                </section>
+
+                <section>
+                    <h2>Чеклист</h2>
+
+                    <p>+10 к привлекательности вашего OpenSource проекта.</p>
+
+                    <img src="pipboy.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>Главное</h2>
+
+                    <ul>
+                        <li>Краткое описание: что это и зачем.</li>
+                        <li>Английский!</li>
+                        <li>Документация.</li>
+                        <li>phpdoc (jsdoc, javadoc).</li>
+                        <li>Тесты и CI.</li>
+                        <li>Особое внимание readme.</li>
+                        <li>Скриншоты, лого.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Ещё главное</h2>
+
+                    <ul>
+                        <li>Стандарт кодирования (PSR или другой).</li>
+                        <li>Действительно отвечать на issue.</li>
+                        <li>Анонсировать везде (yiiframework.ru, YiiFeed, форумы, reddit).</li>
+                        <li>Выбрать нормальную лицензию.</li>
+                        <li>Выбрать версионирование и следовать ему.</li>
+                        <li>packagist (npm, bower).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>И это тоже важно</h2>
+
+                    <ul>
+                        <li>Сайт "поддержки".</li>
+                        <li>Ссылка на сайт из репозитория и обратно.</li>
+                        <li>Отключить wiki и projects, если не используются.</li>
+                        <li>Теги GitHub.</li>
+                        <li>CONTRIBUTING.md.</li>
+                        <li>Анонсировать релизы.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Почитать</h2>
+
+                    <ul>
+                        <li><a href="https://samdark.github.io/">samdark.github.io</a></li>
+                        <li><a href="https://www.patreon.com/samdark">https://www.patreon.com/samdark</a></li>
+                        <li><a href="http://rmcreative.ru/">rmcreative.ru</a></li>
+                        <li><a href="http://yiiframework.ru/">yiiframework.ru</a></li>
+                        <li><a href="http://www.yiiframework.com/">http://www.yiiframework.com/</a></li>
+                        <li><a href="https://opensource.guide/starting-a-project/">Starting an Open Source Project</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Минутка рекламы</h2>
+
+                    <ul>
+                        <li><a href="https://www.patreon.com/samdark">https://www.patreon.com/samdark</a></li>
+                        <li>Могу сделать ваш OpenSource проект конфеткой.</li>
+                        <li>Могу делать code review: Yii, безопасность, общее.</li>
+                        <li>Могу насоветовать всякого.</li>
+                        <li>Могу тренировать.</li>
+                        <li>Могу написать небольшие OpenSource решения под ваши задачи.</li>
+                        <li>Могу писать статьи.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Время вопросов!</h2>
+
+                    <img src="drink.jpg" alt="" height="500rem">
+
+                    <a href="http://slides.rmcreative.ru/2017/opensource/">http://slides.rmcreative.ru/2017/opensource/</a>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
