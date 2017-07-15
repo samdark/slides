@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>PHP 7.x: Что нам даёт семёрка и что будет завтра</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="PHP 7.x: что нам даёт семёрка и что будет завтра">
+        <meta name="author" content="Александр Макаров">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../../css/samdark.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide" data-background="dc_back.png">
+                    <h1>PHP 7.x</h1>
+                    <h2>Что нам даёт семёрка и что будет завтра</h2>
+
+                    <p><a href="http://github.com/samdark">Александр Макаров</a></p>
+                    <p>
+                        <small>
+                            <a href="http://www.yiiframework.com/">Yii core team</a>
+                        </small>
+                    </p>
+
+                    <a href="http://slides.rmcreative.ru/2017/devconf-php7/">http://slides.rmcreative.ru/2017/devconf-php7/</a>
+                </section>
+
+                <section>
+                    <h2>Что происходит с PHP?</h2>
+                </section>
+
+                <section>
+                    <p>Сейчас, наконец, стал актуален PHP 7.*</p>
+                </section>
+
+                <section>
+                    <p>На него собираются мигрировать все большие фреймворки: <br>
+                    Symfony, Zend, Yii, Laravel.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Заметно быстрее.</li>
+                        <li>Лучше работает с объектами.</li>
+                        <li>Меньше кушает памяти.</li>
+                        <li>Практически не течёт.</li>
+                        <li>Мощнее в плане возможностей.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Никуда не собирается деваться.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li><a href="https://w3techs.com/technologies/overview/programming_language/all">82,6% от всех сайтов используют PHP</a> (W<sup>3</sup>).</li>
+                        <li><a href="http://redmonk.com/sogrady/2016/07/20/language-rankings-6-16/">3-е место в рейтинге языков Redmonk</a>.</li>
+                        <li><a href="https://www.tiobe.com/tiobe-index/">9-е место в рейтинге TIOBE</a>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Итак, что же занятного в семёрке?</h2>
+                </section>
+
+                <section>
+                    <h2>5.6 → 7.0</h2>
+                </section>
+
+                <section>
+                    <h2>Скорость!</h2>
+
+                    <p><a href="https://wiki.php.net/rfc/phpng">phpng</a> рулит! От 5% до 70% прироста без изменения кода.</p>
+                </section>
+
+                <section>
+                    <h2>Память</h2>
+
+                    <p>Раньше ещё имелся смысл использовать массивы вместо объектов из соображений экономии. Теперь его
+                    почти нет. Семёрка кушает вдвое меньше.</p>
+                </section>
+
+                <section>
+                    <h2>Многие фаталы стали исключениями</h2>
+
+                    <ul>
+                        <li>Наследуются от <code>\Error</code> или <code>\ParseError</code>.</li>
+                        <li>Ловятся try-catch.</li>
+                        <li>Портят жизнь авторам фреймворков.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Расширен набор исключений:</h2>
+
+                    <ul>
+                        <li>Throwable.</li>
+                        <li>Error.</li>
+                        <li>TypeError.</li>
+                        <li>ParseError.</li>
+                        <li>AssertionError.</li>
+                        <li>ArithmeticError.</li>
+                        <li>DivisionByZeroError.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Массивы</h2>
+
+                    <ul>
+                        <li><a href="https://www.slideshare.net/profyclub_ru/php-7-php-5-zend-technologies">Другие внутри</a>.</li>
+                        <li><code>foreach</code> не смещает указатель.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>intl довели до нормального состояния</h2>
+
+                    <p>Раньше приходилось писать polyfill-ы.</p>
+                </section>
+
+                <section>
+                    <h2><a href="https://wiki.php.net/rfc/scalar_type_hints_v5">Скалярные тайпхинты</a></h2>
+
+                    <ul>
+                        <li>string, int, float, bool.</li>
+                        <li>Работают в двух режимах: строгом (<code>declare(strict_types=1)</code>) и нет.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <pre><code>
+// Coercive mode
+function sumOfInts(int ...$ints)
+{
+    return array_sum($ints);
+}
+
+var_dump(sumOfInts(2, '3', 4.1));
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Строгость позволяет выловить целый класс ошибок на этапе написания кода.</p>
+                </section>
+
+                <section>
+                    <h2>Декларация возвращаемых значений</h2>
+
+<pre><code>
+function arraysSum(array ...$arrays): array
+{
+    return array_map(function(array $array): int {
+        return array_sum($array);
+    }, $arrays);
+}
+
+print_r(arraysSum([1,2,3], [4,5,6], [7,8,9]));
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Слишком строгая :(</h2>
+
+                    <p><code>null</code> нельзя.</p>
+                </section>
+
+                <section>
+                    <h2>null coalescing</h2>
+
+                    <pre><code>
+$username = $_GET['user'] ?? 'nobody';
+// то же, что и
+$username = isset($_GET['user']) ? $_GET['user'] : 'nobody';
+// можно и так:
+$username = $_GET['user'] ?? $_POST['user'] ?? 'nobody';
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Летающая тарелка</h2>
+
+<pre><code>
+echo 1.5 <=> 1.5; // 0
+echo 1.5 <=> 2.5; // -1
+echo 2.5 <=> 1.5; // 1
+</code></pre>
+                    
+                    <p><a href="https://wiki.php.net/rfc/combined-comparison-operator">https://wiki.php.net/rfc/combined-comparison-operator</a></p>
+
+                    <p>Пользуетесь?</p>
+                </section>
+
+                <section>
+                    <h2>Анонимные классы</h2>
+
+                    <pre><code>
+$app = new Application;
+$app->setLogger(new class implements Logger {
+    public function log(string $msg) {
+        echo $msg;
+    }
+});
+                    </code></pre>
+
+                    <p>Нужно редко. Лучше не увлекаться.</p>
+                </section>
+
+                <section>
+                    <h2>escape-синтаксис для юникода</h2>
+
+                    <pre><code>
+echo "\u{aa}";
+echo "\u{0000aa}";
+echo "\u{9999}";
+                    </code></pre>
+
+                    <p>Очень удобно.</p>
+                </section>
+
+                <section>
+                    <h2>Closure::call($newthis, ...)</h2>
+
+                    <p>Временно привязывает замыкание к объекту и вызывает его с параметрами.</p>
+
+                    <p>Этим можно делать хаки вроде гидрации.</p>
+                </section>
+
+                <section>
+<pre><code>
+class Value {
+    protected $value;
+
+    public function __construct($value) {
+        $this->value = $value;
+    }
+
+    public function getValue() {
+        return $this->value;
+    }
+}
+
+$three = new Value(3);
+$closure = function ($delta) { var_dump($this->getValue() + $delta); };
+$closure->call($three, 4);
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Опции из php.ini при старте сессий</h2>
+
+                    <pre><code>
+session_start([
+    'cache_limiter' => 'private',
+    'read_and_close' => true,
+]);
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Безопасность</h2>
+
+                    <ul>
+                        <li>random_bytes().</li>
+                        <li>random_int().</li>
+                        <li>Запретили генерить свою соль и передавать в password_hash().</li>
+                    </ul>
+
+                    <p>Можно не париться :)</p>
+                </section>
+
+                <section>
+                    <h2>assert() expectations</h2>
+
+                    <p>Проверки для отладки, разработки и тестов. Не влияют на продакшн (<code>zend.assertions</code>, php.ini).</p>
+                </section>
+
+                <section>
+<pre><code>
+assert(true == false);
+</code></pre>
+
+                    <p>Хорошая альтернатива строгим проверкам всего и выкидыванию исключений.</p>
+                </section>
+
+                <section>
+                    <h2>Ослабили ограничения на зарезервированные слова</h2>
+
+                    <pre><code>
+// 'new', 'private', and 'for' were previously unusable
+Project::new('Project Name')->private()->for('purpose here')->with('username here');
+                    </code></pre>
+
+                    <p>Привет, приятные DSL!</p>
+                </section>
+
+
+                <section>
+                    <h2>И ещё всякое</h2>
+
+                    <ul>
+                        <li>Группировка use.</li>
+                        <li>return и <a href="https://wiki.php.net/rfc/generator-delegation">делегирование</a> для генераторов.</li>
+                        <li>Deprecate-нули конструкторы PHP4.</li>
+                        <li>Deprecate-нули статические вызовы нестатических методов.</li>
+                        <li>Opcache всегда кеширует и отдаёт phpdoc.</li>
+                        <li><code>getenv()</code> научился не учитывать SAPI.</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>7.0 → 7.1</h2>
+                </section>
+
+                <section>
+                    <h2>Ещё немного быстрее</h2>
+                </section>
+
+                <section>
+                    <h2>nullable types</h2>
+
+<pre><code>
+function testReturn(): ?string
+{
+return 'elePHPant';
+}
+</code></pre>
+
+                    <p>Ура!</p>
+                </section>
+
+                <section>
+                    <h2>void для возвращаемых значений</h2>
+
+                    <p>Запрещает возвращать что либо из функции.</p>
+                    
+                    <p><a href="https://wiki.php.net/rfc/void_return_type">https://wiki.php.net/rfc/void_return_type</a></p>
+                </section>
+
+                <section>
+                    <h2><a href="https://wiki.php.net/rfc/object-typehint">object как тайпхинт</a></h2>
+
+                    <pre><code>
+function acceptsObject(object $obj) {
+    ...
+}
+                    </code></pre>
+
+                    <p>Иногда может быть полезно. Например, сериализация.</p>
+                </section>
+
+                <section>
+                    <h2><a href="https://wiki.php.net/rfc/short_list_syntax">Короткий list()</a> и <a href="https://wiki.php.net/rfc/list_keys">ключи</a></h2>
+
+<pre><code>
+    $data = [
+        ["id" => 1, "name" => 'Tom'],
+        ["id" => 2, "name" => 'Fred'],
+    ];
+
+    [$id1, $name1] = $data[0];
+
+    foreach ($data as [$id, $name]) {
+        // logic here with $id and $name
+    }
+
+    ["id" => $id1, "name" => $name1] = $data[0];
+
+    foreach ($data as ["id" => $id, "name" => $name]) {
+        // logic here with $id and $name
+    }
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Области видимости для констант</h2>
+
+                    <pre><code>
+class ConstDemo
+{
+    const PUBLIC_CONST_A = 1;
+    public const PUBLIC_CONST_B = 2;
+    protected const PROTECTED_CONST = 3;
+    private const PRIVATE_CONST = 4;
+}
+                    </code></pre>
+
+                    <p>О, да! <a href="https://wiki.php.net/rfc/class_const_visibility">https://wiki.php.net/rfc/class_const_visibility</a></p>
+                </section>
+
+                <section>
+                    <h2>iterable</h2>
+
+                    <pre><code>
+function iterator(iterable $iter)
+{
+    foreach ($iter as $val) {
+        //
+    }
+}
+                    </code></pre>
+
+                    <p><a href="https://wiki.php.net/rfc/iterable">https://wiki.php.net/rfc/iterable</a></p>
+
+                    <p>Раньше надо было проверять <code>is_array() && instanceof \Traversable</code>.</p>
+                </section>
+
+                <section>
+                    <h2>Несколько catch</h2>
+
+                    <pre><code>
+try {
+    // some code
+} catch (FirstException | SecondException $e) {
+    // handle first and second exceptions
+}
+                    </code></pre>
+
+                    <p>Просто немного удобней.</p>
+                </section>
+
+
+                <section>
+                    <h2>А также</h2>
+
+                    <ul>
+                        <li>pcntl_async_signals().</li>
+                        <li>Возможность самому делать <a href="https://wiki.php.net/rfc/session-gc">session_gc()</a>.</li>
+                        <li>ext/mcrypt deprecated. Ура!</li>
+                        <li>opcache.enable_cli = 1 по умолчанию.</li>
+                        <li>ID сессии генерится через CSPRNG.</li>
+                        <li><a href="https://wiki.php.net/rfc/negative-string-offsets">Негативный оффсет для строк</a>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>7.1 → 7.2</h2>
+                </section>
+
+                <section>
+                    <h2>Больше скорости!</h2>
+
+                    <p>Дмитрий Стогов не дремлет!</p>
+
+                    <ul>
+                        <li><a href="https://externals.io/thread/856">HYBRID VM</a>.</li>
+                        <li>+ 3-7%.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Можно убирать тайпхинты при наследовании</h2>
+
+                    <p><a href="https://wiki.php.net/rfc/parameter-no-type-variance">https://wiki.php.net/rfc/parameter-no-type-variance</a></p>
+                </section>
+
+                <section>
+                    <h2>Можно перекрыть абстрактный метод абстрактным методом</h2>
+
+                    <p><a href="https://wiki.php.net/rfc/allow-abstract-function-override">https://wiki.php.net/rfc/allow-abstract-function-override</a></p>
+
+                    <p>Зачем?!</p>
+                </section>
+
+                <section>
+                    <h2>Меньше глупых ошибок</h2>
+
+                    <ul>
+                        <li><a href="https://wiki.php.net/rfc/deprecate-bareword-strings">Убрали unquoted strings</a>.</li>
+                        <li><a href="https://wiki.php.net/rfc/counting_non_countables">count() ругается на попытку посчитать несчитаемое</a>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2><a href="https://wiki.php.net/rfc/argon2_password_hash">Argon2i</a> и libsodium</h2>
+
+                    <p>Можно использовать в <code>password_hash()</code> и <code>password_verify()</code>.</p>
+
+                    <p><a href="https://wiki.php.net/rfc/libsodium">Libsodium</a> &mdash; более простая и понятная
+                    альтернатива mcrypt и openssl.</p>
+                </section>
+
+
+                <section>
+                    <h2>Возможно будет в 7.2</h2>
+                </section>
+
+                <section>
+                    <h2><a href="https://wiki.php.net/rfc/null_coalesce_equal_operator">Null Coalescing Assignment</a></h2>
+
+                    <pre><code>
+
+$this->request->data['comments']['user_id'] =
+    $this->request->data['comments']['user_id'] ?? 'value';
+
+↓
+
+$this->request->data['comments']['user_id'] ??= 'value';
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Стоит ли обновляться?</h2>
+                </section>
+
+                <section>
+                    <h2>Да!</h2>
+
+                    <p>Добивайтесь этого как только можете.</p>
+                </section>
+
+
+                <section>
+                    <h2>Какую версию выбрать?</h2>
+
+                    <img src="php_timelime.png" alt="">
+                </section>
+
+                <section>
+                    <p>Практически все большие фреймворки переходят на 7.1.</p>
+                </section>
+
+                <section>
+                    <h2>Время вопросов!</h2>
+
+                    <ul>
+                        <li><a href="https://wiki.php.net/rfc">https://wiki.php.net/rfc</a>.</li>
+                        <li><a href="https://www.slideshare.net/profyclub_ru/php-7-php-5-zend-technologies">Как мы сделали PHP 7 в два раза быстрее PHP 5 / Дмитрий Стогов (Zend Technologies)</a>.</li>
+                        <li>sam@rmcreative.ru</li>
+                        <li>@sam_dark</li>
+                        <li><a href="http://slides.rmcreative.ru/2017/devconf-php7/">http://slides.rmcreative.ru/2017/devconf-php7/</a></li>
+                    </ul>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

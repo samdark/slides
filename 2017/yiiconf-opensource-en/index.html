@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>OpenSource from inside</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="OpenSource from inside">
+        <meta name="author" content="Alexander Makarov">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../../css/samdark.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide" data-background="yiiconf_back.png">
+                    <h1>OpenSource from inside</h1>
+
+                    <p><a href="http://github.com/samdark">Alexander Makarov</a></p>
+                    <p>
+                        <small>
+                            <a href="http://www.yiiframework.com/">Yii core team</a>
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>What is OpenSource?</h2>
+                </section>
+
+                <section>
+                    <h2>My perception of it changed</h2>
+
+                    <ul>
+                        <li>Before.</li>
+                        <li>After.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Perfeception before</h2>
+
+                    <ul>
+                        <li>I don't have to pay for it! Yay!</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>How it sucked me in</h2>
+
+                    <ul>
+                        <li>In 2005 I worked for Siemens.</li>
+                        <li>In 2007 I've outsourced and used Java.</li>
+                        <li>Private projects weren't convinient to deploy with Java...</li>
+                        <li>So I've used PHP. CodeIgniter.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Yii</h2>
+
+                    <ul>
+                        <li>At some point I was disappointed about CodeIgniter.</li>
+                        <li>Tried ZF, Symfony, CakePHP and more.</li>
+                        <li>Visited Yii website by accident. Site was awful.</li>
+                        <li>Read docs and docs made sense.</li>
+                        <li>Launched yiiframework.ru (2009).</li>
+                        <li>Started to contribute actively.</li>
+                        <li>Was invited to core team (2010).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Perception after</h2>
+
+                    <ul>
+                        <li>Collective work where every participant benefit.</li>
+                        <li>Free to use but isn't free to create.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>What for?</h2>
+
+                    <ul>
+                        <li>Together you can build better product.</li>
+                        <li>More testing that you'll ever be able to do alone.</li>
+                        <li>Can learn from others.</li>
+                        <li>New faces.</li>
+                        <li>Can learn to work remotely and improve your English.</li>
+                        <li>Profit?!</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Problems</h2>
+
+                    <ul>
+                        <li>Time.</li>
+                        <li>Energy.</li>
+                        <li>Money.</li>
+                        <li>Expectations.</li>
+                        <li>Popularity.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Time</h2>
+
+                    <ul>
+                        <li>There's not enough time for everything.</li>
+                        <li>Hero syndrome and a cult of being busy.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Energy</h2>
+
+                    <ul>
+                        <li>Burnout.</li>
+                        <li>Emotional drain.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Every year there is the same topic at Linux conferences: "<a href="https://lwn.net/Articles/662979/">Is Linus happy?</a>".</li>
+                        <li>In Yii community burnouts happen and aren't that rare.</li>
+                        <li>There were cases in the core team.</li>
+                        <li><a href="https://github.com/doctrine/doctrine2/issues/6211">Example from Doctrine</a>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Money</h2>
+
+                    <p>Where are money in OpenSource?!</p>
+                </section>
+
+                <section>
+                    <h2>Not Yii cases</h2>
+
+                    <ul>
+                        <li>Selling licenses (MariaDB).</li>
+                        <li>Consulting. Not so good... (Sphinx).</li>
+                        <li>Paid learning materials (Laravel).</li>
+                        <li>Complimentary SAAS with recurrent payments (Laravel).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>What about Yii?</h2>
+
+                    <p>No money. At least for now...</p>
+                </section>
+
+                <section>
+                    <h2>?!</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Yes, I've worked on Yii for 8 years for free.</li>
+                        <li>Yes, the rest of the core team as well.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>And it's not bad</h2>
+
+                    <ul>
+                        <li>Consulting (not much but still there's some).</li>
+                        <li>Cool jobs (CleverTech, Stay.com).</li>
+                        <li>Conferences.</li>
+                        <li>Gifts (hello, JetBrains).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2><a href="https://patreon.com/invite/zxlxwv">Patreon</a></h2>
+
+                    <p>A service to finance a project or a person with recurrent payments.</p>
+
+                    <ul>
+                        <li>Launced a campaign there.</li>
+                        <li>Got enough to dedicate at least some time to work on Yii.</li>
+                        <li>If I'll get more there will be no need to do anything else.</li>
+                        <li>Good motivation.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Expectations</h2>
+
+                    <p>Many people do think that Yii is commercial company and that core team are employees.</p>
+                </section>
+                
+                <section>
+                    <img src="bug_report.png" alt="">
+                </section>
+
+                <section>
+                    <img src="bug_report2.png" alt="">
+                </section>
+
+                <section>
+                    <img src="bug_report3.png" alt="">
+                </section>
+
+                <section>
+                    <img src="bug_report4.png" alt="">
+                </section>
+
+                <section>
+                    <img src="bug_report5.png" alt="">
+                </section>
+
+                <section>
+                    <img src="bug_report6.png" alt="">
+                </section>
+
+                <section>
+                    <p>OpenSource is about doing it <strong>together</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Popularity</h2>
+                </section>
+
+                <section>
+                    <img src="shitstorm_1.png" alt="">
+
+                    <p>There are always unhappy users.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>New issue and pull requests are created continuously.</li>
+                        <li>Different feedback. Negative is voiced often. Positive is voiced rare.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>What to do with all that?!</h2>
+
+                    <ul>
+                        <li>The project is definitely needed.</li>
+                        <li>We want to enjoy life.</li>
+                        <li>Time is finite.</li>
+                    </ul>
+
+                    <img src="world.png" alt="">
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Enjoy positive part of it.</li>
+                        <li>Constructive critics and haters aren't the same.</li>
+                        <li>Do not try to do many things at the same time (if possible).</li>
+                        <li>Do not try to do more than you can.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Useful part</h2>
+
+                    <p>Which you can actually apply...</p>
+                </section>
+
+                <section>
+                    <h2>Checklist</h2>
+
+                    <p>+10 to attractiveness of your project.</p>
+
+                    <img src="pipboy.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>Main points</h2>
+
+                    <ul>
+                        <li>Short description: what it is and what is it for.</li>
+                        <li>English!</li>
+                        <li>Documentation.</li>
+                        <li>phpdoc (jsdoc, javadoc).</li>
+                        <li>Tests and CI.</li>
+                        <li>Put more attention into readme.</li>
+                        <li>Screenshots and logo.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Main points</h2>
+
+                    <ul>
+                        <li>Coding standard (PSR or any other).</li>
+                        <li>Handle issues for real.</li>
+                        <li>Announce it everywhere (Facebook, YiiFeed, forums, reddit).</li>
+                        <li>Choose a good license.</li>
+                        <li>Choose versioning policy and follow it.</li>
+                        <li>packagist (npm, bower).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>These are important as well</h2>
+
+                    <ul>
+                        <li>Support website.</li>
+                        <li>Website and repo should be cross-linked.</li>
+                        <li>Turn off wiki and projects if these aren't used.</li>
+                        <li>Fill GitHub tags.</li>
+                        <li>CONTRIBUTING.md.</li>
+                        <li>Announce releases.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Some links</h2>
+
+                    <ul>
+                        <li><a href="https://samdark.github.io/">samdark.github.io</a></li>
+                        <li><a href="https://www.patreon.com/samdark">https://www.patreon.com/samdark</a></li>
+                        <li><a href="http://www.yiiframework.com/">http://www.yiiframework.com/</a></li>
+                        <li><a href="https://yiiconf-opensource.guide/starting-a-project/">Starting an Open Source Project</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Some self-advertising</h2>
+
+                    <ul>
+                        <li><a href="https://www.patreon.com/samdark">https://www.patreon.com/samdark</a></li>
+                        <li>I can polish your OpenSource project.</li>
+                        <li>I can do code review: Yii, security, code overall.</li>
+                        <li>I can consult.</li>
+                        <li>I can train.</li>
+                        <li>I can implement small OpenSource solutions for your problems.</li>
+                        <li>I can write articles.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Questions time!</h2>
+
+                    <img src="drink.jpg" alt="" height="400rem">
+                    <br>
+
+                    <a href="http://slides.rmcreative.ru/2017/yiiconf-opensource-en/">http://slides.rmcreative.ru/2017/yiiconf-opensource-en/</a>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

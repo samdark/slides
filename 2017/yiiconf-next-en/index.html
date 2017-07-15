@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Yii. What's next?</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Yii. What's next?">
+        <meta name="author" content="Alexander Makarov">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../../css/samdark.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide" data-background="yiiconf_back.png">
+                    <h1>Yii. What's next?</h1>
+
+                    <p><a href="http://github.com/samdark">Alexander Makarov</a></p>
+                    <p>
+                        <small>
+                            <a href="http://www.yiiframework.com/">Yii core team</a>
+                        </small>
+                    </p>
+
+                    <a href="http://slides.rmcreative.ru/2017/yiiconf-next-en/">http://slides.rmcreative.ru/2017/yiiconf-next-en/</a>
+                </section>
+
+                <section>
+                    <h2>What's going on about PHP?</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Yii 1.x started with 5.2.</li>
+                        <li>Yii 2.0 requires 5.4.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>PHP 7.* is the thing nowadays</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Significantly faster.</li>
+                        <li>Handles objects better.</li>
+                        <li>Requires less memory.</li>
+                        <li>Almost no memory leaks.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>PHP is here to stay.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li><a href="https://w3techs.com/technologies/overview/programming_language/all">82,6% of all websites are using PHP</a> (W<sup>3</sup>).</li>
+                        <li><a href="http://redmonk.com/sogrady/2016/07/20/language-rankings-6-16/">3rd place in Redmonk rating</a>.</li>
+                        <li><a href="https://www.tiobe.com/tiobe-index/">9th place in TIOBE rating</a>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Current trends are</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>SOA.</li>
+                        <li>DDD.</li>
+                        <li>PSR.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Can't resist myself to note that SOA often turns debugging into hell because of layers and events.</p>
+                </section>
+
+                <section>
+                    <h2>Yii philosophy</h2>
+
+                    <ul>
+                        <li>Introduce only necessary complexity.</li>
+                        <li>API and code usability first.</li>
+                        <li>Document everything.</li>
+                        <li>Backwards compatibility and support are important.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Yii history</h2>
+                </section>
+
+                <section>
+                    <h2>Prado 1.0 (2004)</h2>
+
+                    <ul>
+                        <li>Qiang Xue, relesed in June 2004.</li>
+                        <li>Inspired by Apache Tapestry, Borland Delphi and Microsoft ASP.NET.</li>
+                        <li>Took Zend gophp5 prize.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Prado 2.0 (2005)</h2>
+
+                    <ul>
+                        <li>Wei Zhuo helped with i18n and l10n.</li>
+                        <li>It was decided to rewrite everything after 2.0 release.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Prado 3.0 (2006)</h2>
+
+                    <ul>
+                        <li>Inspired by Microsoft ASP.NET 2.0.</li>
+                        <li>Many enhancements.</li>
+                        <li>It is current verison that is still used and supported.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Yii 1.0 (2006 &mdash; 2008)</h2>
+
+                    <ul>
+                        <li>Qiang announces Yii alpha.</li>
+                        <li>Majority features are from Prado: ActiveRecord, i18n, l10n etc.</li>
+                        <li>Inspired by RoR, symfony1, Joomla.</li>
+                        <li>Faster than other frameworks.</li>
+                        <li>Community grows fast.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>yiiframework.ru</h2>
+
+                    <ul>
+                        <li>Launched in 2009.</li>
+                        <li>Some code-igniter.ru community members migrated.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="yiiframework_ru.png" alt="">
+                </section>
+
+                <section>
+                    <h2>Yii 1.1 (2010)</h2>
+
+                    <ul>
+                        <li>Form builder, relational AR, unit testing framework and more.</li>
+                        <li>I've joined core team.</li>
+                        <li>New website released.</li>
+                        <li>First books.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Yii 1.2 (2010)</h2>
+
+                    <ul>
+                        <li>The goal was to update 1.1.</li>
+                        <li>PHP 5.2 and 5.3 compatible.</li>
+                        <li>Wasn't released.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Yii cookbook (2011 &mdash; 2013)</h2>
+
+                    <ul>
+                        <li>My book.</li>
+                        <li>Russian and English versions.</li>
+                        <li>PACKT.</li>
+                        <li>Mostly good experience (except what PACKT did with the name afterwards).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>2012 &mdash; 2013</h2>
+
+                    <ul>
+                        <li>Carsten Brandt, @CeBe joined team in 2012.</li>
+                        <li>Paul Klimov joined team in 2013.</li>
+                        <li>GitHub.</li>
+                        <li>More books.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Yii 2.0 (2012 &mdash; ...)</h2>
+
+                    <ul>
+                        <li>Developed privately until 2013.</li>
+                        <li>Released in 2014.</li>
+                        <li>In 2015 Dmitry Naumenko, @SilverFire joined the team.</li>
+                        <li>In 2016 extension released were splitted from framework releases.</li>
+                        <li>Same year Boudewijn Vahrmeijer, @dynasource join the team.</li>
+                        <li>In 2017 Alexey Rogachev, @arogachev joined the team.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Qiang left the project summer 2015</h2>
+
+                    <p>Noone noticed for about 6 months and that's good.</p>
+                </section>
+
+                <section>
+                    <h2>Yii 2.0</h2>
+
+                    <ul>
+                        <li>PHP 5.4.</li>
+                        <li>Well balanced.</li>
+                        <li>Covers all the needs of traditional web.</li>
+                        <li>Simplifies building REST APIs.</li>
+                        <li>Good tools and infrastructure.</li>
+                        <li>Less layered than others. Fast.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>2.0 failures</h2>
+                </section>
+
+                <section>
+                    <h2>Took too many features at the same time</h2>
+
+                    <p>Put too much in the core.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>jQuery.</li>
+                        <li>PJAX.</li>
+                        <li>CAPTCHA.</li>
+                        <li>Masked input.</li>
+                        <li>The rest of clientside.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>fxp composer plugin</h2>
+
+                    <p>Caused lots of pain but finally stabilized.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Almost no bugs.</li>
+                        <li>Still complicates setup.</li>
+                        <li>Slow.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Haven't used many PSRs</h2>
+
+                    <p>There were Yii releases already when PSRs were accepted. Backwards compatibility.</p>
+                </section>
+
+                <section>
+                    <h2>MVC</h2>
+
+                    <ul>
+                        <li>Can't route w/o it.</li>
+                        <li>Called a class "Model".</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Other mistakes</h2>
+                </section>
+
+                <section>
+                    <h2>2.1 plans</h2>
+                </section>
+
+                <section>
+                    <h2>Raise requirements</h2>
+
+                    <ul>
+                        <li>PHP 7.1+.</li>
+                        <li>No HHVM support.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Lighter core</h2>
+
+                    <ul>
+                        <li>assets.</li>
+                        <li>Clientside?</li>
+                        <li>Obsolete cache backends.</li>
+                        <li>Other thigns that do not belong to the core.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Official LTS</h2>
+                </section>
+
+                <section>
+                    <h2>Cleanup</h2>
+
+                    <ul>
+                        <li>Remove @deprecated.</li>
+                        <li>Remove polyfills that aren't needed for PHP 7.1.</li>
+                        <li>Remove HHVM support.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>change() for migrations</h2>
+
+                    <p>Will be no need to implement <code>down()</code>.</p>
+                </section>
+
+                <section>
+                    <h2>Configurator</h2>
+
+                    <p>A component or a library that manages configs.</p>
+                </section>
+
+                <section>
+                    <h2>Queue</h2>
+
+                    <p><a href="https://github.com/zhuravljov/yii2-queue">https://github.com/zhuravljov/yii2-queue</a></p>
+                </section>
+
+                <section>
+                    <h2>Docker</h2>
+
+                    <p><a href="https://github.com/yiisoft/yii2-docker">https://github.com/yiisoft/yii2-docker</a></p>
+                </section>
+
+                <section>
+                    <h2>More atomic operations</h2>
+
+                    <ul>
+                        <li>upsert.</li>
+                        <li>batch w/ ignore.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Probably new application templates</h2>
+
+                    <ul>
+                        <li>advanced-like basic.</li>
+                        <li>API.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>intl abstraction</h2>
+
+                    <p>Probably will use Symfony polyfills.</p>
+                </section>
+
+                <section>
+                    <h2>asset-packagist by default</h2>
+
+                    <p>@hiqsol, @SilverFire and community created <a href="https://asset-packagist.org/">https://asset-packagist.org/</a>.</p>
+
+                    <p>It is an fxp composer plugin alternative that is much faster.</p>
+                </section>
+
+                <section>
+                    <h2>Docs</h2>
+
+                    <ul>
+                        <li>More tutorials.</li>
+                        <li>More best practices.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>New website</h2>
+
+                    <a href="http://yiiframework.domain-na.me/">http://yiiframework.domain-na.me/</a>
+                </section>
+                
+                <section>
+                    <img src="ws1.png" alt="" width="100%">
+                </section>
+
+                <section>
+                    <img src="ws2.png" alt="" width="100%">
+                </section>
+
+                <section>
+                    <h2>Pars of it are already done as separate projects</h2>
+
+                    <ul>
+                        <li><a href="http://yiifeed.com/">YiiFeed</a>.</li>
+                        <li><a href="http://yiipowered.com/en">YiiPowered</a>.</li>
+                        <li><a href="http://yiiframework.ru/">yiiframework.ru</a>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Admin panel and wiki search.</li>
+                        <li>Comments for docs.</li>
+                        <li>Ratings for comments, wiki and extensions.</li>
+                        <li>Users ratings.</li>
+                        <li>Replace old forum.</li>
+                        <li>Extensions.</li>
+                        <li>Design improvements.</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <h2>Want to help us?</h2>
+
+                    <a href="https://github.com/yiisoft-contrib/yiiframework.com">https://github.com/yiisoft-contrib/yiiframework.com</a>
+                </section>
+
+                <section>
+                    <h2>What about 1.1?</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>EOL. Security and PHP 7 compatibility fixes only.</li>
+                        <li>1.1.19.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Plans for 3.0 (or 2.2?)</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>We want to avoid revolution.</li>
+                        <li>Experimenting with separate libs (router, DI container, collections).</li>
+                        <li>Fix naming.</li>
+                        <li><a href="https://github.com/yiisoft/yii2/wiki/PSR-adoption">More PSR support</a>.</li>
+                        <li>Make routing work w/o MVC.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Some points are possible to introduce in 2.x.</p>
+                </section>
+
+                <section>
+                    <h2>How to help:</h2>
+                    <ul>
+                        <li><a href="https://github.com/yiisoft/yii2/">https://github.com/yiisoft/yii2/</a>.</li>
+                        <li>Bugs, feedback, ideas, code.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Questions time!</h2>
+
+                    <p>What would you like to see in 3.0?</p>
+
+                    <ul>
+                        <li><a href="https://github.com/yiisoft/yii2/">https://github.com/yiisoft/yii2/</a></li>
+                        <li><a href="http://yiiframework.ru/">yiiframework.ru</a></li>
+                        <li><a href="http://www.yiiframework.com/">yiiframework.com</a></li>
+                        <li>sam@rmcreative.ru</li>
+                        <li>@sam_dark</li>
+                        <li><a href="http://www.yiiframework.com/">www.yiiframework.com</a></li>
+                        <li><a href="http://slides.rmcreative.ru/2017/yiiconf-next-en/">http://slides.rmcreative.ru/2017/yiiconf-next-en/</a></li>
+                    </ul>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
