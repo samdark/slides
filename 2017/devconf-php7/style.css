@@ -7,6 +7,8 @@
     position: absolute;
     top: .7em;
     left: .5em;
+    width: 1em;
+    height: 1em;
     font-size: 200%;
     color: #fff;
 }

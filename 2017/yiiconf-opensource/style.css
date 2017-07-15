@@ -9,6 +9,8 @@
     left: .5em;
     font-size: 200%;
     color: #666;
+    width: 1em;
+    height: 1em;
 }
 
 .reveal .slide-background.title-slide {
