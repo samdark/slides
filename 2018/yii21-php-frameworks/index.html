@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Yii 2.1, PHP и фреймворки</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Yii 2.1, PHP и фреймворки">
+        <meta name="author" content="Александр Макаров">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../../css/samdark.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide" data-background="title-slide.png">
+                    <h1>Yii 2.1, PHP и фреймворки</h1>
+
+                    <p><a href="https://github.com/samdark">Александр Макаров</a></p>
+                    <p>
+                        <small>
+                            <a href="https://www.yiiframework.com/">Yii core team, Skyeng</a>
+                        </small>
+                    </p>
+
+                    <a href="https://slides.rmcreative.ru/2018/yii21-php-frameworks/">https://slides.rmcreative.ru/2018/yii21-php-frameworks/</a>
+                </section>
+
+                <section>
+                    <h2>Обо мне</h2>
+
+                    <img src="yii_logo.svg" alt="" width="50%">
+
+                    <img src="skyeng.svg" alt="">
+
+
+                    <ul>
+                        <li>10+ лет в IT: Java, PHP, JavaScript etc.</li>
+                        <li><a href="https://yiicookbook.org/">Писатель</a>, <a href="https://slides.rmcreative.ru/">докладчик</a>.</li>
+                        <li><a href="https://github.com/samdark">OpenSource</a>.</li>
+                        <li><a href="https://www.yiiframework.com/about">Член команды Yii</a>, представитель в PHP-FIG.</li>
+                        <li>В прошлом Siemens, Wrike, CleverTech, Stay.com.</li>
+                        <li>Тимлид в <a href="https://skyeng.ru/">Skyeng</a>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Поговорим про</h2>
+
+                    <ul>
+                        <li>PHP.</li>
+                        <li>Его направление.</li>
+                        <li>Что изучать?</li>
+                        <li>На какой фреймворк перепрыгнуть?</li>
+                        <li>Yii.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Рассказывать буду, в основном, для тех, кто учится.</p>
+                </section>
+
+                <section>
+                    <h2>Начнём с PHP</h2>
+
+                    <img src="php.svg.png" alt="PHP">
+                </section>
+
+                <section>
+                    <ul>
+                        <li><a href="https://w3techs.com/technologies/overview/programming_language/all">83,4% (было 82,6%) от всех сайтов используют PHP</a> (W<sup>3</sup>).</li>
+                        <li><a href="https://redmonk.com/fryan/2018/03/15/redmonk-language-rankings-over-time/">4-е место в рейтинге языков Redmonk</a>.</li>
+                        <li><a href="https://www.tiobe.com/tiobe-index/">6-е место в рейтинге TIOBE</a>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Куда движется язык?</h2>
+
+                    <img src="bullet.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>Но сначала немного про языки</h2>
+                </section>
+
+                <section>
+                    <p>Чем один язык отличается от другого?</p>                    
+                </section>
+
+                <section>
+                    <h2>Пользователи</h2>
+
+                    <img src="developers.jpg" alt="">
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Новички.</li>
+                        <li>Специалисты.</li>
+                        <li>Профессионалы.</li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>В бизнесе редко бывают на 100% «звёздные» команды. Нужен ± язык для новичков.</p>
+                </section>
+
+                <section>
+                    <h2>Новичкам нужны</h2>
+
+                    <ul>
+                        <li>Рамки.</li>
+                        <li>Строгость.</li>
+                        <li>Примеры.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Java для новичков.</li>
+                        <li>Python для бывалых.</li>
+                        <li>JavaScript...</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <img src="javascript.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>Фичи не так важны</h2>
+
+                    <p>В вебе мы почти всё собираем из готового. <br>Если надо что-то эдакое &mdash; микросервис на golang
+                    поможет.</p>
+                </section>
+
+                <section>
+                    <h2>Парадигма важна!</h2>
+                </section>
+
+                <section>
+                    <h2>Проекты</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Свои проекты для души.</li>
+                        <li>Свои проекты $.</li>
+                        <li>Команды $.</li>
+                        <li>Много команд $.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Развитие PHP</h2>
+                </section>
+
+                <section>
+                    <img src="composer-2018-01.png" alt="Composer PHP stats" />
+                </section>
+
+                <section>
+                    <h2>PHP 7.0</h2>
+
+                    <ul>
+                        <li>Производительность.</li>
+                        <li style="color: red">Больше исключений.</li>
+                        <li style="color: red">Тайпхинты скаляров и return-типы.</li>
+                        <li style="color: red">assert().</li>
+                        <li>Безопасность.</li>
+                        <li>Всегда кешируется phpdoc = аннотации.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>PHP 7.1</h2>
+
+                    <ul>
+                        <li style="color: blue">nullable types.</li>
+                        <li style="color: red">void return.</li>
+                        <li style="color: red">Область видимости для констант.</li>
+                        <li>pcntl_async_signals.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>PHP 7.2</h2>
+
+                    <ul>
+                        <li style="color: blue">object как тайпхинт.</li>
+                        <li>Ещё больше безопасности.</li>
+                        <li>Сахар.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>PHP 7.3</h2>
+
+                    <ul>
+                        <li>is_countable().</li>
+                        <li>Сахар.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Почему?</h2>
+                </section>
+
+                <section>
+                    <h2>Так PHP норм?</h2>
+                </section>
+
+                <section>
+                    <h2>Более чем!</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Где-то посередине между «для новичков» и «для души».</li>
+                        <li>Фреймворки могут сместить планку в ту или иную сторону.</li>
+                        <li>Тимлиды и инструменты не дремлют.</li>
+                        <li>Позволяет делать годные прототипы очень быстро.</li>
+                        <li>Инфраструктура хороша! Composer.</li>
+                        <li>stateless по умолчанию.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Что изучать?</h2>
+
+                    <img src="books.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>То, что пригодится всегда</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>ООП/ООД. Проверка: cohesion/coupling.</li>
+                        <li>HTTP/HTTPS/REST.</li>
+                        <li>Безопасность.</li>
+                        <li>SQL.</li>
+                        <li>CAP (Consistency-Availability-Partition Tolerance).</li>
+                        <li>Базовые понятия о сложности алгоритмов.</li>
+                        <li>Рефакторинг.</li>
+                        <li>Linux.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Это не значит что фреймворк и язык не надо изучать!</p>
+                </section>
+
+                <section>
+                    <h2>Бизнесу важно</h2>
+
+                    <ul>
+                        <li style="color: blue">Предсказуемость.</li>
+                        <li style="color: red">Скорость.</li>
+                        <li style="color: blue">Стоимость.</li>
+                        <li style="color: blue;">Умение выражать мысли.</li>
+                        <li style="color: green">Умение резать углы.</li>
+                        <li style="color: green">Умение оценивать задачи.</li>
+                        <li style="color: blue">Любознательность.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>На какой фреймворк перепрыгнуть?</h2>
+                </section>
+
+                <section>
+                    <h2>А что у нас есть?</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Laravel.</li>
+                        <li>Symfony.</li>
+                        <li>Yii 2.</li>
+                        <li>CakePHP.</li>
+                        <li>CodeIgniter.</li>
+                        <li>Zend Framework.</li>
+                        <li>reactphp.</li>
+                        <li>Phalcon.</li>
+                        <li>FuelPHP.</li>
+                        <li>Slim, F3, ...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Laravel</h2>
+
+                    <ul>
+                        <li>Крутейший маркетинг. На данный момент самый популярный.</li>
+                        <li>Секретные приоритеты. Как у Apple.</li>
+                        <li>Спорное отношение к сообществу.</li>
+                        <li>Годный.</li>
+                    </ul>
+
+                </section>
+
+                <section>
+                    <h2>Symfony</h2>
+
+                    <ul>
+                        <li>Сильные рамки.</li>
+                        <li>Проблемы производительности решает кешем и компиляцией (OroCRM).</li>
+                        <li>Лучше чтобы кеш работал. Внутри слои.</li>
+                        <li>Очень похож по стилю на Java и Spring.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Zend Framework</h2>
+
+                    <p>Похож на Symfony. Слишком.</p>
+                </section>
+
+                <section>
+                    <h2>Phalcon</h2>
+
+                    <ul>
+                        <li>Рвёт всех по производительности.</li>
+                        <li>Во внутренности просто так не полезешь.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>ReactPHP</h2>
+
+                    <p>Отличный вариант для асинхронных демонов.</p>
+                </section>
+
+                <section>
+                    <h2>Работа в «студии»</h2>
+
+                    <ul>
+                        <li>Wordpress.</li>
+                        <li>Drupal.</li>
+                        <li>...</li>
+                    </ul>
+
+                    <p>Но некоторые делают себе CMS на фреймворках.</p>
+                </section>
+
+                <section>
+                    <h2>Что нужно от фреймворка?</h2>
+                </section>
+
+                <section>
+                    <h2>Фреймворк должен нравиться.</h2>
+                </section>
+
+                <section>
+                    <h2>А может ну их, фреймворки?</h2>
+                </section>
+
+                <section>
+                    <p>А у вас достаточно опыта и времени?</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Собрать фреймворк так и так придётся.</li>
+                        <li>Либы отдельно может и норм, но как они вместе?</li>
+                        <li>Как обучить команду?</li>
+                        <li>Сроки... вчера?</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Попробуйте. У нас вышло ;)</p>
+                </section>
+
+                <section>
+                    <p>Не зацикливайтесь на одном фреймворке или языке</p>
+                </section>
+
+                <section>
+                    <img src="yii_logo.svg" alt="">
+                </section>
+
+                <section>
+                    <ul>
+                        <li>PHP MVC.</li>
+                        <li>Очень быстрая разработка.</li>
+                        <li>Возможность перейти от MVP к поддержке и развитию.</li>
+                        <li>Много всего из коробки.</li>
+                        <li>Гибок, прагматичен.</li>
+                        <li>Позволяет резать углы.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Чуть статистики</h2>
+
+                    <ul>
+                        <li>Slack, 921 пользователь.</li>
+                        <li>392 проекта на YiiPowered.</li>
+                        <li>11951 звёзда на Github.</li>
+                        <li>32027 участников Facebook-группы.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Философия Yii</h2>
+
+                    <ul>
+                        <li>Только необходимая сложность.</li>
+                        <li>API и юзабилити кода прежде всего.</li>
+                        <li>Документировать всё.</li>
+                        <li>Обратная совместимость и поддержка &mdash; это важно.</li>
+                        <li>Слушать сообщество.</li>
+                        <li>OpenSource &mdash; совместная работа над общим инструментом.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Как и у любого фреймворка у Yii есть сильные и слабые стороны.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>RAD</li>
+                        <li>Не очень строг</li>
+                        <li>Абстракции достаточно тонкие</li>
+                        <li>Производительность</li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Ошибки 2.0</h2>
+                </section>
+
+                <section>
+                    <h2>Взяли слишком много всего сразу</h2>
+
+                    <p>И засунули слишком много в ядро.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>jQuery.</li>
+                        <li>PJAX.</li>
+                        <li>CAPTCHA.</li>
+                        <li>Masked input.</li>
+                        <li>Остальной клиентсайд :(</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>fxp composer plugin</h2>
+
+                    <p>Попил много крови, но вроде стабилизировался.</p>
+                </section>
+
+                <section>
+                    <h2>Не использовали многие PSR в разработке</h2>
+
+                    <p>Их приняли, а у нас обратная совместимость.</p>
+                </section>
+
+                <section>
+                    <h2>next?</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Новый сайт (тоже OpenSource).</li>
+                        <li>Улучшения в инфраструктуре.</li>
+                        <li>Перелопачены внутренности AR.</li>
+                        <li><a href="https://trello.com/b/9RBEX5Q6/yii-21-feature-requests-propose-features-here-https-wwwfacebookcom-groups-yiitalk-permalink-10156113524667150">Собрали много фидбэка</a>.</li>
+                        <li>Yii 2.0 заморожен по фичам.</li>
+                        <li>Yii 2.1 пилим.</li>
+                        <li>yiisoft/di.</li>
+                        <li>Пока поддерживаем 1.1.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Нужна помощь!</h2>
+                    <ul>
+                        <li><a href="https://github.com/yiisoft/yii2/">https://github.com/yiisoft/yii2/</a>.</li>
+                        <li>Баги, фидбек, идеи, код.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Время вопросов!</h2>
+
+                    <p>Что бы вы хотели увидеть в 3.0?</p>
+
+                    <ul>
+                        <li><a href="https://github.com/yiisoft/yii2/">https://github.com/yiisoft/yii2/</a></li>
+                        <li><a href="https://yiiframework.ru/">yiiframework.ru</a></li>
+                        <li><a href="https://www.yiiframework.com/">yiiframework.com</a></li>
+                        <li>sam@rmcreative.ru</li>
+                        <li>@sam_dark</li>
+                        <li><a href="https://www.yiiframework.com/">www.yiiframework.com</a></li>
+                        <li><a href="https://slides.rmcreative.ru/2018/yii21-php-frameworks/">https://slides.rmcreative.ru/2018/yii21-php-frameworks/</a></li>
+                    </ul>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
