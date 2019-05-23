@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Yii, PHP and frameworks</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Yii, PHP and frameworks">
+        <meta name="author" content="Alexander Makarov">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../../css/samdark.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide">
+                    <h1>Yii, PHP and frameworks</h1>
+
+                    <p><a href="https://github.com/samdark">Alexander Makarov</a></p>
+                    <p>
+                        <small>
+                            <a href="https://www.yiiframework.com/">Yii core team</a>
+                        </small>
+                    </p>
+
+                    <a href="https://slides.rmcreative.ru/2019/php-serbia-yii-php-frameworks/">https://slides.rmcreative.ru/2019/php-serbia-yii-php-frameworks/</a>
+                </section>
+
+                <section>
+                    <h2>About me</h2>
+
+                    <img src="yii_logo.svg" alt="" width="50%">
+
+                    <ul>
+                        <li>10+ years in IT: Java, PHP, JavaScript etc.</li>
+                        <li><a href="https://yiicookbook.org/">Writer</a>, <a href="https://slides.rmcreative.ru/">speaker</a>.</li>
+                        <li><a href="https://github.com/samdark">OpenSource</a>.</li>
+                        <li><a href="https://www.yiiframework.com/about">Yii core team member</a>, PHP-FIG representative.</li>
+                        <li>In the past worked with Siemens, Wrike, CleverTech, Stay.com, Skyeng.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>We are going to talk about</h2>
+
+                    <ul>
+                        <li>PHP.</li>
+                        <li>Where is it heading to.</li>
+                        <li>What to learn?</li>
+                        <li>Which framework to choose next?</li>
+                        <li>Yii.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Let's start with</h2>
+
+                    <img src="php.svg.png" alt="PHP">
+                </section>
+
+                <section>
+                    <ul>
+                        <li><a href="https://w3techs.com/technologies/overview/programming_language/all">79% of all websites are using PHP</a> (W<sup>3</sup>).</li>
+                        <li><a href="https://w3techs.com/technologies/details/pl-php/all/all">67% of them is PHP 5, 32% is PHP 7</a></li>
+                        <li><a href="https://redmonk.com/sogrady/2019/03/20/language-rankings-1-19/">4th place in Redmonk rating</a>.</li>
+                        <li><a href="https://www.tiobe.com/tiobe-index/">9th place in TIOBE rating</a>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Overall PHP usage and popularity declines to some degree but it is still one of the most popular languages.</p>
+                </section>
+
+                <section>
+                    <h2>Where is PHP heading to?</h2>
+
+                    <img src="bullet.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>But first a bit about languages in general</h2>
+                </section>
+
+                <section>
+                    <p>What's the difference between languages?</p>
+                </section>
+
+                <section>
+                    <h2>Users</h2>
+
+                    <img src="developers.jpg" alt="">
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Novice.</li>
+                        <li>Specialist.</li>
+                        <li>Professional.</li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>There are almost no all-stars IT-teams when it comes to real business. You need a language for novices.</p>
+                </section>
+
+                <section>
+                    <h2>Novices need</h2>
+
+                    <ul>
+                        <li>Frames (guidelines, limitations).</li>
+                        <li>Strictness.</li>
+                        <li>Examples.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Java is for novices.</li>
+                        <li>Python is for experienced.</li>
+                        <li>JavaScript...</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <img src="javascript.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>Features are less important</h2>
+
+                    <p>We're more assembling rather than developing except domain. <br>Need performance?
+                        Do it as golang micro-service.</p>
+                </section>
+
+                <section>
+                    <h2>Paradigm is important!</h2>
+                </section>
+
+                <section>
+                    <h2>PHP improved over years</h2>
+                </section>
+
+                <section>
+                    <img src="composer-php-versions.png" alt="Composer PHP stats" />
+
+                    <a href="https://blog.packagist.com/php-versions-stats-2018-2-edition/">https://blog.packagist.com/php-versions-stats-2018-2-edition/</a>
+                </section>
+
+                <section>
+                    <h2>PHP 7.0</h2>
+
+                    <ul>
+                        <li>Performance.</li>
+                        <li style="color: red">More exceptions.</li>
+                        <li style="color: red">Return types and scalar typehints.</li>
+                        <li style="color: red">assert().</li>
+                        <li>Security.</li>
+                        <li>phpdoc is always cached (annotations).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>PHP 7.1</h2>
+
+                    <ul>
+                        <li style="color: blue">nullable types.</li>
+                        <li style="color: red">void return.</li>
+                        <li style="color: red">Constant visibility (private, protected, public).</li>
+                        <li>pcntl_async_signals.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>PHP 7.2</h2>
+
+                    <ul>
+                        <li style="color: blue">object as typehint.</li>
+                        <li>More security.</li>
+                        <li>Syntactic sugar.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>PHP 7.3</h2>
+
+                    <ul>
+                        <li>is_countable().</li>
+                        <li>Syntactic sugar.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>PHP 7.4</h2>
+
+                    <ul>
+                        <li>Performance.</li>
+                        <li>Syntactic sugar.</li>
+                        <li style="color: red">Typed properties.</li>
+                        <li style="color: blue">Improved type variance.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Is PHP okay?</h2>
+                </section>
+
+                <section>
+                    <h2>It is!</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Somewhere between "for novice" and "for fun".</li>
+                        <li>Frameworks could shift above position.</li>
+                        <li>Teamleads and tools are watching.</li>
+                        <li>Allows prototyping fast.</li>
+                        <li>Infrastructure is great! Composer.</li>
+                        <li>Stateless by default.</li>
+                        <li>Good for domain.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>What to learn?</h2>
+
+                    <img src="books.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>Learn what you can use anywhere</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>OOP/OOD. Check yourself with cohesion/coupling.</li>
+                        <li>HTTP/HTTPS/REST.</li>
+                        <li>Security.</li>
+                        <li>SQL.</li>
+                        <li>CAP (Consistency-Availability-Partition Tolerance).</li>
+                        <li>Basic understanding of algorithm complexity.</li>
+                        <li>Refactoring.</li>
+                        <li>Linux.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>You still should learn the framework you use!</p>
+                </section>
+
+                <section>
+                    <h2>Business needs more than that...</h2>
+
+                    <ul>
+                        <li style="color: blue">Predictability.</li>
+                        <li style="color: red">Performance.</li>
+                        <li style="color: blue">Adequate cost.</li>
+                        <li style="color: blue;">Ability to express yourself clearly.</li>
+                        <li style="color: green">Ability to write dirty code quickly.</li>
+                        <li style="color: green">Ability to estimate.</li>
+                        <li style="color: blue">Desire to learn new things.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Which framework to choose next?</h2>
+                </section>
+
+                <section>
+                    <h2>What do we have?</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Laravel.</li>
+                        <li>Symfony.</li>
+                        <li>Yii 2.</li>
+                        <li>CakePHP.</li>
+                        <li>CodeIgniter.</li>
+                        <li>Zend Framework.</li>
+                        <li>reactphp.</li>
+                        <li>Phalcon.</li>
+                        <li>FuelPHP.</li>
+                        <li>Slim, F3, ...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Laravel</h2>
+
+                    <ul>
+                        <li>Best marketing. Most popular framework nowadays.</li>
+                        <li>Secret priorities similar to Apple.</li>
+                        <li>Questionable community relations.</li>
+                        <li>It's mostly alright.</li>
+                    </ul>
+
+                </section>
+
+                <section>
+                    <h2>Symfony</h2>
+
+                    <ul>
+                        <li>Strong limitations.</li>
+                        <li>Performance issues are being solved by caching and compiling (extreme case - OroCRM).</li>
+                        <li>It better if cache works well. Debug isn't easy sometimes. There are many layers.</li>
+                        <li>Style is similar to Java and Spring.</li>
+                        <li>Since recently following Laravel features :(</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Zend Framework</h2>
+
+                    <p>Similar to Symfony but with different style.</p>
+
+                    <p>Becoming Laminas soon.</p>
+                </section>
+
+                <section>
+                    <h2>Phalcon</h2>
+
+                    <ul>
+                        <li>Way better perforance.</li>
+                        <li>Can't dig into it easily. It is PECL.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>ReactPHP</h2>
+
+                    <p>Great for async daemons.</p>
+                </section>
+
+                <section>
+                    <h2>If you want a web-site...</h2>
+
+                    <ul>
+                        <li>Wordpress.</li>
+                        <li>Drupal.</li>
+                        <li>...</li>
+                    </ul>
+
+                    <p>Some studios create their own CMS with frameworks.</p>
+                </section>
+
+                <section>
+                    <h2>What do you really need from a framework?</h2>
+                </section>
+
+                <section>
+                    <h2>It should be enjoyable.</h2>
+                </section>
+
+                <section>
+                    <h2>What about no framework approach?</h2>
+                </section>
+
+                <section>
+                    <p>Do you have enough experience and time?</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>You'll build a framework anyway.</li>
+                        <li>Each library is OK by itself but how about 10 libraries used together?</li>
+                        <li>How to teach your team?</li>
+                        <li>Deadlines... yesterday?</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Try it. We succeeded in making a framework ;)</p>
+                </section>
+
+                <section>
+                    <p>Don't get stuck with a single language or framework</p>
+                </section>
+
+                <section>
+                    <img src="yii_logo.svg" alt="">
+                </section>
+
+                <section>
+                    <ul>
+                        <li>PHP MVC.</li>
+                        <li>Rapid development.</li>
+                        <li>You can get from MVP to support and development.</li>
+                        <li>Lots of features out of the box.</li>
+                        <li>Flexible and pragmatic.</li>
+                        <li>Allows taking shortcuts.</li>
+                        <li>Non-commercial.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Originally created by Qiang Xue in 2008 based on his Prado framework (2004).</p>
+                    <p>Yii 2 was released in 2014.</p>
+
+                    <img src="history.png" alt="">
+                </section>
+
+                <section>
+                    <h2>Some stats</h2>
+
+                    <ul>
+                        <li>Slack, 1500 users.</li>
+                        <li>500 projects at YiiPowered.</li>
+                        <li>12852 Github stars.</li>
+                        <li>31767 Facebook group members.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Yii values</h2>
+
+                    <ol>
+                        <li>
+                            Be Practical
+                            <ul>
+                                <li>High Performance</li>
+                                <li>Sensible Defaults and Flexibility</li>
+                                <li>Be practice-oriented</li>
+                            </ul>
+                        </li>
+                        <li>
+                                Be Helpful
+                                <ul>
+                                    <li>Be simple</li>
+                                    <li>Be explicit</li>
+                                    <li>Be consistent</li>
+                                </ul>
+                        </li>
+                    </ol>
+                </section>
+
+                <section>
+                    <p>Same as with every framework Yii has its pros and cons.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>RAD</li>
+                        <li>Not too strict</li>
+                        <li>Thin abstractions, sequential, good naming. Easy to read and debug.</li>
+                        <li>Performance. Works great without cache.</li>
+                        <li>Gii</li>
+                        <li>Grids and data providers</li>
+                        <li>Docs</li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="error.png" alt="">
+                </section>
+
+                <section>
+                    <img src="basic3.png" alt="">
+                </section>
+
+                <section>
+                    <img src="basic6.png" alt="">
+                </section>
+
+                <section>
+                    <img src="basic10.png" alt="">
+                </section>
+
+                <section>
+                    <h2>Yii 2.0 mistakes</h2>
+                </section>
+
+                <section>
+                    <h2>Tried to handle too much</h2>
+
+                    <p>Got too much into the core.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>jQuery.</li>
+                        <li>PJAX.</li>
+                        <li>CAPTCHA.</li>
+                        <li>Masked input.</li>
+                        <li>More clientside :(</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Tried to fix PHP with magic.</h2>
+                </section>
+
+                <section>
+                    <h2>Inheritance :(</h2>
+                </section>
+
+                <section>
+                    <h2>Handled errors PHP way.</h2>
+                </section>
+
+                <section>
+                    <h2>We haven't used many PSRs</h2>
+
+                    <p>They were mostly accepted after framework release. Backwards compatibility...</p>
+                </section>
+
+                <section>
+                    <h2>Old-style architecture.</h2>
+                </section>
+
+                <section>
+                    <h2>next?</h2>
+                </section>
+
+                <section>
+                    <h2>Yii 3</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Set of packages (log, di, i18n etc.) + default application.</li>
+                        <li>Allow both "classic" MVC and DDD.</li>
+                        <li>SOLID, GRASP etc.</li>
+                        <li>PSRs (HTTP request/response, middlewares, container, events).</li>
+                        <li>Strict types.</li>
+                        <li>Keep most good things from Yii 2.</li>
+                        <li>Kill most of inheritance</li>
+                        <li>Swoole / RoadRunner</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>We need your help!</h2>
+                    <ul>
+                        <li><a href="https://github.com/yiisoft/">https://github.com/yiisoft/</a>.</li>
+                        <li>Bugs, feedback, ideas, code.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Questions time!</h2>
+
+                    <ul>
+                        <li><a href="https://github.com/yiisoft">https://github.com/yiisoft</a></li>
+                        <li><a href="https://www.yiiframework.com/">yiiframework.com</a></li>
+                        <li>sam@rmcreative.ru</li>
+                        <li>@sam_dark</li>
+                        <li><a href="https://slides.rmcreative.ru/2019/php-serbia-yii-php-frameworks/">https://slides.rmcreative.ru/2019/php-serbia-yii-php-frameworks/</a></li>
+                    </ul>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: 'c/t',
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
