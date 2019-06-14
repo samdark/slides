@@ -13,6 +13,12 @@
     height: 1em;
 }
 
+.reveal .slide-background {
+    background-position: bottom;
+    background-image: url(presentation_16_9_next.png);
+    background-size: 100% auto;
+}
+
 .reveal .slide-background.title-slide {
     background-position: bottom;
 }
@@ -21,9 +27,24 @@
     margin-top: -100px;
 }
 
+.title-slide {
+    color: #fff;
+}
+
+.reveal section img {
+    background: none;
+    border-radius: 10%;
+}
+
+.title-slide a {
+    color: #fff;
+    background: #1459b6;
+    padding: 0 .5em 1em .5em;
+}
+
 .title-slide h1 {
     font-size: 2.77em;
-    text-shadow: 0 0 5px #fff;
+    color: #fff;
 
 }
 

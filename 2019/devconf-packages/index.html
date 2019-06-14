@@ -40,15 +40,10 @@
 
             <!-- Any section element inside of this container is displayed as a slide -->
             <div class="slides">
-                <section class="title-slide">
+                <section class="title-slide" data-background="presentation_16_9_back.png">
                     <h1>Пакетные принципы и метрики</h1>
 
-                    <p><a href="https://github.com/samdark">Александр Макаров</a></p>
-                    <p>
-                        <small>
-                            <a href="https://www.yiiframework.com/">Yii core team</a>
-                        </small>
-                    </p>
+                    <p><a href="https://github.com/samdark">Александр Макаров</a> / <a href="https://www.yiiframework.com/">Yii core team</a></p>
 
                     <a href="https://slides.rmcreative.ru/2019/devconf-packages/">https://slides.rmcreative.ru/2019/devconf-packages/</a>
                 </section>
@@ -168,7 +163,7 @@
                 <section>
                     <h2>Что такое «пакет»?</h2>
 
-                    <img src="package.jpg" />
+                    <img src="package.png" />
                 </section>
 
                 <section>
@@ -262,7 +257,7 @@
                 <section>
                     <img src="principles_triangle.png" alt="" />
 
-                    <p>Dr. Stefan Kluth, Max-Planck-Institut fuer Physik</p>
+                    Dr. Stefan Kluth, Max-Planck-Institut fuer Physik
                 </section>
 
                 <section>
@@ -305,8 +300,8 @@
                     <h2>Как разорвать цикл?</h2>
 
                     <ul>
-                        <li>DIP - использовать инверсию зависимостей через интерфейсы.</li>
-                        <li>CRP - выделить общий пакет.</li>
+                        <li>DIP &mdash; использовать инверсию зависимостей через интерфейсы.</li>
+                        <li>CRP &mdash; выделить общий пакет.</li>
                         <li>Переделать...</li>
                     </ul>
                 </section>
@@ -327,9 +322,9 @@
                     <h2>I = <span class="green">C<sub>e</sub></span> / <span class="green">C<sub>e</sub></span> + <span class="red">C<sub>a</sub></span></h2>
 
                     <ul>
-                        <li>I - Instability, нестабильность. 1 - нестабильный, 0 - стабильный.</li>
-                        <li><span class="green">C<sub>e</sub></span> - Efferent Coupling. Количество классов вне пакета, зависящих от пакета.</li>
-                        <li><span class="red">C<sub>a</sub></span> - Afferent Coupling. Количество классов вне пакета, от которых зависит пакет.</li>
+                        <li>I &mdash; Instability, нестабильность. 1 &mdash; нестабильный, 0 &mdash; стабильный.</li>
+                        <li><span class="green">C<sub>e</sub></span> &mdash; Efferent Coupling. Количество классов вне пакета, зависящих от пакета.</li>
+                        <li><span class="red">C<sub>a</sub></span> &mdash; Afferent Coupling. Количество классов вне пакета, от которых зависит пакет.</li>
                     </ul>
                 </section>
 
@@ -353,9 +348,9 @@
                     <h2>A = <span class="red">N<sub>a</sub></span> / <span class="green">N<sub>c</sub></span></h2>
 
                     <ul>
-                        <li>A - абстрактность. 0 - конкретный, 1 - абстрактный.</li>
-                        <li><span class="red">N<sub>a</sub></span> - число классов и интерфесов в пакете.</li>
-                        <li><span class="green">N<sub>c</sub></span> - число абстрактных классов и интерфейсов в пакете.</li>
+                        <li>A &mdash; абстрактность. 0 &mdash; конкретный, 1 &mdash; абстрактный.</li>
+                        <li><span class="red">N<sub>a</sub></span> &mdash; число классов и интерфесов в пакете.</li>
+                        <li><span class="green">N<sub>c</sub></span> &mdash; число абстрактных классов и интерфейсов в пакете.</li>
                     </ul>
                 </section>
 
@@ -398,7 +393,7 @@
                 </section>
 
                 <section>
-                    <p>Как и SOLID, дополнительные принципы и метрики — не догма, но могут быть полезны.</p>
+                    <p>Как и SOLID, дополнительные принципы и метрики &mdash; не догма, но могут быть полезны.</p>
                 </section>
 
                 <section>
@@ -419,8 +414,8 @@
                         <li><a href="https://en.wikipedia.org/wiki/Short-term_memory">Wikipedia: Short-term memory</a></li>
                         <li><a href="http://wiki.c2.com/?WelcomeVisitors">c2 wiki</a></li>
                         <li><a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod ">Principles of OOD</a></li>
-                        <li>Agile Software Development, Principles, Patterns, and Practices - Robert C. Martin</li>
-                        <li><a href="https://matthiasnoback.nl/book/principles-of-package-design/">Principles of Package Design - Matthias Noback</a></li>
+                        <li>Agile Software Development, Principles, Patterns, and Practices &mdash; Robert C. Martin</li>
+                        <li><a href="https://matthiasnoback.nl/book/principles-of-package-design/">Principles of Package Design &mdash; Matthias Noback</a></li>
                     </ul>
                 </section>
 
@@ -436,11 +431,11 @@
             // Full list of configuration options available here:
             // https://github.com/hakimel/reveal.js#configuration
             Reveal.initialize({
-                controls: true,
+                controls: false,
                 progress: true,
                 history: true,
                 center: true,
-                slideNumber: 'c/t',
+                slideNumber: false,
 
                 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
                 transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
@@ -450,6 +445,15 @@
                     { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
                     { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
                 ]
+            });
+
+            Reveal.addEventListener('slidechanged', (event) => {
+                const isFirst = event.indexh === 0;
+                var slideNumber = false;
+                if (!isFirst) {
+                    slideNumber = 'c/t';
+                }
+                Reveal.configure({ slideNumber: slideNumber});
             });
 
         </script>
