@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Yii 3</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Yii 3">
+        <meta name="author" content="Александр Макаров">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../../css/samdark.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide">
+                    <h1><img src="yii3.png" width="30%" alt="Yii 3" /><br>Yii 3</h1>
+
+                    <p><a href="https://github.com/samdark">Александр Макаров</a> / <a href="https://www.yiiframework.com/">Yii core team</a></p>
+
+                    <a href="https://slides.rmcreative.ru/2020/yii3/">https://slides.rmcreative.ru/2020/yii3/</a>
+                </section>
+
+                <section>
+                    <h2>Обо мне</h2>
+
+                    <ul>
+                        <li>10+ лет в IT: Java, PHP, JavaScript etc.</li>
+                        <li><a href="https://yiicookbook.org/">Пишу</a>, <a href="https://slides.rmcreative.ru/">докладываю</a>.</li>
+                        <li><a href="https://github.com/samdark">Заниимаюсь OpenSource</a>.</li>
+                        <li><a href="https://www.yiiframework.com/about">Член команды Yii</a> и PHP-FIG.</li>
+                        <li>Siemens, Murano, Wrike, CleverTech, Stay.com, Skyeng.</li>
+                        <li>Делаю <a href="https://phprussia.ru/2019">PHP Russia</a>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="phpru_elephant.jpg" />
+                </section>
+
+                <section>
+                    <h2><img src="yii_logo.svg" alt="" width="50%"></h2>
+
+                    <ul>
+                        <li>PHP фреймворк.</li>
+                        <li>Один из самых популярных.</li>
+                        <li>Две стабильные ветки.</li>
+                        <li><a href="https://yiipowered.com/">Много проектов</a>.</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <img src="projects.png" alt="">
+                </section>
+
+                <section>
+                    <h2>За что любят Yii</h2>
+
+                    <ul>
+                        <li>Быстрый.</li>
+                        <li>Понятный. Отличная документация.</li>
+                        <li>Много фич.</li>
+                        <li>Крутая кодогенерация.</li>
+                        <li>Быстро делать прототипы.</li>
+                        <li>Active Record.</li>
+                        <li>Низкий порог входа.</li>
+                        <li>Сообщество.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>За что не любят Yii</h2>
+
+                    <ul>
+                        <li>Низкий порог входа.</li>
+                        <li>Не учит писать хорошо.</li>
+                        <li>Провоцирует писать плохо.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="f8.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>История Yii</h2>
+
+                    <ul>
+                        <li>2004 — Prado (Qiang Xue, Wei Zhuo).</li>
+                        <li>2008 — Yii 1.0.</li>
+                        <li>2010 — я вошёл в команду, Yii 1.1, планы на 1.2.</li>
+                        <li>2011 — начали Yii 2.</li>
+                        <li>2014 — стабильный Yii 2.</li>
+                        <li>2015 — уходит Qiang.</li>
+                        <li>2016 — планы на 2.1.</li>
+                        <li>2018 — early access 2.1, начали Yii 3.</li>
+                        <li>2019 — организован фонд.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Что не так было в 2.1?</h2>
+
+                    <ul>
+                        <li>Service locator.</li>
+                        <li>properties, behaviors.</li>
+                        <li>Форсированное дерево наследования.</li>
+                        <li>fxp и завязка на клиентсайд.</li>
+                        <li>Не PSR, хоть и пытался.</li>
+                        <li>Всё ещё сильно монолитен.</li>
+                        <li>Всё ещё закрыт от PHP-сообщества.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2><img src="yii3.png" width="30%" alt="Yii 3" /></h2>
+                </section>
+
+                <section>
+                    <h2>Принципы</h2>
+                </section>
+
+                <section>
+                    <h2>Практичность</h2>
+
+                    <ul>
+                       <li>Высокая производительность.</li>
+                       <li>Умолчания, но гибкость.</li>
+                       <li>Ориентированность на практику.</li>
+                   </ul>
+                </section>
+
+                <section>
+                    <h2>Полезность</h2>
+
+                    <ul>
+                        <li>Простое лучше сложного.</li>
+                        <li>Явное лучше неявного.</li>
+                        <li>Необходимо быть последовательным.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Зачем?</h2>
+
+                    <ul>
+                        <li>Убить service locator.</li>
+                        <li>От наследования к композиции</li>
+                        <li>Уйти от нестандартного PHP (accessor, behavior).</li>
+                        <li>Заложить фундамент на 10 лет вперёд.</li>
+                        <li>Не ограничивать в выборе архитектуры.</li>
+                        <li>Поделить ответственность (пакеты).</li>
+                        <li>Открыть PHP-сообществу.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Зачем-зачем?</h2>
+
+                    <ul>
+                        <li>Общий инструмент.</li>
+                        <li>Быстро начинать проекты.</li>
+                        <li>Продолжать и поддерживать с нормальным уровнем техдолга.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Пакеты</h2>
+
+                    <ul>
+                        <li>Их много (85!).</li>
+                        <li>Позволяют собирать что нужно.</li>
+                        <li>Легче поддерживать.</li>
+                        <li>Можно использовать вне Yii.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>PSR</h2>
+
+                    <ul>
+                        <li>1, 12 — стандарт кода.</li>
+                        <li>4 — автозагрузка.</li>
+                        <li>3 — логгер.</li>
+                        <li>16 — кеш.</li>
+                        <li>14 — диспетчер событий.</li>
+                        <li>7, 15, 17 — HTTP + Middeware + хедлеры.</li>
+                        <li>11 — контейнер.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>7, 15, 17 — HTTP + Middeware + хедлеры</h2>
+
+                    <img src="middleware.svg" alt="">
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Приложение — стэк middleware.</li>
+                        <li>Роутер — middleware.</li>
+                        <li>Обработчик роута — стэк middeware.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <pre><code>
+class MiddlewareDispatcherFactory
+{
+  public function __invoke(ContainerInterface $container)
+  {
+    $session = $container->get(SessionMiddleware::class);
+    $router = $container->get(Router::class);
+    $errorCatcher = $container->get(ErrorCatcher::class);
+    $subFolder = $container->get(SubFolder::class);
+
+    return new MiddlewareDispatcher([
+      $errorCatcher,
+      $session,
+      $subFolder,
+      $router,
+    ], $container);
+  }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code>
+class RespondingMiddleware implements MiddlewareInterface
+{
+  private $responseFactory;
+
+  public function __construct(ResponseFactoryInterface $responseFactory)
+  {
+    $this->responseFactory = $responseFactory;
+  }
+
+  public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+  {
+    $response = $this->responseFactory->createResponse();
+    $response->getBody()->write('Hello!');
+    return $response;
+  }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code>
+class ProcessingMiddleware implements MiddlewareInterface
+{
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        // before other middleware
+        $response = $handler->handle($request);
+        // after other middleware
+        return $response;
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Роутер</h2>
+                </section>
+
+                <section>
+<pre><code>
+class AppRouterFactory
+{
+  public function __invoke(ContainerInterface $container)
+  {
+      $routes = [
+        Group::create('/user', [
+          Route::get('[/page-{page:\d+}]', [UserController::class, 'index'])
+            ->name('user/index'),
+
+          Route::get('/{login}', [UserController::class, 'profile'])
+            ->name('user/profile'),
+      ]),
+    ];
+
+    return (new RouterFactory(new FastRouteFactory(), $routes))($container);
+  }
+}
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>RoadRunner / Swoole</h2>
+
+                    <ul>
+                        <li>RR даёт производительность × 20 по сравнению с FPM.</li>
+                        <li>Писать нужно по-другому.</li>
+                        <li>Yii 3 готов работать в RR.</li>
+                        <li>Но приложение готовым делаете вы.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>11 — контейнер</h2>
+                </section>
+
+                <section>
+<pre><code>
+class PostCard extends Widget
+{
+  private UrlGeneratorInterface $urlGenerator;
+
+  public function __construct(UrlGeneratorInterface $urlGenerator)
+  {
+    $this->urlGenerator = $urlGenerator;
+  }
+</code></pre>
+                </section>
+
+                <section>
+                    <pre><code>
+public function index(ArchiveRepository $archiveRepo): Response
+{
+  return $this->render('index', [
+    'archive' => $archiveRepo->getFullArchive()
+  ]);
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Что готово?</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Контейнер.</li>
+                        <li>Middleware.</li>
+                        <li>Менее важные PSR.</li>
+                        <li>View / базовый виджет.</li>
+                        <li>Data.</li>
+                        <li>Пакеты.</li>
+                        <li>Интеграция с Cycle.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Пока не готово</h2>
+
+                    <ul>
+                        <li>Шаблон приложения.</li>
+                        <li>Gii / Debug.</li>
+                        <li>Виджеты.</li>
+                        <li>data-виджеты.</li>
+                        <li>Свой DBAL.</li>
+                        <li>RBAC.</li>
+                        <li>API.</li>
+                        <li>Валидаторы.</li>
+                        <li>Документация.</li>
+                        <li>Полировка и баги.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Планы</h2>
+
+                    <ul>
+                        <li>Полировка и доделки.</li>
+                        <li>Документация.</li>
+                        <li>Альфа 1.</li>
+                        <li>Psalm / Phan / PhpStan.</li>
+                        <li>Альфа 2.</li>
+                        <li>Фонд++</li>
+                        <li>Бета 1.</li>
+                        <li>Релиз.</li>
+                        <li>Ифраструктура и сайд-проекты.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Как готовиться к Yii 3?</h2>
+
+                    <ul>
+                        <li>Не использовать <code>Yii::$app</code>.</li>
+                        <li>Использовать DI-контейнер.</li>
+                        <li>Выделение доменного слоя и сервисов.</li>
+                        <li>Выделение репозиториев, не завязываться на AR.</li>
+                        <li>Не использовать магию.</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Как помочь</h2>
+
+                    <ul>
+                        <li>Код.</li>
+                        <li>Review.</li>
+                        <li>Идеи / обсуждения.</li>
+                        <li>Управление.</li>
+                        <li>Документация.</li>
+                        <li>Фидбэк.</li>
+                        <li>OpenCollective.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>С чего начать?</h2>
+
+                    <ul>
+                        <li>yiisoft/yii-demo.</li>
+                        <li>yiisoft/yii-dev.</li>
+                        <li>Telegram: @yii3ru.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Спасибо!</h2>
+                </section>
+
+                <section>
+                    <h2>Время вопросов!</h2>
+
+                    <ul>
+                        <li>sam@rmcreative.ru</li>
+                        <li>@sam_dark</li>
+                        <li><a href="https://slides.rmcreative.ru/2020/yii3/">https://slides.rmcreative.ru/2020/yii3/</a></li>
+                        <li><a href="https://github.com/yiisoft/docs/">https://github.com/yiisoft/docs/</a></li>
+                    </ul>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: false,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: false,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+
+            Reveal.addEventListener('slidechanged', (event) => {
+                const isFirst = event.indexh === 0;
+                var slideNumber = false;
+                if (!isFirst) {
+                    slideNumber = 'c/t';
+                }
+                Reveal.configure({ slideNumber: slideNumber});
+            });
+
+        </script>
+
+    </body>
+</html>
