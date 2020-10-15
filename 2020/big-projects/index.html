@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Большие проекты, архитектура и фреймворки</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Большие проекты, архитектура и фреймворки">
+        <meta name="author" content="Александр Макаров">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../../css/samdark.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide">
+                    <h2>Большие проекты, архитектура и фреймворки</h2>
+
+                    <p><a class="author" href="http://github.com/samdark">Александр Макаров</a></p>
+                    <p>
+                        <small>
+                            <a class="company" href="http://www.yiiframework.com/">Skyeng, Yii core team</a>
+                        </small>
+                    </p>
+
+                    <a href="http://slides.rmcreative.ru/2020/big-projects/">http://slides.rmcreative.ru/2020/big-projects/</a>
+                </section>
+
+                <section>
+                    <h2>О себе</h2>
+
+                    <img src="yii.png" alt="">
+
+                    <ul>
+                        <li>Долго занимаюсь Yii и другим открытым кодом.</li>
+                        <li>Параллельно работал над коммерческими проектами.</li>
+                        <li>Участвую в PHP-FIG.</li>
+                        <li>Автор нескольких книг и rmcreative.ru.</li>
+                        <li>Делаю PHP Russia.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Архитектура?</h2>
+
+                    <p><a href="http://www.sei.cmu.edu/architecture/start/glossary/community.cfm">Чёткого определения нет :)</a></p>
+                </section>
+
+                <section>
+                    <p>Ряд решений о том, как взаимодействуют отдельные части системы (в том числе люди). Это, в основном,
+                    глобальные решения, которые тяжело изменить потом.</p>
+
+                    <img src="f3.jpg" alt="" width="30%">
+                </section>
+
+                <section>
+                    <ul>
+                        <li>На какие элементы разбить код?</li>
+                        <li>Как эти элементы взаимодействуют?</li>
+                        <li>Кто и за что отвечает.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Архитектура &mdash; это про соглашения, интерфейсы, контракты и абстракцию. Не про код и конкретную реализацию.</p>
+
+                    <img src="layers.gif" alt="">
+                </section>
+
+                <section>
+                    <h2>Что такое интерфейс?</h2>
+                </section>
+
+                <section>
+                    <p>Наследование знают все. А что такое инкапсуляция и полиморфизм? Какой их смысл?</p>
+                </section>
+
+                <section>
+                    <h2>Фреймворк &mdash; не архитектура</h2>
+
+                    <p>Он не построит архитектуру за вас.</p>
+                </section>
+
+                <section>
+                    <p>Фреймворк <strong>ничего не знает об элементах вашего приложения</strong> и
+                        <strong>не может определить интерфейсы для взаимодействия этих элементов</strong>.</p>
+                </section>
+
+                <section>
+                    <p>Но может дать начальный шаблон и инфраструктуру. В случае Yii это MVC.</p>
+                </section>
+
+                <section>
+                    <p>basic/advanced &mdash; не догма и не шаблон полноценной архитектуры</p>
+                </section>
+
+                <section>
+                    <h2>Кстати, про MVC...</h2>
+
+                    <img src="mvc.png" alt="">
+                </section>
+
+                <section>
+                    <h2>Controller</h2>
+
+                    <ul>
+                        <li>Принимает данные извне (GET, POST, консольный ввод, ...).</li>
+                        <li>Отдаёт данные в нужном виде в Model и View.</li>
+                        <li><strong>Не реализует логику, не занимается форматированием или формированием ответа.</strong></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>View</h2>
+
+                    <ul>
+                        <li>Получает подготовленные контроллером данные.</li>
+                        <li>Форматирует данные для ответа.</li>
+                        <li><strong>Никогда не работает с внешними данными, базой или пользовательским вводом напрямую.</strong></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Model</h2>
+
+                    <ul>
+                        <li><strong>Не Model в Yii! Не ActiveRecord!</strong></li>
+                        <li><strong>M в MVC - не один класс, а целый доменный слой (вся логика приложения).</strong></li>
+                        <li>Получает подготовленные контроллером данные, обрабатывает их, возвращает результат.</li>
+                        <li><strong>Никогда не работает с внешними данными или пользовательским вводом напрямую.</strong></li>
+                        <li><strong>Не занимается форматированием или формированием ответа.</strong></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>ADR</h2>
+                </section>
+
+                <section>
+                    <h2>Паттерны проектирования &mdash; не архитектура.</h2>
+                </section>
+
+                <section>
+                    <p>Это проверенные варианты решения более-менее распространённых проблем. У каждого паттерна есть как плюсы,
+                    так и минусы.</p>
+                </section>
+
+                <section>
+                    <p>Даже правильно релизованные паттерны легко использовать неправильно.</p>
+
+                    <img src="fountain.jpg" alt="" width="40%">
+                </section>
+
+                <section>
+                    <h2>Зачем нужна архитектура?</h2>
+                </section>
+
+                <section>
+                    <p>Для борьбы со сложностью.</p>
+
+                    <p>Цель &mdash; сделать понятным каждый уровень абстракции.</p>
+
+                    <img src="brain.png" alt="">
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Для изменения под реалии бизнеса.</li>
+                        <li>Чтобы не приходилось всё переписывать с нуля.</li>
+                        <li>Сделать с первого раза хорошо — это не просто.</li>
+                    </ul>
+
+                    <img src="roof.png" alt="">
+                </section>
+
+                <section>
+                    <p>Хорошая архитектура &mdash; это дорого. Плохая &mdash; еще дороже.</p>
+
+                    <img src="f7.jpg" alt="">
+                </section>
+
+                <section>
+                    <p>"If you think good architecture is expensive, try bad architecture"<br>&ndash; Brian Foote and Joseph Yoder</p>
+                </section>
+
+                <section>
+                    <h2>Паттерны — хорошо. Принципы — лучше.</h2>
+                </section>
+
+                <section>
+                    <h2>SOLID</h2>
+
+                    <p>Ещё одна модная аббревиатура...</p>
+                </section>
+
+                <section>
+                    <h2>Single Responsibility</h2>
+
+                    <p>Класс должен делать что-то одно.</p>
+
+                    <img src="f5.jpg" alt="" width="40%">
+                </section>
+
+                <section>
+                    <h2>Single Responsibility</h2>
+
+                    <p>У класса должна быть одна причина для изменения.</p>
+
+                    <img src="f5.jpg" alt="" width="40%">
+                </section>
+
+                <section>
+                    <h2>Single Responsibility</h2>
+
+                    <p>Модуль должен служить одному типу потребителей.</p>
+
+                    <img src="f5.jpg" alt="" width="40%">
+                </section>
+
+                <section>
+                    <h2>Open-closed</h2>
+
+                    <p>Класс или модуль (несколько связанных классов) должен скрывать детали реализации (то есть
+                        как именно он работает внутри), но иметь чётко определённый интерфейс, который позволяет
+                        как использовать модуль или класс (public методы), так и расширять его наследованием (protected
+                        и public методы).</p>
+
+                    <img src="f4.jpg" alt="" width="30%">
+                </section>
+
+                <section>
+                    <h2>Liskov substitution</h2>
+
+                    <p>Принцип об иерархии и наследования. Классическое определение очень запутанное. Можно проще.</p>
+
+                    <p>Когда мы реализовываем новый класс, наследуясь от существующего,
+                        новый должен быть с тем же интерфейсом и вести себя абсолютно так же в тех же ситуациях. Так,
+                        чтобы программа работала, если подсунуть ей как родителя, так и наследника.</p>
+                </section>
+
+                <section>
+                    <h2>Interface segregation</h2>
+
+                    <p>Интерфейс не должен определять больше функциональности, чем используется за один раз. Это как
+                        Single Responsibility, только для интерфейсов. Если интерфейс описывает больше одной задачи,
+                        разбиваем его на несколько интерфейсов.</p>
+                </section>
+
+                <section>
+                    <h2>Dependency inversion</h2>
+
+                    <p>Класс должен объявлять зависимости (то, что ему нужно) через интерфейсы, но никогда не получать их
+                    самостоятельно.</p>
+                </section>
+
+                <section>
+                    <h2>Где-то это уже было...</h2>
+                </section>
+
+                <section>
+                    <h2>Хорошие и плохие зависимости</h2>
+
+                    <ul>
+                        <li>Cohesion - связность.</li>
+                        <li>Coupling - связанность.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Cohesion</h2>
+
+                    <p>Степень единства элементов модуля.</p>
+                </section>
+
+                <section>
+                    <h2>Coupling</h2>
+
+                    <p>Степень взаимной зависимости модулей / классов.</p>
+                </section>
+
+                <section>
+                    <p>Cohesion - хорошо. Coupling - плохо.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li><strong>Служащие одной цели классы</strong> собираются в модули (Не модули фреймворка! Не конкретные классы! Логические рамки).</li>
+                        <li><strong>Внутри модуля</strong> используем его классы напрямую. <strong>Нет смысла абстрагироваться</strong>.</li>
+                        <li>Используемые модулем классы, но <strong>не связанные с ним</strong>, используются <strong>только через интерфейсы</strong>.</li>
+                        <li>Модулю наплевать на то, как он получит зависимости.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Довольно много мест в Yii сделаны не по SOLID. На то были причины.</p>
+                </section>
+
+                <section>
+                    <p>Чтобы нарушать правила необходимо их знать и уметь соблюдать.</p>
+                </section>
+
+                <section>
+                    <p>Попробуйте делать в своих проектах правильно.</p>
+                </section>
+
+                <section>
+                    <h2>Про компромиссы...</h2>
+                </section>
+
+                <section>
+                    <h2>Active Record</h2>
+
+                    <ul>
+                        <li>Делает одновременно слишком много.</li>
+                        <li>Притягивает к себе и бизнес-логику и инфраструктурную логику.</li>
+                        <li>Позволяет достичь цели очень быстро.</li>
+                        <li>Удобен.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Переабстрагирование</h2>
+
+                    <p>Чрезмерное увлечение абстракцией может привести к тому, что каждый отдельный её уровень
+                    слишком прост, а взаимодействие уровней слишком сложно.</p>
+
+                    <img src="parts.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>Недоабстрагирование</h2>
+
+                    <p>Лапша :(</p>
+                </section>
+
+                <section>
+                    <h2>Документирование архитектурных решений</h2>
+                </section>
+
+                <section>
+                    <h2>Что описывать?</h2>
+
+                    <ul>
+                        <li>Модули: структура компонентов.</li>
+                        <li>Компоненты и коннекторы: взаимодействие компонентов.</li>
+                        <li>Размещение: физическое распределение компонентов по серверам.</li>
+                        <li>Ответственность.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Чем описывать?</h2>
+
+                    <ul>
+                        <li>Текст. Как? Почему?</li>
+                        <li>UML.</li>
+                        <li>Простые диаграммы. Наример, в yEd.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Как сделать приложение надёжным?</h2>
+
+                    <img src="f6.jpg" alt="" width="50%">
+                </section>
+
+                <section>
+                    <p>Исправляю одно, отваливается другое...</p>
+                </section>
+
+                <section>
+                    <p>Не увлекайтесь DRY.</p>
+                </section>
+
+                <section>
+                    <p>Выделяйте границы.</p>
+                </section>
+
+                <section>
+                    <p>Избегайте неявнях зависимостей.</p>
+                </section>
+
+                <section>
+                    <p>Избегайте состояния.</p>
+                </section>
+
+                <section>
+                    <h2>TDD/BDD</h2>
+
+                    <p>Тестировать.</p>
+                </section>
+
+                <section>
+                    <h2>Хорошие и плохие тесты</h2>
+                </section>
+
+                <section>
+                    <p>Ключевые места хорошей архитектуры не должно быть сложно тестировать.</p>
+                </section>
+
+                <section>
+                    <p>Засуньте тесты в CI!</p>
+                </section>
+
+                <section>
+                    <p>Архитектура зависит в большей степени от предметной области и нужд компании, чем от применяемых фреймворков и библиотек.</p>
+                </section>
+
+                <section>
+                    <h2>Как отразить в архитектуре домен?</h2>
+                </section>
+
+                <section>
+                    <h2>DDD</h2>
+
+                    <p>Domain Driven Design</p>
+                </section>
+
+                <section>
+                    <p>Программист недостаточно знает автоматизируемый им процесс.</p>
+
+                    <p>Есть человек, который знает его от и до. Это — доменный эксперт.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Большие богатые не логику проекты (> 6 месяцев).</li>
+                        <li>Цель &mdash; получить архитектуру, близкую к реальному процессу.</li>
+                        <li>Использовать термины реального процесса.</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Структурные блоки</h2>
+
+                    <ul>
+                        <li>Value object &mdash; значение, которое может включать в себя другие значения.</li>
+                        <li>Entity &mdash; объекты, которые можно идетифицировать. Взяв два объекта и сравнив их, можно
+                        определить, тот же это объект или нет.</li>
+                        <li>Aggregate &mdash; группа объектов. Имеет главный Entity, без которого вся группа не имеет смысла (root).
+                            Транзакционно целостна.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Доменный слой не зависит ни от чего.</p>
+                </section>
+
+                <section>
+                    <h2>Главные паттерны</h2>
+
+                    <ul>
+                        <li><a href="http://martinfowler.com/eaaCatalog/repository.html">Repository</a> &mdash; сохраняет чистые
+                            объекты и загружает их. Чаще всего речь идёт про базу данных. Не AR! Иногда его бьют на Command и Query.</li>
+                        <li>Доменный сервис &mdash; использует entity для какой-то полезной работы. Всё ещё не зависит ни от чего
+                        вне домена.</li>
+                        <li>Сервис приложения &mdash; предоставлятся фреймворком (components). Может использовать доменный
+                        сервис для работы с доменом.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>DDD в чистом виде действительно нужен не часто</h2>
+
+                    <ul>
+                        <li>Сложно.</li>
+                        <li>Оверхед.</li>
+                        <li>Абстрактно.</li>
+                        <li>Плохо натягивается на "бедный" домен.</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <img src="chart_42.png" alt="">
+
+                    <p><a href="http://slides.silverfire.me/2017/eatdog-ddd/">* из слайдов Дмитрия Науменко</a></p>
+                </section>
+
+                <section>
+                    <h2>Изучать стоит!</h2>
+
+                    <img src="f2.jpg" alt="" width="40%">
+                </section>
+
+                <section>
+                    <h2>Можно перенять частично</h2>
+
+                    <ul>
+                        <li>Понятные конкретные методы в AR, работающие с инстансом.</li>
+                        <li>Отдельные модели для форм.</li>
+                        <li>Сервисы.</li>
+                        <li>ActiveQuery.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Главное</h2>
+
+                    <ul>
+                        <li>Абстракция — вынужденная мера.</li>
+                        <li>Паттерны — не архитектура.</li>
+                        <li>Фреймворк — не архитектура.</li>
+                        <li>Практики и паттерны можно применять частично и по необходимости.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Думайте!</h2>
+                </section>
+                
+                <section>
+                    <h2>Почитать</h2>
+
+                    <ul>
+                        <li><a href="http://download.microsoft.com/documents/rus/msdn/%D1%80%D1%8B_%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B9_%D0%BF%D0%BE%D0%BB%D0%BD%D0%B0%D1%8F_%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0.pdf">Руководство Microsoft по проектированию архитектуры приложений</a></li>
+                        <li><a href="https://www.infoq.com/minibooks/domain-driven-design-quickly">Domain Driven Design Quickly (InfoQ)</a></li>
+                        <li>Implementing Domain-Driven Design - Vaughn Vernon</li>
+                        <li>Domain-Driven Design Distilled - Vaughn Vernon</li>
+                        <li><a href="http://martinfowler.com/eaaCatalog/">Catalog of Patterns of Enterprise Application Architecture</a></li>
+                        <li><a href="https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html">Clean Architecture</a></li>
+                        <li><a href="https://sites.google.com/site/unclebobconsultingllc/getting-a-solid-start">Getting a SOLID start</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Время вопросов!</h2>
+
+                    <ul>
+                        <li><a href="http://slides.rmcreative.ru/2020/big-projects/">http://slides.rmcreative.ru/2020/big-projects/</a></li>
+                        <li><a href="http://www.yiiframework.com/">http://www.yiiframework.com/</a></li>
+                    </ul>
+
+                    <img src="elephant.png" />
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
