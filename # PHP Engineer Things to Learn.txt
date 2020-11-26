@@ -1,0 +1,155 @@
+# PHP Engineer Things to Learn
+
+## Message brokers
+
+- RabbitMQ
+- Kafka
+
+## Frontend
+
+- HTML
+- CSS
+- JavaScript
+
+## English
+
+## Linux
+
+- Bash
+- SSH
+
+## Docker
+
+## Web
+
+- HTTP(S) RFC
+- DNS
+- TCP/IP
+
+## Computer Science
+
+- Algorithms
+- Data structures
+- Discrete mathematics
+
+## API
+
+- RPC
+- REST
+- GraphQL
+- Swagger
+
+## Authentication
+
+- OAuth
+- Basic
+- Token
+- JWT
+
+## Performance
+
+- Caching
+    - Cache invalidation
+    - Redis
+    - Memcached
+- Profiling
+    - xhprof
+    - Blackfire
+- Scaling
+    - Horizontal and vertical
+
+## Search engines
+
+- ElasticSearch
+- Sphinx
+- SOLR
+
+## PHP
+
+- Language basics
+- PSR
+- Composer
+
+## Frameworks
+
+- Symfony
+- Laravel
+- Yii
+
+## Soft skills
+
+## Business
+
+## OOP/OOD
+
+- Basics
+- Principles
+    - SOLID
+    - GRASP
+    - YAGNI
+    - KISS
+    - DRY
+- Design patterns
+- DDD
+
+## Testing
+
+- Unit
+- Functional
+- Integration
+- AAA
+- Tools
+    - PHPUnit
+    - Codeception
+- CI/CD
+
+## VCS
+
+- Git / Mercurial
+- SemVer
+
+## Databases
+
+- Concepts
+    - Indexes
+    - Locks
+    - ACID
+    - N + 1 problem
+    - Normalization
+- Relational
+    - SQL
+    - MySQL
+    - PostgreSQL
+- PHP-specific
+    - PDO
+    - ORM
+- Key-value
+    - Redis
+- Document
+    - MongoDB
+
+## Debugging
+
+- XDebug
+
+## Webservers
+
+- nginx
+- PHP-FPM
+- Apache
+
+## Regex
+
+## Security
+
+- Principles
+- Attacks
+
+## Architecture
+
+- Monolith
+- Microservice
+- MVC / ADR
+- SOA
+- CQRS/ES
+- Serverless
