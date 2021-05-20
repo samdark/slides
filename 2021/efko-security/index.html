@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Безопасность: от базовых принципов до особенностей PHP</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Безопасность: от базовых принципов до особенностей PHP">
+        <meta name="author" content="Александр Макаров">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../../css/samdark.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide">
+                    <h1>Безопасность</h1>
+                    <h2>От базовых принципов до особенностей PHP</h2>
+
+                    <p><a href="https://github.com/samdark">Александр Макаров</a></p>
+                    <p>
+                        <small>
+                            <a href="https://www.yiiframework.com/">Yii core team</a>
+                        </small>
+                    </p>
+
+                    <a href="https://slides.rmcreative.ru/2021/efko-security/">https://slides.rmcreative.ru/2021/efko-security/</a>
+                </section>
+
+                <section>
+                    <h2>Обо мне</h2>
+
+                    <img src="yii_logo.svg" alt="" width="50%">
+
+
+                    <ul>
+                        <li>15+ лет в IT: Java, PHP, JavaScript etc.</li>
+                        <li><a href="https://yiicookbook.org/">Писатель</a>, <a href="https://slides.rmcreative.ru/">докладчик</a></li>
+                        <li>Член ПК Highload, РИТ, руководитель ПК PHP Russia</li>
+                        <li><a href="https://github.com/samdark">OpenSource</a></li>
+                        <li><a href="https://www.yiiframework.com/about">Лид команды Yii</a>, представитель в PHP-FIG</li>
+                        <li>В прошлом Siemens, Wrike, CleverTech, Stay.com, Skyeng</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Не эксперт по безопасности. <span class="fragment" style="color: #999;">Но кое-что знаю.</span></p>
+                </section>
+
+                <section>
+                    <p class="fragment">Я занимался аудитом кода многих проектов...</p>
+                    <p class="fragment">... и практически всегда встречал похожие ошибки.</p>
+                </section>
+
+                <section>
+                    <h2>Главная идея в том...</h2>
+                </section>
+
+                <section>
+                    <h2>Что нельзя доверять данным не смотря ни на что</h2>
+
+                    <img src="locks.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>Фильтруй вход,<br>экранируй выход</h2>
+                </section>
+
+                <section>
+                    <h2>Входы</h2>
+
+                    <ul>
+                        <li class="fragment">Формы</li>
+                        <li class="fragment">Файлы</li>
+                        <li class="fragment">Заголовки HTTP (<code>$_SERVER['HTTP_X_FORWARDED_FOR']</code> и т.д.)</li>
+                        <li class="fragment">User agent</li>
+                        <li class="fragment">...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Выходы</h2>
+
+                    <ul>
+                        <li class="fragment">Браузер</li>
+                        <li class="fragment">Консоль</li>
+                        <li class="fragment">База данных</li>
+                        <li class="fragment">...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Проблемы?</h2>
+
+                    <ul>
+                        <li class="fragment">Плохо фильтруем</li>
+                        <li class="fragment">Неправильно экранируем</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Фильтровать?</h2>
+
+                    <p>Фильтровать = убедиться, что данные верны.</p>
+                </section>
+
+                <section>
+                    <h2>Предпочитайте белые списки</h2>
+
+                    <p>Входные данные не валидны пока не доказано обратное.</p>
+                </section>
+
+                <section>
+                    <h2>Используйте <a href="https://secure.php.net/manual/ru/filter.filters.validate.php">filter_var</a></h2>
+
+<pre><code>
+$email = filter_var($email, FILTER_VALIDATE_EMAIL);
+if ($email === false) {
+    // email не торт...
+}
+// всё OK
+</code></pre>
+                </section>
+
+                <section>
+                    <p>или используйте надёжные библиотеки и фреймворки</p>
+                </section>
+
+                <section>
+                    <h2>Экранировать?</h2>
+
+                    <p class="fragment">Сделать так, чтобы спецсимволы вели себя как нормальные символы.</p>
+                    <p class="fragment">Обычно префиксированием других спецсимволов.</p>
+                    <p class="fragment">На каждый выход свои правила экранирования.</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Популярные угрозы</h2>
+                </section>
+
+                <section>
+                    <h2>XSS</h2>
+
+                    <p class="fragment">На страницу вставляется скрипт, который запускается в браузере пользователя.</p>
+
+                    <p class="fragment">Встречалось в большинстве проектов, с которыми я работал.</p>
+                </section>
+
+                <section>
+                    <pre><code>
+...
+&lt;div&gt;
+&lt;?= $_GET['query'] ?&gt;
+&lt;/div&gt;
+...
+                    </code></pre>
+                </section>
+
+                <section>
+                    <img src="xss.png" alt="">
+                </section>
+
+                <section>
+                    <h2>Вместо alert-а могут:</h2>
+
+                    <ul>
+                        <li class="fragment">Сделать что-то от имени пользователя...</li>
+                        <li class="fragment">Одолжить денег у его друзей</li>
+                        <li class="fragment">Нарепостить экстремистских комментов</li>
+                        <li class="fragment">Утащить денег со счёта</li>
+                        <li class="fragment">...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Две главных разновидности</h2>
+
+                    <ul>
+                        <li class="fragment">Первого порядка - выполняется немедленно</li>
+                        <li class="fragment">Второго порядка - пишется в базу, выполняется потом</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Решение</h2>
+
+                    <p>Экранируй!</p>
+                </section>
+
+                <section>
+                    <h2>Экранируем HTML</h2>
+
+                    <p>Если нужен только текст.</p>
+
+                    <pre><code>
+htmlspecialchars($content, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Делаем HTML безопасным</h2>
+
+                    <p>Если нужен именно HTML.</p>
+
+                    <p>HTMLPurifier (<a href="http://htmlpurifier.org/">http://htmlpurifier.org/</a>)</p>
+
+                    <pre><code>
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
+$clean_html = $purifier->purify($dirty_html);
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Не сохраняйте экранированные данные в базу</h2>
+
+                    <p>Они могут вам понадобиться в исходном виде. К тому же, базе доверять нельзя.</p>
+                </section>
+
+                <section>
+                    <h2>Кстати, разработчики Chromium <a href="https://www.chromestatus.com/feature/5021976655560704">выкинули XSS-фильтр</a>...</h2>
+                </section>
+
+                <section>
+                    <h2>XSS в админке не менее опасен...</h2>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>CSRF</h2>
+
+                    <p>Сторонний сайт может отправить формы на ваш сайт от имени пользователя.</p>
+                </section>
+
+                <section>
+                    <img src="puppet.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>Решение</h2>
+
+                    <p>Использовать токены CSRF, использовать TLS/SSL.</p>
+                </section>
+
+                <section>
+                    <h2>CSRF-токены</h2>
+
+                    <ul>
+                        <li>В момент отображения к форме добавляется уникальный случайный токен.</li>
+                        <li>Тот же токен пишется в хранилище (обычно в сессию).</li>
+                        <li>После отсылки формы, токены сравниваются.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Same origin policy недостаточно!</h2>
+
+                    <ul>
+                        <li>Политика действует на XMLHTTPRequest</li>
+                        <li>Она не запрещает <strong>запросы</strong>, а предотвращает получение результата</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Не используйте GET для изменения состояния приложения</h2>
+
+                    <pre><code>
+&lt;img src="/logout" /&gt;
+                    </code></pre>
+
+                    <p>Использование <code>$_REQUEST</code> - то же самое.</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>SQL инъекции</h2>
+
+                    <p>Выполнение произвольного SQL в БД проекта.</p>
+                </section>
+
+                <section>
+                    <pre><code>
+$email = $_POST['email'];
+
+query("SELECT *
+FROM user
+WHERE email = '$email';");
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code>
+' OR 1
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code>
+UNION SELECT 1,'<?php eval($_GET[1]) ?>',3,4,5 INTO OUTFILE '1.php' --%20
+UNION SELECT 1,LOAD_FILE('config.php'),3,4,5 --%20
+                    </code></pre>
+                </section>
+                
+                <section>
+                    <img src="sql_injection.png" alt="">
+                </section>
+
+                <section>
+                    <h2>Решение</h2>
+
+                    <p>Экранируйте запросы.</p>
+                </section>
+
+                <section>
+                    <h2>Но делайте это правильно!</h2>
+                </section>
+
+                <section>
+                    <h2>Ручное экранирование не пойдёт!</h2>
+                    
+                    <ul>
+                        <li><code>addslashes()</code></li>
+                        <li><code>mysql_escape_string()</code></li>
+                        <li><code>mysql_real_escape_string()</code></li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Потому что</h2>
+
+                    <ul>
+                        <li>Можно его забыть</li>
+                        <li>Контекст может быть не верен (значения, таблицы, столбцы)</li>
+                        <li>Может быть не полным</li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Используйте prepared statements</h2>
+
+                    <p>Есть и в PDO и нативных драйверах. Для PDO:</p>
+
+                    <pre><code>
+$stmt = $db->prepare("SELECT * FROM user WHERE email = :email");
+$stmt->bindValue(':email', $email);
+$user = $stmt->fetch();
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Имена таблиц и столбцов</h2>
+
+                    <p>Используйте белый список.</p>
+
+                    <pre><code>
+$allowedTables = ['user_comments', 'post_comments'];
+if (!in_array($table), $allowedTables, true) {
+    return false;
+}
+// делаем запрос
+                    </code></pre>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Отсутствие валидации загрузок</h2>
+
+                    <p>Возможность загрузить и запустить код.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Валидируйте mime</li>
+                        <li>Пересохраняйте изображения</li>
+                    </ul>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Инъекция кода</h2>
+
+                    <p>Возможность выполнить произвольный код.</p>
+
+<pre><code>
+eval($_GET['query']);
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Решение</h2>
+
+                    <p>Не использовать eval() или использовать после проверки по белому списку.</p>
+                </section>
+
+                <section>
+                    <p>Запускайте PHP с минимально возможными правами</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Небезопасные include</h2>
+
+<pre><code>
+require $_GET['type'] . '.php';
+</code></pre>
+                </section>
+
+                <section>
+                    Белый список.
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Clickjacking</h2>
+
+                    <img src="clickjacking.png" alt="" width="50%">
+
+                    <p>Обманом заставить пользователя кликнуть на что-то на стороннем сайте.</p>
+
+                    <p>iframe + opactity: 0</p>
+                </section>
+
+                <section>
+                    <p>Не особо относится к PHP, но довольно серьёзно.</p>
+                </section>
+
+                <section>
+                    <h2>Решение</h2>
+
+                    <p>Запретить запихивать сайт в фреймы через RFC 7034:</p>
+
+                    <pre><code>
+header('X-Frame-Options: DENY');
+// или
+header('X-Frame-Options: SAMEORIGIN');
+                    </code></pre>
+
+                    или через JavaScript:
+
+<pre><code>
+if (window.top !== window.self) {
+    document.write = "";
+    window.top.location = window.self.location;
+    setTimeout(function () {
+        document.body.innerHTML = '';
+    }, 1);
+    window.self.onload = function (evt) {
+        document.body.innerHTML = '';
+    };
+}
+</code></pre>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Пароли</h2>
+                </section>
+
+                <section>
+                    <h2>В чём проблема?</h2>
+                </section>
+
+                <section>
+                    <h2>Зло может угадать ваш пароль</h2>
+
+                    <ul>
+                        <li>Перебором</li>
+                        <li>Атакой по словарю</li>
+                        <li>Атакой на основе времени ответа</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Решение: ограничить попытки</h2>
+
+                    <ul>
+                        <li>10 попыток с IP в минуту более чем достаточно</li>
+                        <li>CAPTCHA</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Всё ещё проблема?</h2>
+
+                    <ul>
+                        <li>Легко сменить IP</li>
+                        <li>БД иногда утекают...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Важно ли, как хранить пароль?</h2>
+                </section>
+
+                <section>
+                    <h2>Да!</h2>
+                </section>
+
+                <section>
+                    <h2>Вы не должны знать пароль пользователя!</h2>
+
+                    <p>Храните хэш.</p>
+                </section>
+
+                <section>
+                    <h2>md5, sha1, sha256, sha512 и т.д. - не вариант</h2>
+
+                    <img src="md5.jpeg" alt="">
+
+                    <p>Даже с солью.</p>
+                </section>
+
+                <section>
+                    <h2>Хэши предназначены для быстрого вычисления</h2>
+
+                    <p class="fragment">Полный перебор пароля из 8 символов, SHA-256 занимает...</p>
+                    <p class="fragment"><a href="http://blog.ircmaxell.com/2011/08/rainbow-table-is-dead.html">3.5 дня на одной GPU 2011 года</a></p>
+                    <p class="fragment">На крутой GPU 2015 года это будет уже 20 часов</p>
+                    <p class="fragment">8x Nvidia GTX 1080 — 2.5 часа</p>
+                </section>
+
+                <section>
+                    <h2>GPU?</h2>
+                </section>
+                
+                <section>
+                    <img src="farm1.jpg" alt="Я на ферме">
+                </section>
+                
+                <section>
+                    <img src="farm2.jpg" alt="GPU - это круто!">
+                </section>
+
+                <section>
+                    <h2>Используйте как минимум bcrypt</h2>
+
+                    <ul>
+                        <li>Изначально сделан не быстрым.</li>
+                        <li>Заставляет работать как CPU, так и GPU.</li>
+                        <li>Плохо считается на GPU (требует много доступа к памяти, что портит параллелизм).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Cost и сложность пароля важны</h2>
+                </section>
+
+                <section>
+                    <h2>Cost?</h2>
+
+                    <p>итерации key derivation function = 2^cost</p>
+
+                    <p>12+ - безопасное значение. Yii использует 13.</p>
+                </section>
+
+                <section>
+                    <h2>Немного посчитаем</h2>
+                </section>
+
+                <section>
+                    <p><span class="fragment">Cost = <strong>13</strong></span> <span class="fragment">→ ~<strong>28 хэшей в сек.</strong> на Nvidia GTX Titan X</span> <span class="fragment">(<strong>$700</strong>, 2015)</span></p>
+                    <p class="fragment">28 * 60 * 60 * 24 = <strong>2419200 хэшей в день</strong></p>
+                    <p><span class="fragment">6 символьный пароль, буквы в нижнем регистре</span> <span class="fragment">= 308915776 комбинаций</span></p>
+                    <p class="fragment">308915776 / 2419200 = <strong>127 дней</strong> для перебора одного пароля</p>
+                    <p><span class="fragment"><strong>21 день</strong> с 6-ю видеокартами.</span> <span class="fragment">Стоит это более <strong>~4200$</strong></span></p>
+                    <p><strong class="fragment">Добавим в пароль из 6 символов цифры</strong> <span class="fragment">и стоить взлом за <strong>21 день</strong> будет уже более <strong>~22600$</strong></span></p>
+                </section>
+
+                <section>
+                    <p>GPU становятся все лучше и всё дешевле.</p>
+                    <p>AMD R380X (2016) даёт 14 хешей bcrypt с cost=13 в секунду и стоит около $78.</p>
+                </section>
+
+                <section>
+                    <h2>У не случайных нападающих <a href="https://www.secjuice.com/how-to-build-a-cracking-rig/">железо сильно лучше</a></h2>
+                </section>
+
+                <section>
+                    <h2>bcrypt даёт вам лишь время</h2>
+
+                    <p>Если вы знаете, что хэши утекли:</p>
+                    <ul>
+                        <li class="fragment">Устранить источник утечек</li>
+                        <li class="fragment">Инвалидировать хэши</li>
+                        <li class="fragment">Попросить пользователей поменять пароли и объяснить, что сделать это надо <strong>везде</strong></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Подсказывайте сложные пароли, но не ограничивайте их</h2>
+
+                    <p>У вас будет больше времени среагировать на утечку.</p>
+                </section>
+
+                <section>
+                    <h2>Много времени можно получить используя <a href="https://password-hashing.net/">Argon2</a></h2>
+                </section>
+
+                <section>
+                    <h2>Не для паролей</h2>
+                    <ul>
+                        <li class="fragment">md5, sha1, sha256, sha512</li>
+                        <li class="fragment">PBKDF2</li>
+                    </ul>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Сессии</h2>
+
+                    <ul>
+                        <li>Фиксация - дать пользователю заранее известный ID сессии.</li>
+                        <li>Перехват cookie.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="session_fixation.png" alt="">
+                </section>
+
+                <section>
+                    <h2>Решение</h2>
+
+                    <p>Используйте только куки. В php.ini:</p>
+
+                    <ul>
+                        <li class="fragment"><code>session.use_cookies = 1</code></li>
+                        <li class="fragment"><code>session.use_only_cookies = 1</code></li>
+                        <li class="fragment"><code>session_cookie_httponly = 1</code></li>
+                        <li class="fragment"><code>session.cookie_secure = 1</code></li>
+                    </ul>
+
+                    <p class="fragment">Регенерируйте ID сессии при помощи <code>session_regenerate_id(true)</code>
+                        после логина или смены прав.</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Не забывайте проверять доступ</h2>
+
+                    <p>Да, такое бывает.</p>
+
+                    <ul>
+                        <li class="fragment">Доступ к файлу по URL.</li>
+                        <li class="fragment">Скрыть != обезопасить.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Сначала запрещайте всё, потом уже разрешайте.</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Утечки информации</h2>
+
+                    <ul>
+                        <li class="fragment">Отладочный режим</li>
+                        <li class="fragment">Страницы ошибок</li>
+                        <li class="fragment">Ответы API</li>
+                        <li class="fragment">Системы контроля версий</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Утечки паролей</h2>
+
+                    <ul>
+                        <li>Из репозитория</li>
+                        <li>Из файлов</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Что делать?</h2>
+
+                    <p>HashiCorp Vault</p>
+                    <p><a href="https://github.com/marketplace/actions/gitleaks">gitleaks GitHub action</a></p>
+                    <p>2FA</p>
+                    <p><a href="https://haveibeenpwned.com/">Have I been pwned</a></p>
+                    <p>Время жизни паролей (но тут засада)</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Случайные числа</h2>
+
+                    <img src="random.jpg" alt="" width="50%">
+
+                    <p>Используются для <span class="fragment">токенов</span><span class="fragment">, кодов сброса</span><span class="fragment">, генерируемых паролей</span><span class="fragment">, UUID и др.</span></p>
+                </section>
+
+                <section>
+                    <h2>Проблема</h2>
+
+                    <p>Случайные числа могут генерироваться предсказуемо или могут повторяться если источник не достаточно хорош.</p>
+
+                    <p><span class="fragment">Токены</span><span class="fragment">, коды сброса</span><span class="fragment">, генерируемые пароли</span></p>
+                </section>
+
+                <section>
+                    <h2>Решение</h2>
+
+                    <p>Использовать нормальные источники случайных чисел</p>
+                </section>
+
+                <section>
+                    <h2>Yii 2 использует</h2>
+
+                    <ul>
+                        <li class="fragment">PHP 7 <a href="https://secure.php.net/manual/ru/function.random-bytes.php">random_bytes</a></li>
+                        <li class="fragment"><a href="http://www.libressl.org/">LibreSSL</a></li>
+                        <li class="fragment"><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa379942(v=vs.85).aspx">CryptGenRandom</a> (под Windows)</li>
+                        <li class="fragment">/dev/random (под FreeBSD)</li>
+                        <li class="fragment">/dev/urandom</li>
+                        <li class="fragment">Если ничего не получилось, кидаем исключение</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Осторожней с библиотеками</h2>
+
+                    <ul>
+                        <li>mcrypt. <span class="fragment">Не поддерживается уже &gt;10 лет</span><span class="fragment">. <a href="http://sourceforge.net/p/mcrypt/bugs/?limit=100">Есть баги</a></span></li>
+                        <li>OpenSSL. <span class="fragment"><a href="https://github.com/ramsey/uuid/issues/80#issuecomment-135476969">Есть баги</a></span></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Проводите тесты</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Обновляйтесь</h2>
+
+                    <ul>
+                        <li class="fragment">Linux</li>
+                        <li class="fragment">nginx</li>
+                        <li class="fragment">PHP</li>
+                        <li class="fragment">СУБД</li>
+                        <li class="fragment">Любимый фреймворк</li>
+                        <li class="fragment">...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Но помните, что зависимости могут быть с уязвимостями...</h3>
+                </section>
+
+                <section>
+                    <h3>Или с закладками...</h3>
+                </section>
+
+                <section>
+                    <h3>Не доверяй... проверяй!</h3>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>DDOS</h2>
+
+                    <ul>
+                        <li class="fragment">Планируйте заранее.</li>
+                        <li class="fragment">Положитесь на firewall (возможно железный).</li>
+                        <li class="fragment">Может быть очень тяжело.</li>
+                        <li class="fragment">Часто это просто боты и их можно убить fail2ban и CloudFlare.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Держите про запас отменного админа...</p>
+                </section>
+
+                <section>
+                    <h2>Раз зашла речь про админов</h2>
+
+                    <ul>
+                        <li class="fragment">Торчащие наружу memcached и mongodb</li>
+                        <li class="fragment">Саппорт Windows: активировали винду без проверки</li>
+                        <li class="fragment">Саппорт hetzner: ребут сервера</li>
+                        <li class="fragment">Раздача прав на прод всем разработчикам компании</li>
+                        <li class="fragment">Сервера в разных ДЦ, API без паролей</li>
+                        <li class="fragment">Не защищённый S3-бакет</li>
+                    </ul>
+                </section>
+
+                <section>
+                    ...
+                </section>
+
+                <section>
+                    <h2>Безопасность - это процесс</h2>
+
+                    <p>Нельзя сделать приложение безопасным один раз и навсегда.</p>
+                </section>
+
+                <section>
+                    <h2>Обучайте свою команду</h2>
+
+                    <p>Идеально, если в команде есть кто-то, кто знаком с темой. Используйте VCS и делайте code review.</p>
+                </section>
+
+                <section>
+                    <h2>Подумайте о bug bounty</h2>
+                </section>
+
+                <section>
+                    <h2>Абсолютная безопасность недостижима</h2>
+                </section>
+
+                <section>
+                    <h2>Люди &mdash; всегда слабое звено</h2>
+
+                    <ul>
+                        <li class="fragment">Теряют флешки</li>
+                        <li class="fragment">Теряют ноуты</li>
+                        <li class="fragment">Теряют телефоны</li>
+                        <li class="fragment">Пропускают в офис кого попало</li>
+                        <li class="fragment">А там...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="sticky_passwords.jpg" />
+                </section>
+
+                <section>
+                    <ul>
+                        <li><a href="https://tjournal.ru/tech/65054-otpravivshaya-lozhnoe-soobshchenie-o-raketnom-udare-gavayskaya-sluzhba-hranila-parol-na-stikere-na-monitore">Гавайи и "ракетный удар"</a></li>
+                        <li><a href="https://habr.com/ru/post/255509/">Французское ТВ</a></li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Планируйте заранее</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li class="fragment">Что есть злыдни получили доступ к X?</li>
+                        <li class="fragment">Какие данные не должны утечь никогда? (= не надо их хранить)</li>
+                        <li class="fragment">Следует ли админу потушить взломанный сервер?</li>
+                        <li class="fragment">Заготовьте страницу-заглушку.</li>
+                        <li class="fragment">Что сломали? Как? Каков урон?</li>
+                        <li class="fragment">Как поправить?</li>
+                        <li class="fragment">Объяснить команде, в чём была ошибка и как её не делать. Как альтернатива -
+                            найти технический способ не допускать подобных ошибок.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Постоянно учитесь</h2>
+
+                    <ul>
+                        <li class="fragment"><code>target="_blank"</code> не безопасен</li>
+                        <li class="fragment">ImageMagick не безопасен</li>
+                        <li class="fragment">SMS не безопасны</li>
+                        <li class="fragment">XML тоже! (XXE)</li>
+                        <li class="fragment">Ох, и десериализовывать опасно!</li>
+                        <li class="fragment">Процессоры не безопасны :(</li>
+                        <li class="fragment">...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Сделайте так, чтобы взломать вас было слишком хлопотно</h2>
+                </section>
+
+                <section>
+                    <h2>Оставайтесь в безопасности</h2>
+
+                    <img src="secure_hole.jpg" alt="">
+                </section>
+                
+                <section>
+                    <h2>Почитать</h2>
+                    
+                    <ul>
+                        <li class="fragment"><a href="http://owasp.org/">OWASP</a> (осторожно, это wiki!) + <a
+                                href="https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents">testing guide</a></li>
+                        <li class="fragment"><a href="https://martinfowler.com/articles/web-security-basics.html">Фаулер про безопасность</a></li>
+                        <li class="fragment"><a href="https://secure.php.net/manual/ru/security.php">https://secure.php.net/manual/ru/security.php</a> Да, в мануале есть про безопасность ;)</li>
+                        <li class="fragment"><a href="http://projects.lambry.com/elpassword/">Калькулятор числа комбинаций для подбора пароля</a></li>
+                        <li class="fragment"><a href="https://github.com/yiisoft/security">Пакет Yii security</a></li>
+                        <li class="fragment"><a href="https://security.stackexchange.com/">QA на StackExchange</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Время вопросов!</h2>
+
+                    <ul>
+                        <li><a href="https://slides.rmcreative.ru/2021/efko-security/">https://slides.rmcreative.ru/2021/efko-security/</a></li>
+                        <li><a href="https://www.yiiframework.com/">https://www.yiiframework.com/</a></li>
+                    </ul>
+
+                    <img src="elephant.png" />
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
