@@ -1,0 +1,1009 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Security: from basic principles to PHP specifics</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Security: from basic principles to PHP specifics">
+        <meta name="author" content="Alexander Makarov">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../../css/samdark.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide">
+                    <h1>Security</h1>
+                    <h2>From basic principles to PHP specifics</h2>
+
+                    <p><a href="https://github.com/samdark">Alexander Makarov</a></p>
+                    <p>
+                        <small>
+                            <a href="https://www.yiiframework.com/">Yii core team</a>
+                        </small>
+                    </p>
+
+                    <a href="https://slides.rmcreative.ru/2021/phpday-security/">https://slides.rmcreative.ru/2021/phpday-security/</a>
+                </section>
+
+                <section>
+                    <h2>Обо мне</h2>
+
+                    <img src="yii_logo.svg" alt="" width="50%">
+
+
+                    <ul>
+                        <li>15+ years in IT: Java, PHP, JavaScript etc.</li>
+                        <li><a href="https://yiicookbook.org/">Writer</a>, <a href="https://slides.rmcreative.ru/">speaker</a></li>
+                        <li>Organizer of PHP Russia, program commitee member of Highload and RIT</li>
+                        <li><a href="https://github.com/samdark">OpenSource contributor</a></li>
+                        <li><a href="https://www.yiiframework.com/about">Yii lead</a> and PHP-FIG representative</li>
+                        <li>Consultant</li>
+                        <li>In the past: Siemens, Wrike, CleverTech, Stay.com, Skyeng</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Not a true security expert. <span class="fragment" style="color: #999;">Just know a thing or two.</span></p>
+                </section>
+
+                <section>
+                    <p class="fragment">I did code audit for many projects...</p>
+                    <p class="fragment">... and saw the same issues again and again</p>
+                </section>
+
+                <section>
+                    <h2>Basics are...</h2>
+                </section>
+
+                <section>
+                    <h2>Never trust data no matter what</h2>
+
+                    <img src="locks.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>Filter input,<br>escape output</h2>
+                </section>
+
+                <section>
+                    <h2>Input</h2>
+
+                    <ul>
+                        <li class="fragment">Forms</li>
+                        <li class="fragment">Files</li>
+                        <li class="fragment">HTTP headers (<code>$_SERVER['HTTP_X_FORWARDED_FOR']</code> etc.)</li>
+                        <li class="fragment">User agent</li>
+                        <li class="fragment">...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Output</h2>
+
+                    <ul>
+                        <li class="fragment">Browser</li>
+                        <li class="fragment">Console</li>
+                        <li class="fragment">Database</li>
+                        <li class="fragment">...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Problems?</h2>
+
+                    <ul>
+                        <li class="fragment">Insufficient filtering</li>
+                        <li class="fragment">Wrong escaping</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Filter?</h2>
+
+                    <p>Filtering is making sure data is valid.</p>
+                </section>
+
+                <section>
+                    <h2>Prefer whitelisting</h2>
+
+                    <p>Input is invalid by default unless proven otherwise.</p>
+                </section>
+
+                <section>
+                    <h2>Use <a href="https://secure.php.net/manual/ru/filter.filters.validate.php">filter_var</a></h2>
+
+<pre><code>
+$email = filter_var($email, FILTER_VALIDATE_EMAIL);
+if ($email === false) {
+    // email wasn't valid...
+}
+// everything's OK
+</code></pre>
+                </section>
+
+                <section>
+                    <p>or use libraries and frameworks which are reliable</p>
+                </section>
+
+                <section>
+                    <h2>Escaping?</h2>
+
+                    <p class="fragment">Making special characters behave like normal characters.</p>
+                    <p class="fragment">Usually by prefixing with another special character.</p>
+                    <p class="fragment">Each output has different escaping rules.</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Common threats</h2>
+                </section>
+
+                <section>
+                    <h2>XSS</h2>
+
+                    <p class="fragment">A script is injected into the page and is executed in user's browser.</p>
+
+                    <p class="fragment">Saw it in most projects I've reviewed.</p>
+                </section>
+
+                <section>
+                    <pre><code>
+...
+&lt;div&gt;
+&lt;?= $_GET['query'] ?&gt;
+&lt;/div&gt;
+...
+                    </code></pre>
+                </section>
+
+                <section>
+                    <img src="xss.png" alt="">
+                </section>
+
+                <section>
+                    <h2>Instead of alerting it can:</h2>
+
+                    <ul>
+                        <li class="fragment">Do things from your name such as...</li>
+                        <li class="fragment">Ask your frineds for money</li>
+                        <li class="fragment">Make you say/post things</li>
+                        <li class="fragment">Transfer your funds</li>
+                        <li class="fragment">Send nasty stuff to police</li>
+                        <li class="fragment">...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Two main types</h2>
+
+                    <ul>
+                        <li class="fragment">1st order - executed immediately</li>
+                        <li class="fragment">2nd order - stored XSS executed later</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Solution</h2>
+
+                    <p>Escape output.</p>
+                </section>
+
+                <section>
+                    <h2>Escape HTML</h2>
+
+                    <p>If need just text.</p>
+
+                    <pre><code>
+htmlspecialchars($content, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Sanitize HTML</h2>
+
+                    <p>If HTML needed.</p>
+
+                    <p>HTMLPurifier (<a href="http://htmlpurifier.org/">http://htmlpurifier.org/</a>)</p>
+
+                    <pre><code>
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
+$clean_html = $purifier->purify($dirty_html);
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Don't save escaped input to DB</h2>
+
+                    <p>Because you may need to edit it and because data in your own DB could not be trusted.</p>
+                </section>
+
+                <section>
+                    <h2>btw., Chromium developers <a href="https://www.chromestatus.com/feature/5021976655560704">removed XSS-filter</a>...</h2>
+                </section>
+
+                <section>
+                    <h2>XSS in admin panel is not less dangerous...</h2>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>CSRF</h2>
+
+                    <p>Third party website can submit forms to your website on behalf of the user.</p>
+                </section>
+
+                <section>
+                    <img src="puppet.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>Solution</h2>
+
+                    <p>Introduce CSRF-tokens and use TLS/SSL.</p>
+                </section>
+
+                <section>
+                    <h2>CSRF-tokens</h2>
+
+                    <ul>
+                        <li>When a form is displayed, a unique random token is added to it.</li>
+                        <li>Same token is written to storage (usually session).</li>
+                        <li>When form is submitted, tokens are checked to match.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Same origin policy isn't enough</h2>
+
+                    <ul>
+                        <li>It's about XMLHTTPRequest</li>
+                        <li>It doesn't prevent <strong>sending</strong>request, it prevents getting results</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Do not use GET to modify application state</h2>
+
+                    <pre><code>
+&lt;img src="/logout" /&gt;
+                    </code></pre>
+
+                    <p>Using <code>$_REQUEST</code> is the same.</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>SQL injection</h2>
+
+                    <p>Executing arbitrary SQL on a project database.</p>
+                </section>
+
+                <section>
+                    <pre><code>
+$email = $_POST['email'];
+
+query("SELECT *
+FROM user
+WHERE email = '$email';");
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code>
+' OR 1
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code>
+UNION SELECT 1,'<?php eval($_GET[1]) ?>',3,4,5 INTO OUTFILE '1.php' --%20
+UNION SELECT 1,LOAD_FILE('config.php'),3,4,5 --%20
+                    </code></pre>
+                </section>
+                
+                <section>
+                    <img src="sql_injection.png" alt="">
+                </section>
+
+                <section>
+                    <h2>Solution</h2>
+
+                    <p>Escape queries.</p>
+                </section>
+
+                <section>
+                    <h2>Properly!</h2>
+                </section>
+
+                <section>
+                    <h2>Manual escaping is... not really good</h2>
+                    
+                    <ul>
+                        <li><code>addslashes()</code></li>
+                        <li><code>mysql_escape_string()</code></li>
+                        <li><code>mysql_real_escape_string()</code></li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Because</h2>
+
+                    <ul>
+                        <li>Could be forgotten</li>
+                        <li>Context could be wrong (values, tables, columns)</li>
+                        <li>Could be incomplete</li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Use prepared statements</h2>
+
+                    <p>PDO or driver specific. For PDO:</p>
+
+                    <pre><code>
+$stmt = $db->prepare("SELECT * FROM user WHERE email = :email");
+$stmt->bindValue(':email', $email);
+$user = $stmt->fetch();
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Table and column names</h2>
+
+                    <p>Use whitelist.</p>
+
+                    <pre><code>
+$allowedTables = ['user_comments', 'post_comments'];
+if (!in_array($table), $allowedTables, true) {
+    return false;
+}
+// query as usual
+                    </code></pre>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Lack of upload validation</h2>
+
+                    <p>Ability to upload and execute code.</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Validate mime</li>
+                        <li>Re-save images</li>
+                    </ul>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Code injection</h2>
+
+                    <p>Directly execute code.</p>
+
+<pre><code>
+eval($_GET['query']);
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Solution</h2>
+
+                    <p>Avoid <code>eval()</code> or at least use whitelist.</p>
+                </section>
+
+                <section>
+                    <p>Run PHP with as less permissions possible</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Unsafe includes</h2>
+
+<pre><code>
+require $_GET['type'] . '.php';
+</code></pre>
+                </section>
+
+                <section>
+                    Whitelist.
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Clickjacking</h2>
+
+                    <img src="clickjacking.png" alt="" width="50%">
+
+                    <p>Trick user into actually clicking on third party website.</p>
+
+                    <p>iframe + opactity: 0</p>
+                </section>
+
+                <section>
+                    <p>Not really PHP related but quite serious.</p>
+                </section>
+
+                <section>
+                    <h2>Solution</h2>
+
+                    <p>Disable embedding in a frame via RFC 7034:</p>
+
+                    <pre><code>
+header('X-Frame-Options: DENY');
+// или
+header('X-Frame-Options: SAMEORIGIN');
+                    </code></pre>
+
+                    or via JavaScript:
+
+<pre><code>
+if (window.top !== window.self) {
+    document.write = "";
+    window.top.location = window.self.location;
+    setTimeout(function () {
+        document.body.innerHTML = '';
+    }, 1);
+    window.self.onload = function (evt) {
+        document.body.innerHTML = '';
+    };
+}
+</code></pre>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Passwords</h2>
+                </section>
+
+                <section>
+                    <h2>Problem?</h2>
+                </section>
+
+                <section>
+                    <h2>Attacker could guess your password</h2>
+
+                    <ul>
+                        <li>Brute force</li>
+                        <li>Dictionary attack</li>
+                        <li>Timing attack</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Solution: Limit attempts</h2>
+
+                    <ul>
+                        <li>10 guesses from an IP per minute</li>
+                        <li>CAPTCHA</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Still a problem?</h2>
+
+                    <ul>
+                        <li>Easy to change IP</li>
+                        <li>Database leaks</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Does it matter how to store password?</h2>
+                </section>
+
+                <section>
+                    <h2>Yes!</h2>
+                </section>
+
+                <section>
+                    <h2>You should not know user password!</h2>
+
+                    <p>Save a hash.</p>
+                </section>
+
+                <section>
+                    <h2>md5, sha1, sha256, sha512 etc. are no go</h2>
+
+                    <img src="md5.jpeg" alt="">
+
+                    <p>Even with salt.</p>
+                </section>
+
+                <section>
+                    <h2>Hashes are meant to be computed fast</h2>
+
+                    <p class="fragment">ull brute-forcing of 8-char password hashed as SHA-256 takes...</p>
+                    <p class="fragment"><a href="http://blog.ircmaxell.com/2011/08/rainbow-table-is-dead.html">3.5 days of brute forcing on 2011 single GPU</a></p>
+                    <p class="fragment">About 20 hours on 2015 GPU</p>
+                    <p class="fragment">8x Nvidia GTX 1080 — 2.5 hours</p>
+                </section>
+
+                <section>
+                    <h2>GPU?</h2>
+                </section>
+                
+                <section>
+                    <img src="farm1.jpg" alt="Visiting the farm">
+                </section>
+                
+                <section>
+                    <img src="farm2.jpg" alt="GPUs are cool!">
+                </section>
+
+                <section>
+                    <h2>Use at least bcrypt</h2>
+
+                    <ul>
+                        <li>Meant to be not so fast.</li>
+                        <li>Introduces workload for CPU/GPU.</li>
+                        <li>GPU unfriendly (requires lots of memory access which spoils parallelism).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Cost and password strength are important</h2>
+                </section>
+
+                <section>
+                    <h2>Cost?</h2>
+
+                    <p>key derivation function iterations = 2^cost</p>
+
+                    <p>12+ is a safe choice. Yii uses 13.</p>
+                </section>
+
+                <section>
+                    <h2>Let's do some calculations</h2>
+                </section>
+
+                <section>
+                    <p><span class="fragment">Cost = <strong>13</strong></span> <span class="fragment">→ ~<strong>28 hashes/sec.</strong> on Nvidia GTX Titan X</span> <span class="fragment">(<strong>$700</strong>, 2015)</span></p>
+                    <p class="fragment">28 * 60 * 60 * 24 = <strong>2419200 hashes a day</strong></p>
+                    <p><span class="fragment">6 char lowercase letter-only password</span> <span class="fragment">= 308915776 combinations</span></p>
+                    <p class="fragment">308915776 / 2419200 = <strong>127 days</strong> to brute-force a single password</p>
+                    <p><span class="fragment"><strong>21 days</strong> with 6 of such cards.</span> <span class="fragment">Costs more than <strong>~4200$</strong></span></p>
+                    <p><strong class="fragment">Add numbers to 6 char password</strong> <span class="fragment">and to break it in <strong>21 days</strong> it would cost more than <strong>~22600$</strong></span></p>
+                </section>
+
+                <section>
+                    <p>GPUs are getting better and cheaper. <span class="fragment">If we don't consider crypto-mining.</span></p>
+                    <p>AMD R380X (2016) gives you 14 bcrypt hashes with cost=13 per second and costs ~$78.</p>
+                </section>
+
+                <section>
+                    <h2>Prepared attacker has <a href="https://www.secjuice.com/how-to-build-a-cracking-rig/">way better hardware</a></h2>
+                </section>
+
+                <section>
+                    <h2>bcrypt gives you only time</h2>
+
+                    <p>If you know hashes are leaked:</p>
+                    <ul>
+                        <li class="fragment">Fix leak source</li>
+                        <li class="fragment">Invalidate hashes</li>
+                        <li class="fragment">Invite users to change passwords and explain that passwords should be changed <strong>everywhere</strong></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Suggest strong passwords but do not limit them</h2>
+
+                    <p>It would give you more time to react.</p>
+                </section>
+
+                <section>
+                    <h2>You can get plenty of time if you'll use <a href="https://password-hashing.net/">Argon2</a></h2>
+                </section>
+
+                <section>
+                    <h2>Again... these are not for passwords</h2>
+                    <ul>
+                        <li class="fragment">md5, sha1, sha256, sha512</li>
+                        <li class="fragment">PBKDF2</li>
+                    </ul>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Sessions</h2>
+
+                    <ul>
+                        <li>Fixation - give user a known session ID.</li>
+                        <li>Obtain user cookie.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="session_fixation.png" alt="">
+                </section>
+
+                <section>
+                    <h2>Solution</h2>
+
+                    <p>Use cookies only. In php.ini:</p>
+
+                    <ul>
+                        <li class="fragment"><code>session.use_cookies = 1</code></li>
+                        <li class="fragment"><code>session.use_only_cookies = 1</code></li>
+                        <li class="fragment"><code>session_cookie_httponly = 1</code></li>
+                        <li class="fragment"><code>session.cookie_secure = 1</code></li>
+                    </ul>
+
+                    <p class="fragment">Regenerate session ID with <code>session_regenerate_id(true)</code>
+                        after login or permissions change.</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Don't forget to check permissions</h2>
+
+                    <p>Yes, it happens.</p>
+
+                    <ul>
+                        <li class="fragment">Direct file access via URL.</li>
+                        <li class="fragment">Hiding is not securing.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Prefer denying everything then allowing what's needed.</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Information leaks</h2>
+
+                    <ul>
+                        <li class="fragment">Debug mode</li>
+                        <li class="fragment">Error pages</li>
+                        <li class="fragment">API responses</li>
+                        <li class="fragment">Version control</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Password leaks</h2>
+
+                    <ul>
+                        <li>From VSC</li>
+                        <li>From files</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>A fix?</h2>
+
+                    <p>HashiCorp Vault</p>
+                    <p><a href="https://github.com/marketplace/actions/gitleaks">gitleaks GitHub action</a></p>
+                    <p>2FA</p>
+                    <p><a href="https://haveibeenpwned.com/">Have I been pwned</a></p>
+                    <p>Limit passwords lifetime (Microsoft does not recommend it)</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Random numbers</h2>
+
+                    <img src="random.jpg" alt="" width="50%">
+
+                    <p>Used for <span class="fragment">tokens</span><span class="fragment">, reset passcodes</span><span class="fragment">, generated passwords</span><span class="fragment">, UUID, etc.</span></p>
+                </section>
+
+                <section>
+                    <h2>Problem</h2>
+
+                    <p>Random numbers could be guess-able or could collide if random source isn't good enough.</p>
+
+                    <p><span class="fragment">Tokens</span><span class="fragment">, reset passcodes</span><span class="fragment">, generated passwords</span></p>
+                </section>
+
+                <section>
+                    <h2>Solution</h2>
+
+                    <p>Use safe random sources</p>
+                </section>
+
+                <section>
+                    <h2>What Yii 2 uses</h2>
+
+                    <ul>
+                        <li class="fragment">PHP 7 <a href="https://secure.php.net/manual/ru/function.random-bytes.php">random_bytes</a></li>
+                        <li class="fragment"><a href="http://www.libressl.org/">LibreSSL</a></li>
+                        <li class="fragment"><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa379942(v=vs.85).aspx">CryptGenRandom</a> (Windows)</li>
+                        <li class="fragment">/dev/random (FreeBSD)</li>
+                        <li class="fragment">/dev/urandom</li>
+                        <li class="fragment">If nothing above available then fail</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Be careful about libraries</h2>
+
+                    <ul>
+                        <li>mcrypt. <span class="fragment">Not maintained for &gt;10 years</span><span class="fragment">. <a href="http://sourceforge.net/p/mcrypt/bugs/?limit=100">Has issues</a></span></li>
+                        <li>OpenSSL. <span class="fragment"><a href="https://github.com/ramsey/uuid/issues/80#issuecomment-135476969">Has issues</a></span></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Conduct tests</p>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>Server stack</h2>
+                </section>
+
+                <section>
+                    <h2>Be up to date</h2>
+
+                    <ul>
+                        <li class="fragment">Linux</li>
+                        <li class="fragment">nginx</li>
+                        <li class="fragment">PHP</li>
+                        <li class="fragment">СУБД</li>
+                        <li class="fragment">Your favorite framework</li>
+                        <li class="fragment">...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>But beware of insecure dependencies...</h3>
+                </section>
+
+                <section>
+                    <h3>Or dependencies with vulnerabilities introduced on purpose...</h3>
+                </section>
+
+                <section>
+                    <h3>Do not trust... check!</h3>
+                </section>
+
+                <section>
+                    →
+                </section>
+
+                <section>
+                    <h2>DDOS</h2>
+
+                    <ul>
+                        <li class="fragment">Plan it in advance.</li>
+                        <li class="fragment">Rely on firewall (possibly hardware one).</li>
+                        <li class="fragment">Could get really complicated.</li>
+                        <li class="fragment">Often that's just stray bots and these could be eliminated with fail2ban or CloudFlare.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Have an experienced admin around...</p>
+                </section>
+
+                <section>
+                    <h2>Btw., admins and support aren't ideal either</h2>
+
+                    <ul>
+                        <li class="fragment">Wide open memcached and mongodb</li>
+                        <li class="fragment">Windows support: activated Windows without checking</li>
+                        <li class="fragment">hetzner support: rebooted server</li>
+                        <li class="fragment">Give permissions to ssh to prod to anyone within the company</li>
+                        <li class="fragment">Servers are in 2+ data centers, API without passwords</li>
+                        <li class="fragment">Insecure S3-bucket</li>
+                    </ul>
+                </section>
+
+                <section>
+                    ...
+                </section>
+
+                <section>
+                    <h2>Security is a process</h2>
+
+                    <p>It can't be achieved once and for all.</p>
+                </section>
+
+                <section>
+                    <h2>Educate your team</h2>
+
+                    <p>Have someone familiar with security in the team. Use VCS and do code reviews.</p>
+                </section>
+
+                <section>
+                    <h2>Think about bug bounty</h2>
+                </section>
+
+                <section>
+                    <h2>Absolute security is impossible</h2>
+                </section>
+
+                <section>
+                    <h2>People are vulnerable</h2>
+
+                    <ul>
+                        <li class="fragment">Lose flash drives</li>
+                        <li class="fragment">Lose laptops</li>
+                        <li class="fragment">Lose phones</li>
+                        <li class="fragment">Let strangers into office</li>
+                        <li class="fragment">And there...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="sticky_passwords.jpg" />
+                </section>
+
+                <section>
+                    <ul>
+                        <li><a href="https://tjournal.ru/tech/65054-otpravivshaya-lozhnoe-soobshchenie-o-raketnom-udare-gavayskaya-sluzhba-hranila-parol-na-stikere-na-monitore">Hawaii and "air strike"</a></li>
+                        <li><a href="https://habr.com/ru/post/255509/">French TV</a></li>
+                        <li>...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Plan in advance.</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li class="fragment">What if attacker got access to X?</li>
+                        <li class="fragment">What data should never ever be exposed? (= should not be stored)</li>
+                        <li class="fragment">Should admin take down the server in case of being compromised?</li>
+                        <li class="fragment">What was accessed? How? What's the harm?</li>
+                        <li class="fragment">How to fix that?</li>
+                        <li class="fragment">Explain to team so they won't make such mistake again or find technical means to enforce it.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Never stop learning</h2>
+
+                    <ul>
+                        <li class="fragment"><code>target="_blank"</code> is unsafe</li>
+                        <li class="fragment">ImageMagick is unsafe</li>
+                        <li class="fragment">SMS are unsafe</li>
+                        <li class="fragment">XML as well! (XXE)</li>
+                        <li class="fragment">Uh-oh, <code>unserialize()</code> isn't safe!</li>
+                        <li class="fragment">CPUs are unsafe :(</li>
+                        <li class="fragment">...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Make it too expensive to crack</h2>
+                </section>
+
+                <section>
+                    <h2>Stay safe</h2>
+
+                    <img src="secure_hole.jpg" alt="">
+                </section>
+                
+                <section>
+                    <h2>Reading list</h2>
+                    
+                    <ul>
+                        <li class="fragment"><a href="http://owasp.org/">OWASP</a> (it is a wiki!) + <a
+                                href="https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents">testing guide</a></li>
+                        <li class="fragment"><a href="https://martinfowler.com/articles/web-security-basics.html">Fowler about security</a></li>
+                        <li class="fragment"><a href="https://secure.php.net/manual/ru/security.php">https://secure.php.net/manual/ru/security.php</a> Yes, there's security section in the manual ;)</li>
+                        <li class="fragment"><a href="http://projects.lambry.com/elpassword/">Number of password combinations calculator</a></li>
+                        <li class="fragment"><a href="https://github.com/yiisoft/security">Yii security</a></li>
+                        <li class="fragment"><a href="https://security.stackexchange.com/">Security QA at StackExchange</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Questions time!</h2>
+
+                    <ul>
+                        <li><a href="https://slides.rmcreative.ru/2021/phpday-security/">https://slides.rmcreative.ru/2021/phpday-security/</a></li>
+                        <li><a href="https://www.yiiframework.com/">https://www.yiiframework.com/</a></li>
+                    </ul>
+
+                    <img src="elephant.png" />
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
