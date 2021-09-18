@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Теория программирования: пакетные принципы и метрики</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Теория программирования: пакетные принципы и метрики">
+        <meta name="author" content="Александр Макаров">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../../css/samdark.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide" data-background="presentation_16_9_back.png">
+                    <h1>Пакетные принципы и метрики</h1>
+
+                    <br><br><br><br>
+                    <p><a href="https://github.com/samdark">Александр Макаров</a> / <a href="https://www.yiiframework.com/">Yii core team</a></p>
+
+                    <a href="https://slides.rmcreative.ru/2021/packages/">https://slides.rmcreative.ru/2021/packages/</a>
+                </section>
+
+                <section>
+                    <h2>Чтобы применять любые принципы <u>правильно</u> нужно их понять.</h2>
+                </section>
+
+                <section>Начнём издалека...</section>
+
+                <section>
+                    <h3>Абстракция &mdash; обобщение суещественного, удаление несущественного для контекста.</h3>
+                </section>
+
+                <section>
+                    <h2>Зачем?</h2>
+                </section>
+
+                <section>
+                    <h2>Впихнуть невпихуемое.</h2>
+
+                    <img src="complicated.jpg" alt="">
+                </section>
+
+                <section>
+                    <img src="brain.png" alt="Источник всех проблем" />
+                </section>
+
+                <section>
+                    <img src="short_memory.png" alt="Кратковременная память" />
+
+                    <p>TTL объекта = ~20 сек.</p>
+                </section>
+
+                <section>
+                    <p>Оперативно (в кратковременной памяти) <strong>человек может оперировать малым числом объектов</strong>:</p>
+
+                    <ul>
+                        <li>7±2 объектами (George Miller, 1989).</li>
+                        <li>4±1 (Cowan, 2001).</li>
+                        <li>Число зависит от объектов.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Группировка (Chunking)</h2>
+                </section>
+
+                <section>
+                    <h2>88003334434</h2>
+                </section>
+
+                <section></section>
+
+                <section>
+                    <h2>8-800-333-44-34</h2>
+                </section>
+
+                <section></section>
+
+                <section>
+                    <p>Архитектуру изобретают для того, чтобы совладать с <strong>неподъёмно</strong> сложными системами.</p>
+                </section>
+
+                <section>
+                    <p>Для мозга неподъёмность начинается чудовщно скоро.</p>
+                </section>
+
+                <section>
+                    <h2>Слои!</h2>
+                </section>
+
+                <section>
+                    <h2>Пять сущностей в слое &mdash; супер!</h2>
+                </section>
+
+                <section>
+                    <h2>> 5 слоёв &mdash; проблема.</h2>
+                </section>
+
+                <section>
+                    <img src="lasagna.jpg" />
+                </section>
+
+                <section>
+                    <h2>Абстракция &mdash; не цель, а инструмент.</h2>
+                </section>
+
+                <section>
+                    <h2>Абстракция &mdash; необходимое <u>зло</u>.</h2>
+                </section>
+
+                <section>Как построить абстракцию не сделав хуже?</section>
+
+                <section>
+                    <h2><span class="green">Cohesion</span> / <span class="red">coupling</span></h2>
+                </section>
+
+                <section>
+                    <h3>Проверочные правила?</h3>
+                </section>
+
+                <section>
+                    <h2>SOLID</h2>
+
+                    <p>© 2000 Robert Martin</p>
+
+                    <ul>
+                        <li>SRP</li>
+                        <li>OCP</li>
+                        <li>LSP</li>
+                        <li>ISP</li>
+                        <li>DIP</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Что такое «пакет»?</h2>
+
+                    <img src="package.png" />
+                </section>
+
+                <section>
+                    <p>Группа единиц кода (классов)</p>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Модули</li>
+                        <li>Библиотеки</li>
+                        <li>Микросервисы</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h1>?</h1>
+
+                    <ul>
+                        <li>Как правильно формировать пакеты?</li>
+                        <li>Как работать с зависимостями пакетов?</li>
+                    </ul>
+                    
+                </section>
+
+                <section>
+                    <h3><span class="green">Cohesion</span> / <span class="red">coupling</span> для пакетов?</h3>
+                </section>
+
+                <section>
+                    <h2>Да!</h2>
+                </section>
+
+                <section>
+                    <h3>Те же SOLID-маркеры?</h3>
+                </section>
+
+                <section>
+                    <h2>Не совсем...</h2>
+                </section>
+
+                <section>
+                    <h3><span class="green">Package Cohesion (дизайн)</span></h3>
+
+                    <p>REP, CCP, CRP</p>
+
+                    <h3><span class="red">Package Coupling (использование)</span></h3>
+
+                    <p>ADP, SDP, SAP</p>
+                </section>
+
+                <section>
+                    <h2><strong class="green">R</strong>euse-Release <strong class="green">E</strong>quivalency <strong class="green">P</strong>rinciple</h2>
+
+                    <blockquote>The granule of reuse is the granule of release.</blockquote>
+
+                    <p>Собирайте вместе то, что используется юзером одновременно.</p>
+                </section>
+
+                <section>
+                    <pre><code>
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+class Main {
+  public static void main(String[] args) throws IOException{
+    ByteArrayOutputStream os = new ByteArrayOutputStream();
+    os.write("my word".getBytes());
+    
+    os.writeTo(System.out);
+  }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code>
+import java.stream.ByteArrayOutputStream;
+import java.exceptions.IOException;
+
+class Main {
+  public static void main(String[] args) throws IOException{
+    ByteArrayOutputStream os = new ByteArrayOutputStream();
+    os.write("my word".getBytes());
+    
+    os.writeTo(System.out);
+  }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2><strong class="green">C</strong>ommon <strong class="green">C</strong>losure <strong class="green">P</strong>rinciple</h2>
+
+                    <blockquote>Classes that change together are packaged together</blockquote>
+
+                    <p>Классы меняются мейнтенером вместе &mdash; упаковываем в один пакет.</p>
+                </section>
+
+                <section>
+                    <h2>i18n</h2>
+                    
+                    <ul>
+                        <li>Перевод строк.</li>
+                        <li>CLI-инструмент для вынимания строк из кода.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2><strong class="green">C</strong>ommon <strong class="green">R</strong>euse <strong class="green">P</strong>rinciple</h2>
+
+                    <blockquote>Classes that are used together are packaged together</blockquote>
+
+                    <p>Классы не используются юзером по отдельности &mdash; упаковываем в один пакет.</p>
+                </section>
+
+                <section>
+                    <h2>Кеш</h2>
+
+                    <ul>
+                        <li>Редис.</li>
+                        <li>Мемкеш.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Отлично звучит?</h2>
+
+                    <img src="pipboy_good.png" />
+                </section>
+
+                <section>
+                    <h2>Реальность сурова :(</h2>
+
+                    <img src="pipboy_not_good.jpg" />
+                </section>
+
+                <section>
+                    <img src="triangle_good_fast_cheap.png" />
+                </section>
+
+                <section>
+                    <img src="principles_triangle.png" alt="" />
+
+                    Dr. Stefan Kluth, Max-Planck-Institut fuer Physik
+                </section>
+
+                <section>
+                    <p>Фокусируйтесь на <span class="green">CCP</span> и <span class="green">REP</span> на начальных стадиях.</p>
+                </section>
+
+                <section>
+                    <h2><strong class="red">A</strong>cyclic <strong class="red">D</strong>ependencies <strong class="red">P</strong>rinciple</h2>
+
+                    <blockquote>The dependency graph of packages must have no cycles</blockquote>
+
+                    <p>Если есть циклы, проблема вызывает лавину.</p>
+                </section>
+
+                <section>
+                    <h2>Как проверить циклы?</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Строим направленный ацикличный граф.</li>
+                        <li>Смотрим на него :)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Для PHP есть <a href="https://github.com/clue/graph-composer">clue/graph-composer</a>.</p>
+                    <p>Но нужно исключать не интересные пакеты (<a href="https://github.com/clue/graph-composer/pull/45">PR #45</a>).</p>
+                </section>
+
+                <section>
+                    <img src="dag.svg">
+                </section>
+
+                <section>
+                    <p>Чем меньше зависимостей, тем проще...</p>
+                </section>
+
+                <section>
+                    <h2>Как разорвать цикл?</h2>
+
+                    <ul>
+                        <li>DIP &mdash; использовать инверсию зависимостей через интерфейсы.</li>
+                        <li>CRP &mdash; выделить общий пакет.</li>
+                        <li>Переделать...</li>
+                    </ul>
+                </section>
+
+                <section>
+                        <h2><strong class="red">S</strong>table <strong class="red">D</strong>ependencies <strong class="red">P</strong>rinciple</h2>
+
+                        <blockquote>Depend in the direction of stability</blockquote>
+
+                        <p>Не получится строить стабильное на нестабильном.</p>
+                </section>
+
+                <section>
+                    <h3>Можно ли посчитать (не)стабильность?</h3>
+                </section>
+
+                <section>
+                    <h2>I = <span class="green">C<sub>e</sub></span> / (<span class="green">C<sub>e</sub></span> + <span class="red">C<sub>a</sub></span>)</h2>
+
+                    <ul>
+                        <li>I &mdash; Instability, нестабильность. 1 &mdash; нестабильный, 0 &mdash; стабильный.</li>
+                        <li><span class="green">C<sub>e</sub></span> &mdash; Efferent (outgoing, fanout) Coupling. Количество классов вне пакета, от которых зависит пакет.</li>
+                        <li><span class="red">C<sub>a</sub></span> &mdash; Afferent (incoming, fanin) Coupling. Количество классов вне пакета, зависящих от пакета.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Как повысить стабильность?</h3>
+                </section>
+
+                <section>
+                        <h2><strong class="red">S</strong>table <strong class="red">A</strong>bstractions <strong class="red">P</strong>rinciple</h2>
+
+                        <blockquote>A package abstractness should increase with stability</blockquote>
+
+                        <p>Стабильные пакеты абстрактны. Гибкие конкретны.</p>
+                </section>
+
+                <section>
+                    <h3>Можно измерить абстрактность?</h3>
+                </section>
+
+                <section>
+                    <h2>A = <span class="red">N<sub>a</sub></span> / <span class="green">N<sub>c</sub></span> + <span class="red">N<sub>a</sub></span></h2>
+
+                    <ul>
+                        <li>A &mdash; абстрактность. 0 &mdash; конкретный, 1 &mdash; абстрактный.</li>
+                        <li><span class="red">N<sub>a</sub></span> &mdash; число абстрактных сущностей в пакете.</li>
+                        <li><span class="green">N<sub>c</sub></span> &mdash; число конкретных сущностей в пакете.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Абстрактные пакеты должны быть стабильными: безболезненно на них завязываться.</li>
+                        <li>Конкретные пакеты должны быть нестабильны: легко их менять.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>D-метрика</h2>
+
+                    <img src="d-metrics.png" alt="">
+
+                    <p>Ось X &mdash; абстрактность, ось Y &mdash; нестабильность.</p>
+                </section>
+
+                <section>
+                    <h2>Плохо и хорошо</h2>
+                    
+                    <img src="d-metrics-bad.png" alt="">
+
+                    <p>Иногда 0, 0 &mdash; OK. Strings, arrays, stdlib.</p>
+                </section>
+
+                <section>
+                    <h2>D = | A + I &minus; 1 |</h2>
+
+                    <p>Расстояние от главной линии. 0 - хорошо. 1 - плохо.</p>
+                </section>
+
+                <section>
+                    <h2>Инструменты</h2>
+
+                    <ul>
+                        <li><a href="https://github.com/clarkware/jdepend">JDepend</a></li>
+                        <li><a href="https://github.com/pdepend/pdepend">PHP_Depend</a></li>
+                        <li><a href="http://www.phpmetrics.org/">PhpMetrics</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Можно сунуть в пайплайн.</h2>
+                </section>
+
+                <section>
+                    <p>Как и SOLID, дополнительные принципы и метрики &mdash; не догма, но могут быть полезны.</p>
+                </section>
+
+                <section>
+                    <p>Правильное проектирование пакетов вызывает взрывное дробление. Это страшно.</p>
+                </section>
+
+                <section>
+                    <p>Принципы позволяют не скатиться в left-pad или монолит.</p>
+                </section>
+
+                <section>
+                    <h2>Время вопросов!</h2>
+
+                    <ul>
+                        <li>sam@rmcreative.ru</li>
+                        <li>@sam_dark</li>
+                        <li><a href="https://slides.rmcreative.ru/2021/packages/">https://slides.rmcreative.ru/2021/packages/</a></li>
+                        <li><a href="https://en.wikipedia.org/wiki/Short-term_memory">Wikipedia: Short-term memory</a></li>
+                        <li><a href="http://wiki.c2.com/?WelcomeVisitors">c2 wiki</a></li>
+                        <li><a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod ">Principles of OOD</a></li>
+                        <li>Agile Software Development, Principles, Patterns, and Practices &mdash; Robert C. Martin</li>
+                        <li><a href="https://matthiasnoback.nl/book/principles-of-package-design/">Principles of Package Design &mdash; Matthias Noback</a></li>
+                    </ul>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: false,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: false,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+
+            Reveal.addEventListener('slidechanged', (event) => {
+                const isFirst = event.indexh === 0;
+                var slideNumber = false;
+                if (!isFirst) {
+                    slideNumber = 'c/t';
+                }
+                Reveal.configure({ slideNumber: slideNumber});
+            });
+
+        </script>
+
+    </body>
+</html>
