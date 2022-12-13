@@ -3,11 +3,11 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Theory of programming: packaging principles</title>
+        <title>Theory of Programming: Packaging Principles</title>
 
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-        <meta name="description" content="Theory of programming: packaging principles">
+        <meta name="description" content="Theory of Programming: Packaging Principles">
         <meta name="author" content="Alexander Makarov">
 
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -41,7 +41,7 @@
             <!-- Any section element inside of this container is displayed as a slide -->
             <div class="slides">
                 <section class="title-slide" data-background="title_bg.png">
-                    <h1>Theory of programming: packaging principles</h1>
+                    <h1>Theory of Programming: Packaging Principles</h1>
                     <p><a href="https://github.com/samdark">Alexander Makarov</a> / <a href="https://www.yiiframework.com/">Yii core team</a></p>
 
                     <a href="https://slides.rmcreative.ru/2022/hl-packages/">https://slides.rmcreative.ru/2022/hl-packages/</a>
@@ -58,7 +58,7 @@
 
 
                     <ul>
-                        <li>15+ years in: Java, PHP, JavaScript etc.</li>
+                        <li>15+ years in: Java, PHP, JavaScript, etc.</li>
                         <li><a href="https://yiicookbook.org/">Writer</a>, <a href="https://slides.rmcreative.ru/">speaker</a></li>
                         <li>Member of Highload and RIT program committees, head of PHP Russia program committee</li>
                         <li><a href="https://github.com/samdark">OpenSource</a></li>
@@ -103,7 +103,7 @@
                 </section>
 
                 <section>
-                    <p>We can not operate with high number of items:</p>
+                    <p>We cannot operate with high number of items:</p>
 
                     <ul>
                         <li>7±2 items (George Miller, 1989).</li>
@@ -157,7 +157,7 @@
                 </section>
 
                 <section>
-                    <h2>Abstraction is <u>necessary evil</u>.</h2>
+                    <h2>Abstraction is <u>necessary Evil</u>.</h2>
                 </section>
 
                 <section>How to build an abstraction without making everything worse?</section>
@@ -221,7 +221,7 @@
                 </section>
 
                 <section>
-                    <h3>Can we use same SOLID-markers?</h3>
+                    <h3>Can we use the same SOLID-markers?</h3>
                 </section>
 
                 <section>
@@ -243,7 +243,7 @@
 
                     <blockquote>The granule of reuse is the granule of release.</blockquote>
 
-                    <p>Group together things, that are used by end user, together.</p>
+                    <p>Group things, that are used by end user, together.</p>
                 </section>
 
                 <section>
@@ -281,9 +281,9 @@ class Main {
                 <section>
                     <h2><strong class="green">C</strong>ommon <strong class="green">C</strong>losure <strong class="green">P</strong>rinciple</h2>
 
-                    <blockquote>Classes that change together are packaged together</blockquote>
+                    <blockquote>Classes that are changed together are packaged together</blockquote>
 
-                    <p>Classes that are changed together by maintainer should go into the same package.</p>
+                    <p>Classes that are changed together by a maintainer should go into the same package.</p>
                 </section>
 
                 <section>
@@ -367,7 +367,7 @@ class Main {
                 </section>
 
                 <section>
-                    <p>The less dependencies the simpler everything is...</p>
+                    <p>The less dependencies, the simpler everything is...</p>
                 </section>
 
                 <section>
@@ -375,7 +375,7 @@ class Main {
 
                     <ul>
                         <li>DIP &mdash; use dependency inversion via interface.</li>
-                        <li>CRP &mdash; move the interface into separate package.</li>
+                        <li>CRP &mdash; move the interface into a separate package.</li>
                     </ul>
 
                     <p>Or rethink the package...</p>
@@ -386,7 +386,7 @@ class Main {
 
                         <blockquote>Depend in the direction of stability</blockquote>
 
-                        <p>You can't build stable thing on unstable base.</p>
+                        <p>You can't build a stable thing on an unstable base.</p>
                 </section>
 
                 <section>
@@ -394,13 +394,13 @@ class Main {
                 </section>
 
                 <section>
-                    <h2>I = <span class="green">C<sub>e</sub></span> / (<span class="green">C<sub>e</sub></span> + <span class="red">C<sub>a</sub></span>)</h2>
+                    <h2>I = <span class="green">E</span> / (<span class="green">E</span> + <span class="red">A</span>)</h2>
 
-                    <ul>
-                        <li>I &mdash; Instability. 1 &mdash; unstable, 0 &mdash; stable.</li>
-                        <li><span class="green">C<sub>e</sub></span> &mdash; Efferent (outgoing, fanout) Coupling. Number of classes outside of the package the package depends on.</li>
-                        <li><span class="red">C<sub>a</sub></span> &mdash; Afferent (incoming, fanin) Coupling. Number of classes outside of the package that depend on the package.</li>
-                    </ul>
+                    
+                        <p>I &mdash; Instability. 1 &mdash; unstable, 0 &mdash; stable.</p>
+                        <p><span class="green">E</span> &mdash; Efferent (outgoing, fanout) Coupling. <br> Number of classes out of the package the <strong>package depends on</strong>.</p>
+                        <p><span class="red">A</span> &mdash; Afferent (incoming, fanin) Coupling. <br> Number of classes out of the <strong>package that depend on the package</strong>.</p>
+                    
                 </section>
 
                 <section>
@@ -477,7 +477,7 @@ class Main {
                 </section>
 
                 <section>
-                    <p>Correct design results in explosive increase in number of packages. It is scary.</p>
+                    <p>Correct design results in explosive increase in the number of packages. It is scary.</p>
                 </section>
 
                 <section>
@@ -497,21 +497,16 @@ class Main {
                         </div>
                         <div style="float: right; width: 50%;">
                             <ul>
-                                <li><a href="https://slides.rmcreative.ru/2022/hl-packages/">These slides</a></li>
                                 <li>sam@rmcreative.ru</li>
-                                <li>@sam_dark</li>                                
+                                <li><a href="https://t.me/samdark_blog">https://t.me/samdark_blog</a></li>
                                 <li><a href="https://en.wikipedia.org/wiki/Short-term_memory">Wikipedia: Short-term memory</a></li>
                                 <li><a href="http://wiki.c2.com/?WelcomeVisitors">c2 wiki</a></li>
-                                <li><a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod ">Principles of OOD</a></li>
-                                <li>Agile Software Development, Principles, Patterns, and Practices &mdash; Robert C. Martin</li>
+                                <li><a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod">Principles of OOD</a></li>
+                                <li>Agile Software Development, Principles, Patterns, and Practices by Robert C. Martin</li>
                                 <li><a href="https://matthiasnoback.nl/book/principles-of-package-design/">Principles of Package Design &mdash; Matthias Noback</a></li>
                             </ul>
                         </div>
                     </div>
-
-                    
-
-                    
                 </section>
 
             </div>
