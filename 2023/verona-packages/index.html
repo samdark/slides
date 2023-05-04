@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Theory of Programming: Packaging Principles</title>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <meta name="description" content="Theory of Programming: Packaging Principles">
+        <meta name="author" content="Alexander Makarov">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../../css/samdark.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section class="title-slide" data-background="hero.jpg">
+                    <h1>Theory of Programming: Packaging Principles</h1>
+                    <p><a href="https://github.com/samdark">Alexander Makarov</a> / <a href="https://www.yiiframework.com/">Yii core team</a> / <a href="https://asapirl.com/">ASAPIRL</a></p>
+
+                    <a href="https://slides.rmcreative.ru/2023/verona-packages/">https://slides.rmcreative.ru/2023/verona-packages/</a>
+                </section>
+
+                <section>
+                    <h2>Who am I? 🤠</h2>
+                </section>
+
+                <section>
+                    <h2>About me</h2>
+
+                    <img src="yii_logo.svg" alt="" width="50%">
+
+
+                    <ul>
+                        <li>15+ years in: Java, PHP, JavaScript, etc.</li>
+                        <li><a href="https://yiicookbook.org/">Writer</a>, <a href="https://slides.rmcreative.ru/">speaker</a></li>
+                        <li>Member of Highload and RIT program committees, head of PHP Russia program committee</li>
+                        <li><a href="https://github.com/samdark">OpenSource</a></li>
+                        <li><a href="https://www.yiiframework.com/about">Lead of Yii framework team</a>, its representative at PHP-FIG</li>
+                        <li>In the past: Siemens, Wrike, CleverTech, Stay.com, Skyeng</li>
+                        <li>Founder of <a href="https://asapirl.com/">ASAPIRL</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>What's the plan?</h2>
+                </section>
+
+                <section>
+                    <h2>In order to apply any principles <u>correctly</u>, you need to understand them.</h2>
+                </section>
+
+                <section>Let's begin from the very basics...</section>
+
+                <section>
+                    <h3>Abstraction &mdash; generalization of essential, removal of non-essential (for the context).</h3>
+                </section>
+
+                <section>
+                    <h2>What for?</h2>
+                </section>
+
+                <section>
+                    <h2>To fit unfittable.</h2>
+
+                    <img src="complicated.jpg" alt="">
+                </section>
+
+                <section>
+                    <img src="brain.png" alt="Source of all trouble" />
+                </section>
+
+                <section>
+                    <img src="short_memory.png" alt="Short-term memory" />
+
+                    <p>TTL of the item is ~20 sec.</p>
+                </section>
+
+                <section>
+                    <p>We cannot operate with high number of items:</p>
+
+                    <ul>
+                        <li>7±2 items (George Miller, 1989).</li>
+                        <li>4±1 (Cowan, 2001).</li>
+                        <li>Number depends on items.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Trick: chunking</h2>
+                </section>
+
+                <section>
+                    <h2>88003334434</h2>
+                </section>
+
+                <section></section>
+
+                <section>
+                    <h2>8-800-333-44-34</h2>
+                </section>
+
+                <section></section>
+
+                <section>
+                    <p>Architecture is needed to deal with <strong>way too complex</strong> systems.</p>
+                </section>
+
+                <section>
+                    <p>For our brain too complicated comes <strong></strong>way too fast</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Layers!</h2>
+                </section>
+
+                <section>
+                    <h2>Five entities in a layer. Perfect!</h2>
+                </section>
+
+                <section>
+                    <h2>5 layers...</h2>
+                </section>
+
+                <section>
+                    <img src="lasagna.jpg" />
+                </section>
+
+                <section>
+                    <h2>Abstraction is a tool, not a goal.</h2>
+                </section>
+
+                <section>
+                    <h2>Abstraction is <u>necessary Evil</u>.</h2>
+                </section>
+
+                <section>How to build an abstraction without making everything worse?</section>
+
+                <section>
+                    <h2><span class="green">Cohesion</span> / <span class="red">coupling</span></h2>
+                </section>
+
+                <section>
+                    <h3>Any simple validation rules / markers?</h3>
+                </section>
+
+                <section>
+                    <h2>SOLID</h2>
+
+                    <p>© 2000 Robert Martin</p>
+
+                    <ul>
+                        <li>SRP</li>
+                        <li>OCP</li>
+                        <li>LSP</li>
+                        <li>ISP</li>
+                        <li>DIP</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>What is a "package"?</h2>
+
+                    <img src="package.png" />
+                </section>
+
+                <section>
+                    <h3>Grouped code items (classes).</h3>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Modules</li>
+                        <li>Libraries</li>
+                        <li>Microservices</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Right questions?</h2>
+
+                    <ul>
+                        <li>How to design packages?</li>
+                        <li>How to use packages (dependencies)?</li>
+                    </ul>
+                    
+                </section>
+
+                <section>
+                    <h3>Does <span class="green">Cohesion</span> / <span class="red">coupling</span> apply to packages?</h3>
+                </section>
+
+                <section>
+                    <h2>Yes!</h2>
+                </section>
+
+                <section>
+                    <h3>Can we use the same SOLID-markers?</h3>
+                </section>
+
+                <section>
+                    <h2>Not really...</h2>
+                </section>
+
+                <section>
+                    <h3><span class="green">Package Cohesion (design)</span></h3>
+
+                    <p>REP, CCP, CRP</p>
+
+                    <h3><span class="red">Package Coupling (usage)</span></h3>
+
+                    <p>ADP, SDP, SAP</p>
+                </section>
+
+                <section>
+                    <h2><strong class="green">R</strong>euse-Release <strong class="green">E</strong>quivalency <strong class="green">P</strong>rinciple</h2>
+
+                    <blockquote>The granule of reuse is the granule of release.</blockquote>
+
+                    <p>Group things, that are used by end user, together.</p>
+                </section>
+
+                <section>
+                    <pre><code>
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+class Main {
+  public static void main(String[] args) throws IOException{
+    ByteArrayOutputStream os = new ByteArrayOutputStream();
+    os.write("my word".getBytes());
+    
+    os.writeTo(System.out);
+  }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code>
+import java.stream.ByteArrayOutputStream;
+import java.exceptions.IOException;
+
+class Main {
+  public static void main(String[] args) throws IOException{
+    ByteArrayOutputStream os = new ByteArrayOutputStream();
+    os.write("my word".getBytes());
+    
+    os.writeTo(System.out);
+  }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2><strong class="green">C</strong>ommon <strong class="green">C</strong>losure <strong class="green">P</strong>rinciple</h2>
+
+                    <blockquote>Classes that are changed together are packaged together</blockquote>
+
+                    <p>Classes that are changed together by a maintainer should go into the same package.</p>
+                </section>
+
+                <section>
+                    <h2>i18n</h2>
+                    
+                    <ul>
+                        <li>Message translation.</li>
+                        <li>CLI-tool to extract messages from code.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2><strong class="green">C</strong>ommon <strong class="green">R</strong>euse <strong class="green">P</strong>rinciple</h2>
+
+                    <blockquote>Classes that are used together are packaged together</blockquote>
+
+                    <p>If classes aren't used by end user separately, they belong to the same package.</p>
+                </section>
+
+                <section>
+                    <h2>Cache</h2>
+
+                    <ul>
+                        <li>Redis.</li>
+                        <li>Memcached.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Sounds good?</h2>
+
+                    <img src="pipboy_good.png" />
+                </section>
+
+                <section>
+                    <h2>Reality is harsh :(</h2>
+
+                    <img src="pipboy_not_good.jpg" />
+                </section>
+
+                <section>
+                    <img src="triangle_good_fast_cheap.png" />
+                </section>
+
+                <section>
+                    <img src="principles_triangle.png" alt="" />
+
+                    Dr. Stefan Kluth, Max-Planck-Institut fuer Physik
+                </section>
+
+                <section>
+                    <p>On early stages focus on <span class="green">CCP</span> and <span class="green">REP</span>.</p>
+                </section>
+
+                <section>
+                    <h2><strong class="red">A</strong>cyclic <strong class="red">D</strong>ependencies <strong class="red">P</strong>rinciple</h2>
+
+                    <blockquote>The dependency graph of packages must have no cycles</blockquote>
+
+                    <p>Cycles are causing cascading problems.</p>
+                </section>
+
+                <section>
+                    <h2>How to check for cycles?</h2>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Draw directed graph.</li>
+                        <li>Look at it :)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>There is <a href="https://github.com/clue/graph-composer">clue/graph-composer</a>.</p>
+                    <p>But (<a href="https://github.com/clue/graph-composer/pull/45">PR #45</a>) should be applied to exclude non-interesting packages.</p>
+                </section>
+
+                <section>
+                    <img src="dag.svg">
+                </section>
+
+                <section>
+                    <p>The less dependencies, the simpler everything is...</p>
+                </section>
+
+                <section>
+                    <h2>How to break the cycle?</h2>
+
+                    <ul>
+                        <li>DIP &mdash; use dependency inversion via interface.</li>
+                        <li>CRP &mdash; move the interface into a separate package.</li>
+                    </ul>
+
+                    <p>Or rethink the package...</p>
+                </section>
+
+                <section>
+                        <h2><strong class="red">S</strong>table <strong class="red">D</strong>ependencies <strong class="red">P</strong>rinciple</h2>
+
+                        <blockquote>Depend in the direction of stability</blockquote>
+
+                        <p>You can't build a stable thing on an unstable base.</p>
+                </section>
+
+                <section>
+                    <h3>Can we measure (in)stability?</h3>
+                </section>
+
+                <section>
+                    <h2>I = <span class="green">E</span> / (<span class="green">E</span> + <span class="red">A</span>)</h2>
+
+                    
+                        <p>I &mdash; Instability. 1 &mdash; unstable, 0 &mdash; stable.</p>
+                        <p><span class="green">E</span> &mdash; Efferent (outgoing, fanout) Coupling. <br> Number of classes out of the package the <strong>package depends on</strong>.</p>
+                        <p><span class="red">A</span> &mdash; Afferent (incoming, fanin) Coupling. <br> Number of classes out of the <strong>package that depend on the package</strong>.</p>
+                    
+                </section>
+
+                <section>
+                    <h3>How to increase stability?</h3>
+                </section>
+
+                <section>
+                        <h2><strong class="red">S</strong>table <strong class="red">A</strong>bstractions <strong class="red">P</strong>rinciple</h2>
+
+                        <blockquote>A package abstractness should increase with stability</blockquote>
+
+                        <p>Stable packages are abstract. <br> Flexible packages are concrete.</p>
+                </section>
+
+                <section>
+                    <h3>Can we measure abstractness?</h3>
+                </section>
+
+                <section>
+                    <h2>A = <span class="red">N<sub>a</sub></span> / <span class="green">N<sub>c</sub></span> + <span class="red">N<sub>a</sub></span></h2>
+
+                    <ul>
+                        <li>A &mdash; abstractness. 0 &mdash; concrete, 1 &mdash; abstract.</li>
+                        <li><span class="red">N<sub>a</sub></span> &mdash; number of abstract entities in a package.</li>
+                        <li><span class="green">N<sub>c</sub></span> &mdash; number of concrete entities in a package.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Abstract packages → stable: safe to depend on them.</li>
+                        <li>Concrete packages → unstable: easy to change them.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>D-metric</h2>
+
+                    <img src="d-metrics.png" alt="">
+
+                    <p>X &mdash; abstractness, Y &mdash; instability.</p>
+                </section>
+
+                <section>
+                    <h2>Good and bad</h2>
+                    
+                    <img src="d-metrics-bad.png" alt="">
+
+                    <p>Sometimes 0, 0 is OK. Strings, arrays, stdlib.</p>
+                </section>
+
+                <section>
+                    <h2>D = | A + I &minus; 1 |</h2>
+
+                    <p>Distance from main line.<br>0 is good.<br>1 is bad.</p>
+                </section>
+
+                <section>
+                    <h2>Tools</h2>
+
+                    <ul>
+                        <li><a href="https://github.com/clarkware/jdepend">JDepend</a></li>
+                        <li><a href="https://github.com/pdepend/pdepend">PHP_Depend</a></li>
+                        <li><a href="http://www.phpmetrics.org/">PhpMetrics</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>You can add it a pipeline.</h2>
+                </section>
+
+                <section>
+                    <p>Same as SOLID, these principles and metrics are not dogmas but tools.</p>
+                </section>
+
+                <section>
+                    <p>Correct design results in explosive increase in the number of packages. It is scary.</p>
+                </section>
+
+                <section>
+                    <p>Principles are there to keep you away from either left-pad or monolith.</p>
+                </section>
+
+                <section>
+                    <p>These tools and principles should help you producing code that breaks less.</p>
+                </section>
+
+                <section>
+                    <h2>Questions time!</h2>
+
+                    <ul>
+                        <li>sam@rmcreative.ru</li>
+                        <li><a href="https://t.me/samdark_blog">https://t.me/samdark_blog</a></li>
+                        <li><a href="https://en.wikipedia.org/wiki/Short-term_memory">Wikipedia: Short-term memory</a></li>
+                        <li><a href="http://wiki.c2.com/?WelcomeVisitors">c2 wiki</a></li>
+                        <li><a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod">Principles of OOD</a></li>
+                        <li>Agile Software Development, Principles, Patterns, and Practices by Robert C. Martin</li>
+                        <li><a href="https://matthiasnoback.nl/book/principles-of-package-design/">Principles of Package Design &mdash; Matthias Noback</a></li>
+                    </ul>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: false,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: false,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+
+            Reveal.addEventListener('slidechanged', (event) => {
+                const isFirst = event.indexh === 0;
+                var slideNumber = false;
+                if (!isFirst) {
+                    slideNumber = 'c/t';
+                }
+                Reveal.configure({ slideNumber: slideNumber});
+            });
+
+        </script>
+
+    </body>
+</html>
