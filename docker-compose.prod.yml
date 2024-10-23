@@ -1,0 +1,18 @@
+services:
+  webserver:
+    image: git.rmcreative.ru/web/slides.rmcreative.ru:latest
+    networks:
+      - caddy_public
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      labels:
+        caddy: slides.rmcreative.ru
+        caddy.reverse_proxy: "{{upstreams 3000}}"
+
+networks:
+  caddy_public:
+    external: true

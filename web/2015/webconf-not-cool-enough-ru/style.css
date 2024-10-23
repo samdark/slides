@@ -1,0 +1,43 @@
+.reveal .slide-background {
+    background-position: 0 0;
+    background-image: url(bg.png);
+    background-size: 200px;
+    background-repeat: no-repeat;
+}
+
+/*.reveal .slide-background:first-child {*/
+    /*background-position: left top;*/
+	/*background-size: 600px;*/
+	/*background-color: #c04470;*/
+/*}*/
+
+
+
+/*.title-slide h2, .title-slide h3 {*/
+    /*color: #fff;*/
+	/*background: #000;*/
+	/*display: inline-block;*/
+	/*padding: 20px;*/
+	/*margin: 0;*/
+/*}*/
+
+/*.title-slide a:not(.image) {*/
+    /*color: #fff;*/
+/*}*/
+
+/*.title-slide a:not(.image):hover {*/
+    /*color: #fff;*/
+/*}*/
+
+.reveal section.title-slide  img {
+    border: 10px solid #fff !important;
+}
+
+.reveal pre code {
+    max-height: 650px;
+}
+
+.reveal blockquote {
+    font-style: normal;
+    background: #feffbb;
+}

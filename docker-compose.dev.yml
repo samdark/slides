@@ -1,0 +1,11 @@
+services:
+  webserver:
+    build:
+      context: .
+      target: base
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./httpd.conf:/home/static/httpd.conf:ro
+      - ./web:/home/static

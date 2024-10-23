@@ -1,0 +1,22 @@
+/*.slide-background {
+    background-position: 50% 100%;
+    background-image: url(12.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}*/
+
+/*.title-slide h1 {*/
+    /*color: #fff;*/
+/*}*/
+
+/*.title-slide a:not(.image) {*/
+    /*color: #eee;*/
+/*}*/
+
+/*.title-slide a:not(.image):hover {*/
+    /*color: #bbe7ff;*/
+/*}*/
+
+.reveal pre code {
+    max-height: 650px;
+}
