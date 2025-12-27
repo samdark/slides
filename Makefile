@@ -22,4 +22,4 @@ down: ## Down the dev environment
 	docker compose -f docker-compose.dev.yml kill
 
 deploy: ## Deploy to production
-	docker -H ssh://docker-web stack deploy --with-registry-auth -d -c docker-compose.prod.yml slides
+	docker -H ssh://docker-web stack deploy --detach=false --with-registry-auth -d -c docker-compose.prod.yml slides
